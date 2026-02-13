@@ -1,198 +1,243 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-black">
-      {/* Header */}
-      <header className="border-b border-black/10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <Link href="/" className="font-semibold tracking-tight">
-            JT Football Physiotherapy
-          </Link>
+    <div className="flex min-h-screen flex-col">
+      <Header />
 
-          <nav className="flex items-center gap-4 text-sm">
-            <Link className="text-black/70 hover:text-black" href="/services">
-              Services
-            </Link>
-            <Link className="text-black/70 hover:text-black" href="/about">
-              About
-            </Link>
-            <Link className="text-black/70 hover:text-black" href="/contact">
-              Contact
-            </Link>
-            <Link
-              className="rounded-full bg-black px-4 py-2 text-white hover:bg-black/90"
-              href="/contact"
-            >
-              Book an assessment
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="border-b border-black/10">
-        <div className="mx-auto max-w-6xl px-4 py-14">
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <div>
-              <p className="mb-3 inline-flex items-center rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs text-black/70">
-                Kilmarnock • Ayrshire • In-person & online
-              </p>
-
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Physiotherapy in Kilmarnock for pain relief, rehab, and performance.
-              </h1>
-
-              <p className="mt-4 text-lg leading-relaxed text-black/70">
-                Evidence-led assessment and hands-on treatment for sports injuries,
-                back pain, and everyday aches — with a clear plan to get you moving
-                confidently again.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="rounded-full bg-black px-5 py-3 text-sm font-medium text-white hover:bg-black/90"
-                >
-                  Book an appointment
-                </Link>
-                <Link
-                  href="/physiotherapy-kilmarnock"
-                  className="rounded-full border border-black/15 px-5 py-3 text-sm font-medium text-black hover:bg-black/5"
-                >
-                  Physiotherapy Kilmarnock page
-                </Link>
-              </div>
-
-              <ul className="mt-6 grid gap-2 text-sm text-black/70">
-                <li>• Sports injuries & return-to-play rehab</li>
-                <li>• Back pain, neck pain & mobility issues</li>
-                <li>• Strength & conditioning support</li>
-              </ul>
-            </div>
-
-            {/* Hero card */}
-            <div className="rounded-3xl border border-black/10 bg-black/5 p-6">
-              <h2 className="text-lg font-semibold tracking-tight">
-                What you get in your first session
-              </h2>
-
-              <div className="mt-4 grid gap-3 text-sm text-black/70">
-                <div className="rounded-2xl bg-white p-4">
-                  <p className="font-medium text-black">Assessment</p>
-                  <p className="mt-1">
-                    We identify the root cause (not just symptoms) and agree goals.
-                  </p>
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-white min-h-screen flex items-center">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 lg:py-0">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm">
+                  <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
+                  Face-to-Face in Kilmarnock, Ayrshire or Online
                 </div>
-                <div className="rounded-2xl bg-white p-4">
-                  <p className="font-medium text-black">Treatment</p>
-                  <p className="mt-1">
-                    Hands-on physio + tailored exercises based on your needs.
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white p-4">
-                  <p className="font-medium text-black">Plan</p>
-                  <p className="mt-1">
-                    Clear next steps, timelines, and what to do between sessions.
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-5 text-xs text-black/60">
-                Based in Kilmarnock, serving Ayrshire. Appointments available.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services preview */}
-      <section>
-        <div className="mx-auto max-w-6xl px-4 py-14">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Physiotherapy services in Kilmarnock
-          </h2>
-          <p className="mt-2 max-w-2xl text-black/70">
-            A practical, structured approach for both athletes and non-athletes —
-            from first assessment to confident return to activity.
-          </p>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {[
-              {
-                title: "Sports injury rehab",
-                body: "Ankle, knee, hip and muscle injuries with return-to-sport planning.",
-              },
-              {
-                title: "Back pain & mobility",
-                body: "Reduce pain, restore movement, improve strength and confidence.",
-              },
-              {
-                title: "Performance support",
-                body: "Strength & conditioning guidance to build resilience and reduce re-injury.",
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                className="rounded-3xl border border-black/10 p-6"
-              >
-                <h3 className="font-semibold tracking-tight">{card.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {card.body}
+                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl mb-6 leading-tight">
+                  Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock</span> for Peak Performance
+                </h1>
+                <p className="text-xl font-medium text-slate-800 mb-4">
+                  Suffering with pain in Kilmarnock or Ayrshire but don't know what to do?
                 </p>
-                <Link
-                  className="mt-4 inline-block text-sm font-medium text-black underline underline-offset-4 hover:text-black/70"
-                  href="/services"
-                >
-                  View services
-                </Link>
+                <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
+                  Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock tailored to you.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link
+                    href="/contact"
+                    className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-opacity-90 hover:shadow-xl transition-all"
+                  >
+                    Schedule Your Free Discovery Call
+                  </Link>
+                </div>
+                <p className="mt-4 text-xs text-slate-400 uppercase tracking-wider">
+                  Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
+                </p>
               </div>
-            ))}
+              <div className="flex justify-center lg:justify-end">
+                <Image
+                  src="/jt-football-physio-logo.svg"
+                  alt="JT Football Physiotherapy Logo"
+                  width={500}
+                  height={500}
+                  className="h-auto w-64 lg:w-full max-w-md"
+                  priority
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Local CTA */}
-      <section className="border-t border-black/10">
-        <div className="mx-auto max-w-6xl px-4 py-14">
-          <div className="rounded-3xl border border-black/10 bg-black p-10 text-white">
-            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-              Looking for a physiotherapist in Kilmarnock?
+          {/* Decorative background element */}
+          <div className="absolute top-0 right-0 -z-10 translate-x-1/3 -translate-y-1/4 opacity-10">
+            <div className="h-[800px] w-[800px] rounded-full bg-[#1e3a8a] blur-3xl"></div>
+          </div>
+        </section>
+
+        {/* About Us & Process */}
+        <section className="bg-slate-50 py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+                  About Our <span className="text-[#1e3a8a]">Kilmarnock Physio</span> Process
+                </h2>
+                <div className="space-y-4 text-lg text-slate-600">
+                  <p>JT Football Physiotherapy provides specialist physiotherapy for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
+                  <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
+                  <p>Check out our FAQ on the About page to learn how our physiotherapy approach supports pain relief and recovery — from football players to light joggers and seasonal athletes.</p>
+                </div>
+              </div>
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                <h3 className="font-bold text-xl mb-4 text-slate-900">Common Questions We Answer</h3>
+                <ul className="space-y-3">
+                  {[
+                    "What should I do if my pain hasn’t improved with rest?",
+                    "How long does pain relief usually take with physiotherapy?",
+                    "Can physiotherapy help with long-term or persistent pain?",
+                    "Is it normal to feel pain during rehabilitation exercises?",
+                    "Should I stop training completely if I’m in pain?",
+                    "When should I see a physiotherapist about pain?"
+                  ].map((q, i) => (
+                    <li key={i} className="flex items-start gap-3 text-slate-600">
+                      <svg className="h-6 w-6 text-[#1e3a8a] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      <span>{q}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose Us */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                Why Choose Our <span className="text-[#1e3a8a]">Physiotherapy Clinic</span> in Kilmarnock
+              </h2>
+              <p className="text-lg text-slate-600">
+                Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-3">
+              {[
+                { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
+                { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
+                { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy support no matter where you are." }
+              ].map((item, i) => (
+                <div key={i} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow hover:bg-white">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
+                  <p className="text-slate-600">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Services */}
+        <section className="bg-slate-50 py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 max-w-3xl">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                Our <span className="text-[#1e3a8a]">Physiotherapy Services</span>
+              </h2>
+              <p className="text-lg text-slate-600">
+                Comprehensive physiotherapy services in Kilmarnock designed specifically for footballers and athletes.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-3">
+              {[
+                { title: "Injury Assessment & Diagnosis", desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment." },
+                { title: "Rehabilitation & Return to Play", desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play." },
+                { title: "Prevention & Recovery Massage", desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery." }
+              ].map((service, i) => (
+                <div key={i} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm hover:shadow-xl transition-all border border-slate-100">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a]"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+                  <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
+                  <Link href="/contact" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* About Jordan */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="mx-auto max-w-md lg:max-w-none">
+                <Image
+                  src="/jordan-templeton-jtfootballphysiotherapy-kilmarnock-ayrshire-clinic.jpg"
+                  alt="Jordan Templeton - Founder of JT Football Physiotherapy"
+                  width={600}
+                  height={750}
+                  className="w-full h-auto rounded-3xl object-cover"
+                  priority
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+                  About Jordan — Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
+                </h2>
+                <div className="space-y-4 text-lg text-slate-600">
+                  <p>Jordan Templeton is the founder and driving force behind JT Football Physiotherapy — a specialist physiotherapy service in Kilmarnock dedicated to helping football players and active individuals overcome injury and optimise performance.</p>
+                  <p>Frustrated by the limitations of traditional clinic-based treatment, Jordan launched JT Football Physiotherapy to bridge the gap between rehabilitation and real-world sport requirements. His vision is simple: provide tailored, football-specific care that moves beyond symptom relief to address the underlying physical demands of the sport.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits */}
+        <section className="py-24 bg-[#1e3a8a] text-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Benefits of Football-Specific Physiotherapy</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season." },
+                { title: "Faster Recovery", desc: "Targeted treatment accelerates healing and helps you return stronger." },
+                { title: "Performance Boost", desc: "Enhance strength, agility, and resilience specific to the game." },
+                { title: "Ongoing Support", desc: "Education and guidance to maintain fitness long-term." }
+              ].map((benefit, i) => (
+                <div key={i} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center">
+                  <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
+                  <p className="text-blue-200">{benefit.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Blogs */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">Our Blogs</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-slate-100">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Finding the Right Physio and Curing Back Pain</h3>
+                <p className="text-slate-600">Learn our top tips for finding a physiotherapist in Kilmarnock that meets your needs...</p>
+              </Link>
+              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-slate-100">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">🦵 Osgood–Schlatter Disease: A Parent’s Guide</h3>
+                <p className="text-slate-600">A guide for parents on understanding and managing "growing pains" in young athletes...</p>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact CTA */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+              Contact Us Now For <span className="text-[#1e3a8a]">Pain Relief in Kilmarnock</span>, Ayrshire
             </h2>
-            <p className="mt-3 max-w-2xl text-white/80">
-              Book an assessment and leave with a clear plan. In-person appointments
-              in Kilmarnock and online sessions available across Ayrshire.
+            <p className="text-xl text-slate-600 mb-8">
+              Get in touch today to book an assessment or ask a question. Our Free Discovery session lets you discuss your injury at no cost. Your recovery in Kilmarnock starts here.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="flex justify-center">
               <Link
                 href="/contact"
-                className="rounded-full bg-white px-5 py-3 text-sm font-medium text-black hover:bg-white/90"
+                className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white hover:bg-opacity-90 transition-colors shadow-lg"
               >
-                Book now
-              </Link>
-              <Link
-                href="/physiotherapy-kilmarnock"
-                className="rounded-full border border-white/20 px-5 py-3 text-sm font-medium text-white hover:bg-white/10"
-              >
-                Read about physio in Kilmarnock
+                Contact Us Today
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-black/10">
-        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-black/60">
-          <p>© {new Date().getFullYear()} JT Football Physiotherapy</p>
-          <p className="mt-2">
-            Kilmarnock, Ayrshire •{" "}
-            <Link className="underline underline-offset-4" href="/contact">
-              Contact & booking
-            </Link>
-          </p>
-        </div>
-      </footer>
-    </main>
+      <Footer />
+    </div>
   );
 }
