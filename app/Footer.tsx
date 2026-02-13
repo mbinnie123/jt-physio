@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 
 const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#1e3a8a] transition-colors">
+  <a href={href} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-[#1e3a8a] transition-colors">
     {children}
   </a>
 );
@@ -13,7 +12,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-[#1e3a8a] text-white rounded-2xl p-8 text-center mb-12">
           <h3 className="text-2xl font-bold">Ayrshire | Kilmarnock</h3>
-          <p className="mt-2 mb-4 text-blue-200">Ready to start your recovery journey?</p>
+          <p className="mt-2 mb-4 text-blue-100">Ready to start your recovery journey?</p>
           <Link
             href="/contact"
             className="rounded-full bg-white px-6 py-3 text-base font-bold text-[#1e3a8a] hover:bg-slate-100 transition-colors"
@@ -25,7 +24,7 @@ export function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-4">
              <Link href="/" className="flex items-center gap-2 font-bold text-2xl tracking-tighter text-slate-900">
-              <Image
+              <img
                 src="/jt-football-physio-logo.svg"
                 alt="JT Logo"
                 width={50}
@@ -60,7 +59,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-gray-900/10 pt-8">
-          <p className="text-xs leading-5 text-gray-500">&copy; {new Date().getFullYear()} JT Football Physiotherapy. All rights reserved.</p>
+          <p className="text-xs leading-5 text-slate-600">&copy; {new Date().getFullYear()} JT Football Physiotherapy. All rights reserved.</p>
         </div>
       </div>
     </footer>

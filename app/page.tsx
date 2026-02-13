@@ -14,7 +14,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 lg:py-0">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="max-w-3xl">
-                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm">
+                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm transition-colors hover:bg-blue-100 cursor-default">
                   <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
                   Face-to-Face in Kilmarnock, Ayrshire or Online
                 </div>
@@ -30,23 +30,22 @@ export default function HomePage() {
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="/contact"
-                    className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-opacity-90 hover:shadow-xl transition-all"
+                    className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                   >
                     Schedule Your Free Discovery Call
                   </Link>
                 </div>
-                <p className="mt-4 text-xs text-slate-400 uppercase tracking-wider">
+                <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">
                   Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
                 </p>
               </div>
               <div className="flex justify-center lg:justify-end">
-                <Image
+                <img
                   src="/jt-football-physio-logo.svg"
                   alt="JT Football Physiotherapy Logo"
                   width={500}
                   height={500}
                   className="h-auto w-64 lg:w-full max-w-md"
-                  priority
                 />
               </div>
             </div>
@@ -83,7 +82,7 @@ export default function HomePage() {
                     "Should I stop training completely if I’m in pain?",
                     "When should I see a physiotherapist about pain?"
                   ].map((q, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600">
+                    <li key={i} className="flex items-start gap-3 text-slate-600 transition-colors duration-200 hover:text-slate-900">
                       <svg className="h-6 w-6 text-[#1e3a8a] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       <span>{q}</span>
                     </li>
@@ -111,7 +110,7 @@ export default function HomePage() {
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
                 { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy support no matter where you are." }
               ].map((item, i) => (
-                <div key={i} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow hover:bg-white">
+                <div key={i} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                   <p className="text-slate-600">{item.desc}</p>
                 </div>
@@ -137,8 +136,8 @@ export default function HomePage() {
                 { title: "Rehabilitation & Return to Play", desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play." },
                 { title: "Prevention & Recovery Massage", desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery." }
               ].map((service, i) => (
-                <div key={i} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm hover:shadow-xl transition-all border border-slate-100">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a]"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+                <div key={i} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 hover:border-blue-100">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
                   <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
                   <Link href="/contact" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</Link>
@@ -158,8 +157,7 @@ export default function HomePage() {
                   alt="Jordan Templeton - Founder of JT Football Physiotherapy"
                   width={600}
                   height={750}
-                  className="w-full h-auto rounded-3xl object-cover"
-                  priority
+                  className="w-full h-auto rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
                 />
               </div>
               <div>
@@ -188,9 +186,9 @@ export default function HomePage() {
                 { title: "Performance Boost", desc: "Enhance strength, agility, and resilience specific to the game." },
                 { title: "Ongoing Support", desc: "Education and guidance to maintain fitness long-term." }
               ].map((benefit, i) => (
-                <div key={i} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center">
+                <div key={i} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:scale-105">
                   <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
-                  <p className="text-blue-200">{benefit.desc}</p>
+                  <p className="text-blue-100">{benefit.desc}</p>
                 </div>
               ))}
             </div>
@@ -204,12 +202,12 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">Our Blogs</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-slate-100">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Finding the Right Physio and Curing Back Pain</h3>
+              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
+                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">Finding the Right Physio and Curing Back Pain</h3>
                 <p className="text-slate-600">Learn our top tips for finding a physiotherapist in Kilmarnock that meets your needs...</p>
               </Link>
-              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-slate-100">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">🦵 Osgood–Schlatter Disease: A Parent’s Guide</h3>
+              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
+                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">🦵 Osgood–Schlatter Disease: A Parent’s Guide</h3>
                 <p className="text-slate-600">A guide for parents on understanding and managing "growing pains" in young athletes...</p>
               </Link>
             </div>
@@ -228,7 +226,7 @@ export default function HomePage() {
             <div className="flex justify-center">
               <Link
                 href="/contact"
-                className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white hover:bg-opacity-90 transition-colors shadow-lg"
+                className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
               >
                 Contact Us Today
               </Link>
