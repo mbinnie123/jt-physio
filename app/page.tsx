@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { FadeIn } from "./FadeIn";
+import { Reviews } from "./Reviews";
 
 export default function HomePage() {
   return (
@@ -195,6 +196,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Reviews */}
+        <Reviews />
 
         {/* Blogs */}
         <section className="py-24 bg-slate-50">
