@@ -12,7 +12,8 @@ export function Header() {
       const targetId = href.replace("/#", "");
       const elem = document.getElementById(targetId);
       if (elem) {
-        const headerOffset = 64;
+        const header = document.querySelector("header");
+        const headerOffset = header?.offsetHeight ?? 64;
         const elementPosition = elem.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - headerOffset;
         window.scrollTo({
