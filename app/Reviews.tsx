@@ -85,13 +85,9 @@ export function Reviews() {
           ) : reviews.map((review, i) => (
             <FadeIn key={i} delay={i * 100} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-4">
-                {review.profile_photo_url ? (
-                  <img src={review.profile_photo_url} alt={review.author_name} className="h-10 w-10 rounded-full" />
-                ) : (
-                  <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
-                    {review.author_name.charAt(0)}
-                  </div>
-                )}
+                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
+                  {review.author_name.split(" ").length > 1 ? `${review.author_name.split(" ")[0][0]}${review.author_name.split(" ").slice(-1)[0][0]}` : review.author_name.charAt(0)}
+                </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">{review.author_name}</h4>
                   <p className="text-xs text-slate-500">{review.relative_time_description}</p>
