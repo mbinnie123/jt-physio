@@ -105,7 +105,7 @@ export default function HomePage() {
                 Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
               </p>
             </FadeIn>
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
@@ -131,7 +131,7 @@ export default function HomePage() {
                 Comprehensive physiotherapy services in Kilmarnock designed specifically for footballers and athletes.
               </p>
             </FadeIn>
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 { title: "Injury Assessment & Diagnosis", desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment." },
                 { title: "Rehabilitation & Return to Play", desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play." },
