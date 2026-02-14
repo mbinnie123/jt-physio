@@ -6,6 +6,25 @@ import { useState } from "react";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      const targetId = href.replace("/#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        const headerOffset = 64;
+        const elementPosition = elem.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+        window.history.pushState(null, "", href);
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -29,7 +48,11 @@ export function Header() {
           <Link href="/about" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
             About Us
           </Link>
-          <Link href="/#reviews" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
+          <Link
+            href="/#reviews"
+            className="text-slate-600 hover:text-[#1e3a8a] transition-colors"
+            onClick={(e) => handleScroll(e, "/#reviews")}
+          >
             Reviews
           </Link>
           <Link href="/blogs" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
@@ -76,7 +99,11 @@ export function Header() {
             <Link href="/about" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               About Us
             </Link>
-            <Link href="/#reviews" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
+            <Link
+              href="/#reviews"
+              className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+              onClick={(e) => handleScroll(e, "/#reviews")}
+            >
               Reviews
             </Link>
             <Link href="/blogs" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
