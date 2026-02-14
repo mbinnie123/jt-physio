@@ -1,45 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { FadeIn } from "./FadeIn";
 
-const reviews = [
-  {
-    author: "Alan Brown",
-    rating: 5,
-    text: "Absolutely brilliant service. Jordan really knows his stuff when it comes to football injuries. Got me back playing sooner than expected.",
-    date: "1 month ago",
-  },
-  {
-    author: "Sarah Jenkins",
-    rating: 5,
-    text: "I was struggling with knee pain for months. After a few sessions and a tailored gym plan, I'm pain-free. Highly recommend!",
-    date: "2 months ago",
-  },
-  {
-    author: "David Ross",
-    rating: 5,
-    text: "Professional, knowledgeable and friendly. The clinic in Kilmarnock is great. Best physio I've been to.",
-    date: "3 weeks ago",
-  },
-  {
-    author: "Mark Thompson",
-    rating: 5,
-    text: "Great experience. The focus on strength and conditioning alongside the hands-on treatment made a huge difference to my recovery.",
-    date: "4 months ago",
-  },
-  {
-    author: "Emma Wilson",
-    rating: 5,
-    text: "Jordan is fantastic. He explains everything clearly and the treatment is top notch. 5 stars!",
-    date: "5 months ago",
-  },
-  {
-    author: "Gary Smith",
-    rating: 5,
-    text: "If you need a physio in Ayrshire, look no further. Helped me sort out a recurring hamstring issue.",
-    date: "1 week ago",
-  }
-];
+interface GoogleReview {
+  author_name: string;
+  rating: number;
+  text: string;
+  relative_time_description: string;
+  profile_photo_url: string;
+}
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -59,6 +29,36 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export function Reviews() {
+  const [reviews, setReviews] = useState<GoogleReview[]>([]);
+  const [rating, setRating] = useState(5);
+  const [totalRatings, setTotalRatings] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const res = await fetch("/api/reviews");
+        const data = await res.json();
+        
+        if (data.reviews) {
+          setReviews(data.reviews);
+        }
+        if (data.rating) {
+          setRating(data.rating);
+        }
+        if (data.user_ratings_total) {
+          setTotalRatings(data.user_ratings_total);
+        }
+      } catch (error) {
+        console.error("Failed to fetch reviews", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchReviews();
+  }, []);
+
   return (
     <section id="reviews" className="bg-slate-50 py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -70,28 +70,37 @@ export function Reviews() {
             See what our patients in Kilmarnock and Ayrshire have to say about their recovery journey with JT Football Physiotherapy.
           </p>
           <div className="mt-6 flex justify-center items-center gap-2">
-             <span className="text-2xl font-bold text-slate-900">5.0</span>
-             <StarRating rating={5} />
-             <span className="text-slate-600 text-sm">(Based on Google Reviews)</span>
+             <span className="text-2xl font-bold text-slate-900">{rating}</span>
+             <StarRating rating={Math.round(rating)} />
+             <span className="text-slate-600 text-sm">({totalRatings} Google Reviews)</span>
           </div>
         </FadeIn>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((review, i) => (
+          {loading ? (
+            // Simple loading skeleton
+            [...Array(3)].map((_, i) => (
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-64 animate-pulse"></div>
+            ))
+          ) : reviews.map((review, i) => (
             <FadeIn key={i} delay={i * 100} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-4">
-                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
-                  {review.author.charAt(0)}
-                </div>
+                {review.profile_photo_url ? (
+                  <img src={review.profile_photo_url} alt={review.author_name} className="h-10 w-10 rounded-full" />
+                ) : (
+                  <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
+                    {review.author_name.charAt(0)}
+                  </div>
+                )}
                 <div>
-                  <h4 className="font-bold text-slate-900">{review.author}</h4>
-                  <p className="text-xs text-slate-500">{review.date}</p>
+                  <h4 className="font-bold text-slate-900 text-sm">{review.author_name}</h4>
+                  <p className="text-xs text-slate-500">{review.relative_time_description}</p>
                 </div>
               </div>
               <div className="mb-4">
                 <StarRating rating={review.rating} />
               </div>
-              <p className="text-slate-600 text-sm leading-relaxed flex-grow">
+              <p className="text-slate-600 text-sm leading-relaxed flex-grow line-clamp-4">
                 "{review.text}"
               </p>
               <div className="mt-4 pt-4 border-t border-slate-50 flex items-center gap-2">
