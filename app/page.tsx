@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { FadeIn } from "./FadeIn";
 
 export default function HomePage() {
   return (
@@ -13,7 +14,7 @@ export default function HomePage() {
         <section className="relative overflow-hidden bg-white min-h-screen flex items-center">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 lg:py-0">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="max-w-3xl">
+              <FadeIn className="max-w-3xl">
                 <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm transition-colors hover:bg-blue-100 cursor-default">
                   <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
                   Face-to-Face in Kilmarnock, Ayrshire or Online
@@ -38,8 +39,8 @@ export default function HomePage() {
                 <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">
                   Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
                 </p>
-              </div>
-              <div className="flex justify-center lg:justify-end">
+              </FadeIn>
+              <FadeIn delay={200} className="flex justify-center lg:justify-end">
                 <img
                   src="/jt-football-physio-logo.svg"
                   alt="JT Football Physiotherapy Logo"
@@ -47,7 +48,7 @@ export default function HomePage() {
                   height={500}
                   className="h-auto w-64 lg:w-full max-w-md"
                 />
-              </div>
+              </FadeIn>
             </div>
           </div>
 
@@ -61,7 +62,7 @@ export default function HomePage() {
         <section className="bg-slate-50 py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
+              <FadeIn>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
                   About Our <span className="text-[#1e3a8a]">Kilmarnock Physio</span> Process
                 </h2>
@@ -70,8 +71,8 @@ export default function HomePage() {
                   <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
                   <p>Check out our FAQ on the About page to learn how our physiotherapy approach supports pain relief and recovery — from football players to light joggers and seasonal athletes.</p>
                 </div>
-              </div>
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+              </FadeIn>
+              <FadeIn delay={200} className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
                 <h3 className="font-bold text-xl mb-4 text-slate-900">Common Questions We Answer</h3>
                 <ul className="space-y-3">
                   {[
@@ -88,7 +89,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -96,24 +97,24 @@ export default function HomePage() {
         {/* Why Choose Us */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 max-w-3xl mx-auto">
+            <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
                 Why Choose Our <span className="text-[#1e3a8a]">Physiotherapy Clinic</span> in Kilmarnock
               </h2>
               <p className="text-lg text-slate-600">
                 Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
               </p>
-            </div>
+            </FadeIn>
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
                 { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy support no matter where you are." }
               ].map((item, i) => (
-                <div key={i} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
+                <FadeIn key={i} delay={i * 100} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                   <p className="text-slate-600">{item.desc}</p>
-                </div>
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -122,26 +123,26 @@ export default function HomePage() {
         {/* Services */}
         <section className="bg-slate-50 py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 max-w-3xl">
+            <FadeIn className="mb-16 max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
                 Our <span className="text-[#1e3a8a]">Physiotherapy Services</span>
               </h2>
               <p className="text-lg text-slate-600">
                 Comprehensive physiotherapy services in Kilmarnock designed specifically for footballers and athletes.
               </p>
-            </div>
+            </FadeIn>
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 { title: "Injury Assessment & Diagnosis", desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment." },
                 { title: "Rehabilitation & Return to Play", desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play." },
                 { title: "Prevention & Recovery Massage", desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery." }
               ].map((service, i) => (
-                <div key={i} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 hover:border-blue-100">
+                <FadeIn key={i} delay={i * 100} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 hover:border-blue-100">
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
                   <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
                   <Link href="/contact" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</Link>
-                </div>
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -151,7 +152,7 @@ export default function HomePage() {
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="mx-auto max-w-md lg:max-w-none">
+              <FadeIn className="mx-auto max-w-md lg:max-w-none">
                 <Image
                   src="/jordan-templeton-jtfootballphysiotherapy-kilmarnock-ayrshire-clinic.jpg"
                   alt="Jordan Templeton - Founder of JT Football Physiotherapy"
@@ -159,8 +160,8 @@ export default function HomePage() {
                   height={750}
                   className="w-full h-auto rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
                 />
-              </div>
-              <div>
+              </FadeIn>
+              <FadeIn delay={200}>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
                   About Jordan — Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
                 </h2>
@@ -168,7 +169,7 @@ export default function HomePage() {
                   <p>Jordan Templeton is the founder and driving force behind JT Football Physiotherapy — a specialist physiotherapy service in Kilmarnock dedicated to helping football players and active individuals overcome injury and optimise performance.</p>
                   <p>Frustrated by the limitations of traditional clinic-based treatment, Jordan launched JT Football Physiotherapy to bridge the gap between rehabilitation and real-world sport requirements. His vision is simple: provide tailored, football-specific care that moves beyond symptom relief to address the underlying physical demands of the sport.</p>
                 </div>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -176,9 +177,9 @@ export default function HomePage() {
         {/* Benefits */}
         <section className="py-24 bg-[#1e3a8a] text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Benefits of Football-Specific Physiotherapy</h2>
-            </div>
+            </FadeIn>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season." },
@@ -186,10 +187,10 @@ export default function HomePage() {
                 { title: "Performance Boost", desc: "Enhance strength, agility, and resilience specific to the game." },
                 { title: "Ongoing Support", desc: "Education and guidance to maintain fitness long-term." }
               ].map((benefit, i) => (
-                <div key={i} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:scale-105">
+                <FadeIn key={i} delay={i * 100} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:scale-105">
                   <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
                   <p className="text-blue-100">{benefit.desc}</p>
-                </div>
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -198,18 +199,22 @@ export default function HomePage() {
         {/* Blogs */}
         <section className="py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">Our Blogs</h2>
-            </div>
+            </FadeIn>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
+              <FadeIn className="h-full">
+              <Link href="#" className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
                 <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">Finding the Right Physio and Curing Back Pain</h3>
                 <p className="text-slate-600">Learn our top tips for finding a physiotherapist in Kilmarnock that meets your needs...</p>
               </Link>
-              <Link href="#" className="block bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
+              </FadeIn>
+              <FadeIn delay={200} className="h-full">
+              <Link href="#" className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
                 <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">🦵 Osgood–Schlatter Disease: A Parent’s Guide</h3>
                 <p className="text-slate-600">A guide for parents on understanding and managing "growing pains" in young athletes...</p>
               </Link>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -217,7 +222,8 @@ export default function HomePage() {
         {/* Contact CTA */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+            <FadeIn>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
               Contact Us Now For <span className="text-[#1e3a8a]">Pain Relief in Kilmarnock</span>, Ayrshire
             </h2>
             <p className="text-xl text-slate-600 mb-8">
@@ -231,6 +237,7 @@ export default function HomePage() {
                 Contact Us Today
               </Link>
             </div>
+            </FadeIn>
           </div>
         </section>
       </main>
