@@ -60,7 +60,7 @@ export function Reviews() {
   }, []);
 
   return (
-    <section id="reviews" className="bg-slate-50 py-24">
+    <section id="reviews" className="bg-slate-50 py-24 scroll-mt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">

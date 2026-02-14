@@ -29,7 +29,7 @@ export function Header() {
           <Link href="/about" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
             About Us
           </Link>
-          <Link href="/reviews" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
+          <Link href="/#reviews" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
             Reviews
           </Link>
           <Link href="/blogs" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
@@ -76,7 +76,7 @@ export function Header() {
             <Link href="/about" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               About Us
             </Link>
-            <Link href="/reviews" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
+            <Link href="/#reviews" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               Reviews
             </Link>
             <Link href="/blogs" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>

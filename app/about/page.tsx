@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
+import { FadeIn } from "../FadeIn";
 
 export const metadata = {
   title: "About Us | JT Football Physiotherapy",
@@ -15,6 +16,7 @@ export default function AboutPage() {
       <main>
         <section className="relative border-b border-slate-100 bg-[radial-gradient(at_20%_0%,rgba(0,138,252,0.16)_0%,transparent_60%)] py-16 pb-7" aria-labelledby="jt-about-title">
           <div className="mx-auto max-w-6xl px-4">
+            <FadeIn>
             <p className="mb-2.5 inline-block text-xs font-bold uppercase tracking-widest text-blue-600">About Us</p>
             <h1 id="jt-about-title" className="mb-3 text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
               Football-first physiotherapy in Kilmarnock, built for pain relief and performance
@@ -45,12 +47,14 @@ export default function AboutPage() {
               <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Football-specific rehab</li>
               <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Pain & mobility focused</li>
             </ul>
+            </FadeIn>
           </div>
         </section>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-4 py-6 pb-16 lg:grid-cols-[1.25fr_0.85fr]">
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-5">
+            <FadeIn>
             <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-story-title">
               <h2 id="jt-story-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Why JT Football Physiotherapy exists</h2>
               <p className="mb-2.5 leading-relaxed text-slate-600">
@@ -63,7 +67,9 @@ export default function AboutPage() {
                 same goal: reduce pain, improve mobility, rebuild confidence, and help you move better for the long term.
               </p>
             </section>
+            </FadeIn>
 
+            <FadeIn>
             <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-approach-title">
               <h2 id="jt-approach-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Our approach</h2>
 
@@ -101,7 +107,9 @@ export default function AboutPage() {
                 </article>
               </div>
             </section>
+            </FadeIn>
 
+            <FadeIn>
             <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-founder-title">
               <h2 id="jt-founder-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">About <span className="text-blue-600">Jordan Templeton</span></h2>
               <p className="mb-2.5 leading-relaxed text-slate-600">
@@ -139,7 +147,9 @@ export default function AboutPage() {
                 </div>
               </div>
             </section>
+            </FadeIn>
 
+            <FadeIn>
             <section className="rounded-2xl border border-blue-200 bg-gradient-to-b from-blue-50 to-white p-5 shadow-sm" aria-labelledby="jt-cta-title">
               <h2 id="jt-cta-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Ready to reduce pain and move better?</h2>
               <p className="mb-3 leading-relaxed text-slate-600">
@@ -161,10 +171,12 @@ export default function AboutPage() {
                 </Link>
               </div>
             </section>
+            </FadeIn>
           </div>
 
           {/* RIGHT COLUMN */}
           <aside className="flex flex-col gap-5" aria-label="Frequently asked questions">
+            <FadeIn>
             <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-faq-title">
               <h2 id="jt-faq-title" className="mb-1 text-xl font-bold tracking-tight text-slate-900">FAQ</h2>
               <p className="mb-4 text-sm text-slate-500">
@@ -201,6 +213,7 @@ export default function AboutPage() {
                 ))}
               </div>
             </section>
+            </FadeIn>
           </aside>
         </div>
 
