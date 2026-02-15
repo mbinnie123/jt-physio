@@ -107,16 +107,18 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Map Section (Placeholder) */}
-        <section className="h-96 w-full bg-slate-200 relative grayscale opacity-80">
-           {/* If you have a Google Maps API key, you can embed it here. 
-               Otherwise, this serves as a visual placeholder or you can use an iframe embed. */}
-           <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-slate-500 font-medium flex items-center gap-2">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                Kilmarnock, Ayrshire
-              </p>
-           </div>
+        {/* Map Section */}
+        <section className="h-96 w-full bg-slate-200 relative">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2253.8944682493693!2d-4.4736095!3d55.6038503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488833698302dad1%3A0x576ea4e6cf8b0eff!2sJT%20Football%20Physiotherapy!5e0!3m2!1sen!2suk!4v1771158598459!5m2!1sen!2suk"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="absolute inset-0 w-full h-full"
+          />
         </section>
       </main>
 
