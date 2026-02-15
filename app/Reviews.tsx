@@ -91,7 +91,7 @@ export function Reviews() {
                 {review.author_name.split(" ").length > 1 ? `${review.author_name.split(" ")[0][0]}${review.author_name.split(" ").slice(-1)[0][0]}` : review.author_name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{review.author_name}</h4>
+                  <h3 className="font-bold text-slate-900 text-sm">{review.author_name}</h3>
                   <p className="text-xs text-slate-500">{review.relative_time_description}</p>
                 </div>
               </div>
