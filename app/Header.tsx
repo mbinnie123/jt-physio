@@ -46,6 +46,9 @@ export function Header() {
         </div>
 
         <nav className="hidden gap-8 text-sm font-medium lg:flex items-center">
+          <Link href="/" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
+            Home
+          </Link>
           <Link href="/about" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
             About Us
           </Link>
@@ -97,6 +100,9 @@ export function Header() {
       {isMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white">
           <div className="space-y-1 px-4 py-6">
+            <Link href="/" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
+              Home
+            </Link>
             <Link href="/about" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               About Us
             </Link>
