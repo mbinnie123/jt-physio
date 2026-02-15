@@ -17,7 +17,7 @@ export default function AboutPage() {
         <section className="relative border-b border-slate-100 bg-[radial-gradient(at_20%_0%,rgba(0,138,252,0.16)_0%,transparent_60%)] py-16 pb-7" aria-labelledby="jt-about-title">
           <div className="mx-auto max-w-6xl px-4">
             <FadeIn>
-            <p className="mb-2.5 inline-block text-xs font-bold uppercase tracking-widest text-blue-600">About Us</p>
+             <p className="mb-2.5 inline-block text-xs font-bold uppercase tracking-widest text-blue-600">About Us</p>
             <h1 id="jt-about-title" className="mb-3 text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
               Football-first physiotherapy in Kilmarnock, built for pain relief and performance
             </h1>
@@ -295,6 +295,7 @@ export default function AboutPage() {
           }}
         />
       </main>
+
 
       <Footer />
     </div>

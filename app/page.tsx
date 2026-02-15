@@ -3,9 +3,61 @@ import Image from "next/image";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { FadeIn } from "./FadeIn";
+import { stringify } from 'flatted';
 import { Reviews } from "./Reviews";
+import { wixClient } from "./lib/wix";
 
-export default function HomePage() {
+export default async function HomePage() {
+  type BlogPost = {
+    _id: string;
+    title?: string | null;
+    slug?: string | null;
+    excerpt?: string | null;
+  };
+
+  let blogPosts: BlogPost[] = [];
+
+  const hasWixEnv = !!process.env.WIX_API_KEY && 
+    !!process.env.WIX_SITE_ID && 
+    !!process.env.WIX_ACCOUNT_ID;
+
+  if (hasWixEnv) {
+    try {
+      const { items } = await wixClient.posts
+        .queryPosts()
+        .limit(2)
+        // Cache on the server and revalidate periodically
+         .find();
+      blogPosts = (items ?? []).map((p: any) => ({
+        _id: p._id,
+        title: p.title,
+        slug: p.slug,
+        excerpt: p.excerpt,
+      }));
+    } catch (err: any) {
+      // Wix errors often hide us
+      console.error("Failed to fetch posts from Wix:", stringify({
+        name: err?.name,
+        message: err?.message,
+        stack: err?.stack,
+        status: err?.status ?? err?.statusCode,
+        code: err?.code,
+        details: err?.details,
+        data: err?.data,
+      }));
+
+      // Also log the raw error (often includes non-enumerable info)
+      console.error(err);
+    }
+  } else {
+    // Optional: keep this as a silent fallback in production
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        "Wix blog fetch skipped: missing WIX_API_KEY/WIX_SITE_ID/WIX_ACCOUNT_ID in .env.local"
+      );
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -17,37 +69,36 @@ export default function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn className="max-w-3xl">
                 <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm transition-colors hover:bg-blue-100 cursor-default">
-                  <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
+                 <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
                   Face-to-Face in Kilmarnock, Ayrshire or Online
                 </div>
-                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl mb-6 leading-tight">
+                <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl mb-6 leading-tight">
                   Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock</span> for Peak Performance
                 </h1>
                 <p className="text-xl font-medium text-slate-800 mb-4">
-                  Suffering with pain in Kilmarnock or Ayrshire but don't know what to do?
+                  Recover faster. Perform better. Stay injury-free.
                 </p>
                 <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
                   Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock tailored to you.
                 </p>
-                <div className="flex flex-wrap gap-4">
+               <div className="flex flex-wrap gap-4">
                   <Link
                     href="/contact"
                     className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
-                  >
-                    Schedule Your Free Discovery Call
+                 >
+                    Book Your Appointment
                   </Link>
                 </div>
-                <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">
-                  Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
-                </p>
+                <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
+               </p>
               </FadeIn>
-              <FadeIn delay={200} className="flex justify-center lg:justify-end">
+              <FadeIn delay={200} className="relative hidden lg:block">
                 <img
                   src="/jt-football-physio-logo.svg"
                   alt="JT Football Physiotherapy Logo"
                   width={500}
                   height={500}
-                  className="h-auto w-64 lg:w-full max-w-md"
+                  className="h-auto w-64 lg:w-full max-w-md mx-auto"
                 />
               </FadeIn>
             </div>
@@ -55,7 +106,7 @@ export default function HomePage() {
 
           {/* Decorative background element */}
           <div className="absolute top-0 right-0 -z-10 translate-x-1/3 -translate-y-1/4 opacity-10">
-            <div className="h-[800px] w-[800px] rounded-full bg-[#1e3a8a] blur-3xl"></div>
+             <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" />
           </div>
         </section>
 
@@ -205,20 +256,33 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">Our Blogs</h2>
-            </FadeIn>
+             </FadeIn>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <FadeIn className="h-full">
-              <Link href="#" className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
-                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">Finding the Right Physio and Curing Back Pain</h3>
-                <p className="text-slate-600">Learn our top tips for finding a physiotherapist in Kilmarnock that meets your needs...</p>
-              </Link>
-              </FadeIn>
-              <FadeIn delay={200} className="h-full">
-              <Link href="#" className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
-                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">🦵 Osgood–Schlatter Disease: A Parent’s Guide</h3>
-                <p className="text-slate-600">A guide for parents on understanding and managing "growing pains" in young athletes...</p>
-              </Link>
-              </FadeIn>
+              {blogPosts.length > 0 ? (
+                blogPosts.map((post, i) => (
+                  <FadeIn key={post._id} delay={i * 200} className="h-full">
+                    <Link
+                      href={post.slug ? `/blogs/${post.slug}` : "/blogs"}
+                      className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group"
+                    >
+                      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">{post.title}</h3>
+                      <p className="text-slate-600 line-clamp-3">
+                        {post.excerpt || "Read the latest updates and advice from JT Football Physiotherapy."}
+                      </p>
+                    </Link>
+                  </FadeIn>
+                ))
+              ) : (
+                // Fallback if no posts or error
+                <>
+                  <FadeIn className="h-full">
+                    <Link href="/blogs" className="block h-full bg-white p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 group">
+                      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1e3a8a] transition-colors">Visit our Blog</h3>
+                      <p className="text-slate-600">Click here to read our latest articles and updates.</p>
+                    </Link>
+                  </FadeIn>
+                </>
+              )}
             </div>
           </div>
         </section>
@@ -228,19 +292,19 @@ export default function HomePage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
             <FadeIn>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-              Contact Us Now For <span className="text-[#1e3a8a]">Pain Relief in Kilmarnock</span>, Ayrshire
-            </h2>
-            <p className="text-xl text-slate-600 mb-8">
-              Get in touch today to book an assessment or ask a question. Our Free Discovery session lets you discuss your injury at no cost. Your recovery in Kilmarnock starts here.
-            </p>
-            <div className="flex justify-center">
-              <Link
-                href="/contact"
-                className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
-              >
-                Contact Us Today
-              </Link>
-            </div>
+                Contact Us Now For <span className="text-[#1e3a8a]">Pain Relief in Kilmarnock</span>, Ayrshire
+              </h2>
+              <p className="text-xl text-slate-600 mb-8">
+                Get in touch today to book an assessment or ask a question. Our Free Discovery session lets you discuss your injury at no cost. Your recovery in Kilmarnock starts here.
+              </p>
+              <div className="flex justify-center">
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                >
+                  Contact Us Today
+                </Link>
+              </div>
             </FadeIn>
           </div>
         </section>

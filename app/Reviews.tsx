@@ -62,11 +62,11 @@ export function Reviews() {
   return (
     <section id="reviews" className="bg-slate-50 py-24 scroll-mt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn className="text-center mb-16">
+        <FadeIn className="mb-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
             Client Success Stories
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-lg text-slate-600">
             See what our patients in Kilmarnock and Ayrshire have to say about their recovery journey with JT Football Physiotherapy.
           </p>
           <div className="mt-6 flex justify-center items-center gap-2">
@@ -78,15 +78,17 @@ export function Reviews() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {loading ? (
-            // Simple loading skeleton
+            // Loading skeleton
             [...Array(3)].map((_, i) => (
               <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-64 animate-pulse"></div>
             ))
           ) : reviews.map((review, i) => (
-            <FadeIn key={i} delay={i * 100} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+            <FadeIn
+              key={i}
+              delay={i * 100} className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-4">
                 <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
-                  {review.author_name.split(" ").length > 1 ? `${review.author_name.split(" ")[0][0]}${review.author_name.split(" ").slice(-1)[0][0]}` : review.author_name.charAt(0)}
+                {review.author_name.split(" ").length > 1 ? `${review.author_name.split(" ")[0][0]}${review.author_name.split(" ").slice(-1)[0][0]}` : review.author_name.charAt(0)}
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">{review.author_name}</h4>
