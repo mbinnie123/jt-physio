@@ -17,7 +17,7 @@ export default function ContactPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-[#1e3a8a] py-24 text-white overflow-hidden">
+        <section className="relative bg-[#4C6CD6] py-24 text-white overflow-hidden">
           <div className="absolute inset-0 opacity-10">
              <img src="/jt-football-physio-logo.svg" alt="" className="w-full h-full object-contain scale-100 lg:scale-150 translate-y-0 lg:translate-y-1/4" />
           </div>
