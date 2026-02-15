@@ -13,12 +13,12 @@ export function Footer() {
         <div className="bg-[#1e3a8a] text-white rounded-2xl p-8 text-center mb-12">
           <h3 className="text-2xl font-bold">Ayrshire | Kilmarnock</h3>
           <p className="mt-2 mb-4 text-blue-100">Ready to start your recovery journey?</p>
-          <Link
-            href="/contact"
+          <a
+            href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
             className="rounded-full bg-white px-6 py-3 text-base font-bold text-[#1e3a8a] hover:bg-slate-100 transition-colors"
           >
             BOOK A FREE DISCOVERY CALL
-          </Link>
+          </a>
         </div>
 
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">

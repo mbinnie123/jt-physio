@@ -141,12 +141,12 @@ export default async function HomePage() {
                   Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock tailored to you.
                 </p>
                <div className="flex flex-wrap gap-4">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
                     className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                  >
                     Book Your Appointment
-                  </Link>
+                  </a>
                 </div>
                 <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
                </p>
@@ -252,7 +252,7 @@ export default async function HomePage() {
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
                   <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
-                  <Link href="/contact" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</Link>
+                  <a href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</a>
                 </FadeIn>
               ))}
             </div>

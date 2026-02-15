@@ -65,18 +65,18 @@ export function Header() {
           <Link href="/contact" className="text-slate-600 hover:text-[#1e3a8a] transition-colors">
             Contact
           </Link>
-          <Link
-            href="/contact"
+          <a
+            href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
             className="rounded-full bg-[#1e3a8a] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 transition-all hover:shadow-md text-center"
           >
             Book Now
-          </Link>
+          </a>
         </nav>
 
         <div className="flex items-center gap-4 lg:hidden">
-          <Link href="/contact" className="rounded-full bg-[#1e3a8a] px-4 py-2 text-sm font-semibold text-white">
+          <a href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service" className="rounded-full bg-[#1e3a8a] px-4 py-2 text-sm font-semibold text-white">
             Book
-          </Link>
+          </a>
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
