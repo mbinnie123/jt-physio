@@ -123,7 +123,7 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden bg-white min-h-screen flex items-center">
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/20 min-h-screen flex items-center">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 lg:py-0">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn className="max-w-3xl">
@@ -170,7 +170,7 @@ export default async function HomePage() {
         </section>
 
         {/* About Us & Process */}
-        <section className="bg-slate-50 py-24">
+        <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn>
@@ -206,7 +206,7 @@ export default async function HomePage() {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gradient-to-b from-slate-50 to-[#4C6CD6]/10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
@@ -222,7 +222,7 @@ export default async function HomePage() {
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
                 { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy support no matter where you are." }
               ].map((item, i) => (
-                <FadeIn key={i} delay={i * 100} className="bg-slate-50/70 p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
+                <FadeIn key={i} delay={i * 100} className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                   <p className="text-slate-600">{item.desc}</p>
                 </FadeIn>
@@ -232,7 +232,7 @@ export default async function HomePage() {
         </section>
 
         {/* Services */}
-        <section className="bg-slate-50 py-24">
+        <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="mb-16 max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
@@ -260,7 +260,7 @@ export default async function HomePage() {
         </section>
 
         {/* About Jordan */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gradient-to-b from-white to-slate-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn className="mx-auto max-w-md lg:max-w-none">
@@ -286,7 +286,7 @@ export default async function HomePage() {
         </section>
 
         {/* Benefits */}
-        <section className="py-24 bg-[#1e3a8a] text-white">
+        <section className="py-24 bg-gradient-to-r from-[#1e3a8a] via-[#4C6CD6] to-[#1e3a8a] text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Benefits of Football-Specific Physiotherapy</h2>
@@ -394,7 +394,7 @@ export default async function HomePage() {
         </section>
 
         {/* Contact CTA */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gradient-to-t from-[#4C6CD6]/10 to-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
             <FadeIn>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">

@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-[#1e3a8a] text-white rounded-2xl p-8 text-center mb-12">
+        <div className="bg-gradient-to-r from-[#1e3a8a] to-[#4C6CD6] text-white rounded-2xl p-8 text-center mb-12 shadow-lg">
           <h3 className="text-2xl font-bold">Ayrshire | Kilmarnock</h3>
           <p className="mt-2 mb-4 text-blue-100">Ready to start your recovery journey?</p>
           <a

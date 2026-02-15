@@ -19,7 +19,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-GB">
-      <body className={`${inter.variable} font-sans antialiased bg-slate-50 text-slate-900`}>
+      <body className={`${inter.variable} font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/5 text-slate-900 min-h-screen`}>
         {children}
         <WhatsAppButton />
       </body>
