@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.jtfootballphysiotherapy.co.uk"),
   title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
   description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance. Specialist football physio helping you recover from injury and return to the pitch stronger.",
   icons: {
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
         width: 500,
         height: 500,
         alt: "JT Football Physiotherapy Logo",
+        type: "image/svg+xml",
       },
     ],
     siteName: "JT Football Physiotherapy",
