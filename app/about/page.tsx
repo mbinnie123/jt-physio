@@ -6,6 +6,9 @@ import { FadeIn } from "../FadeIn";
 export const metadata = {
   title: "About Us | JT Football Physiotherapy",
   description: "Football-first physiotherapy in Kilmarnock, built for pain relief and performance.",
+  alternates: {
+    canonical: "https://www.jtfootballphysiotherapy.co.uk/about",
+  },
 };
 
 export default function AboutPage() {
