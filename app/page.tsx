@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Header } from "./Header";
@@ -57,6 +58,12 @@ function getFeaturedImageUrl(post: BlogPost): string | null {
     null
   );
 }
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://www.jtfootballphysiotherapy.co.uk",
+  },
+};
 
 export default async function HomePage() {
   let blogPosts: BlogPost[] = [];
