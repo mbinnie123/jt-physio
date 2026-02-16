@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { WhatsAppButton } from "./WhatsAppButton";
+import { BackToTop } from "./BackToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/5 text-slate-900 min-h-screen`}>
         {children}
         <WhatsAppButton />
+        <BackToTop />
       </body>
     </html>
   );

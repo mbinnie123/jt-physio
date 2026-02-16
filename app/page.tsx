@@ -169,6 +169,25 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Trust Stats */}
+        <section className="bg-[#1e3a8a] py-12 text-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4 text-center divide-x divide-white/10">
+              {[
+                { label: "Years Experience", value: "10+" },
+                { label: "Patients Helped", value: "1000+" },
+                { label: "Google Rating", value: "5.0 ★" },
+                { label: "Dedicated Care", value: "100%" },
+              ].map((stat, i) => (
+                <FadeIn key={i} delay={i * 100} className="px-4">
+                  <div className="text-3xl font-bold sm:text-4xl mb-1">{stat.value}</div>
+                  <div className="text-sm font-medium text-blue-200 uppercase tracking-wider">{stat.label}</div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* About Us & Process */}
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
