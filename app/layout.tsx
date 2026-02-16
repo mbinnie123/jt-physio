@@ -13,6 +13,32 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
   description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance. Specialist football physio helping you recover from injury and return to the pitch stronger.",
+  icons: {
+    icon: "/jt-football-physio-logo.svg",
+    shortcut: "/jt-football-physio-logo.svg",
+    apple: "/jt-football-physio-logo.svg",
+  },
+  openGraph: {
+    title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
+    description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
+    images: [
+      {
+        url: "/jt-football-physio-logo.svg",
+        width: 500,
+        height: 500,
+        alt: "JT Football Physiotherapy Logo",
+      },
+    ],
+    siteName: "JT Football Physiotherapy",
+    type: "website",
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary",
+    title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
+    description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
+    images: ["/jt-football-physio-logo.svg"],
+  },
 };
 
 export default function RootLayout({
