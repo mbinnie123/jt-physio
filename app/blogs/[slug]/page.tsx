@@ -205,6 +205,8 @@ function normaliseHtmlContent(post: BlogPost): string {
   return html;
 }
 
+export const revalidate = 0;
+
 export async function generateMetadata({
   params,
 }: {

@@ -25,6 +25,8 @@ export const metadata = {
   description: "Latest news and articles from JT Football Physiotherapy.",
 };
 
+export const revalidate = 0;
+
 function resolveWixMediaUrl(input: unknown): string | null {
   if (!input) return null;
 
