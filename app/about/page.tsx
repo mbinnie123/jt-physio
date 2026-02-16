@@ -25,7 +25,7 @@ export default function AboutPage() {
               Football-first physiotherapy in Kilmarnock, built for pain relief and performance
             </h1>
             <p className="mb-8 max-w-3xl text-lg leading-relaxed text-slate-600">
-              JT Football Physiotherapy helps footballers and active people across Ayrshire recover from injury, reduce pain,
+              JT Football Physiotherapy helps footballers and active people across Ayrshire and Kilmarnock recover from injury, reduce pain,
               restore mobility, and return to sport with confidence — using a practical, evidence-led approach that treats the
               cause, not just the symptoms.
             </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <ul className="mt-3.5 flex flex-wrap gap-2.5 p-0 list-none" aria-label="Highlights">
               <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">In-person & online</li>
               <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Football-specific rehab</li>
-              <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Pain & mobility focused</li>
+              <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Pain & mobility focused Ayrshire Physio</li>
             </ul>
             </FadeIn>
           </div>
@@ -62,7 +62,7 @@ export default function AboutPage() {
               <h2 id="jt-story-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Why JT Football Physiotherapy exists</h2>
               <p className="mb-2.5 leading-relaxed text-slate-600">
                 Traditional “clinic-only” rehab can miss the real demands of football — sprinting, cutting, tackling, repeated
-                loading, and returning to match intensity. JT Football Physiotherapy was created to bridge that gap with
+                loading, and returning to match intensity. JT Football Physiotherapy in Kilmarnock, Ayrshire was created to bridge that gap with
                 football-first assessment and step-by-step rehab that carries over to the pitch.
               </p>
               <p className="mb-0 leading-relaxed text-slate-600">
@@ -74,9 +74,9 @@ export default function AboutPage() {
 
             <FadeIn>
             <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-approach-title">
-              <h2 id="jt-approach-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Our approach</h2>
+              <h2 id="jt-approach-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Our physio approach</h2>
 
-              <div className="mt-3 grid gap-3" role="list">
+              <div className="mt-3 grid gap-3">
                 <article className="rounded-xl border border-slate-200 bg-white p-3" role="listitem">
                   <h3 className="mb-1.5 text-base font-bold text-slate-900">1) Assess the root cause</h3>
                   <p className="m-0 text-slate-600">
@@ -88,7 +88,7 @@ export default function AboutPage() {
                 <article className="rounded-xl border border-slate-200 bg-white p-3" role="listitem">
                   <h3 className="mb-1.5 text-base font-bold text-slate-900">2) Build a pain-informed plan</h3>
                   <p className="m-0 text-slate-600">
-                    You’ll get a clear rehab roadmap: what to do, what to avoid, and how to progress safely without constant
+                    You’ll get a clear rehab roadmap from our physio team in Ayrshire: what to do, what to avoid, and how to progress safely without constant
                     flare-ups.
                   </p>
                 </article>
@@ -96,8 +96,8 @@ export default function AboutPage() {
                 <article className="rounded-xl border border-slate-200 bg-white p-3" role="listitem">
                   <h3 className="mb-1.5 text-base font-bold text-slate-900">3) Restore mobility, strength & control</h3>
                   <p className="m-0 text-slate-600">
-                    Rehab isn’t just “stretching”. We rebuild mobility where needed, strength where it counts, and control
-                    for real-world football actions.
+                    Rehab at our Kilmarnock physio clinic isn’t just “stretching”. We rebuild mobility where needed, strength where it counts, and control
+                    for real-world football actions with our physiotherapy.
                   </p>
                 </article>
 
@@ -117,11 +117,11 @@ export default function AboutPage() {
               <h2 id="jt-founder-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">About <span className="text-blue-600">Jordan Templeton</span></h2>
               <p className="mb-2.5 leading-relaxed text-slate-600">
                 <strong>Jordan Templeton</strong> is the founder and driving force behind
-                JT Football Physiotherapy — focused on helping football players and active people overcome injury, optimise
+                JT Football Physiotherapy — a leading physio in Kilmarnock, focused on helping football players and active people in Ayrshire overcome injury, optimise
                 performance, and return to the sport they love.
               </p>
               <p className="mb-0 leading-relaxed text-slate-600">
-                Jordan’s work is built around practical assessment, evidence-led rehab, and education — so you understand your
+                Jordan’s work in physiotherapy is built around practical assessment, evidence-led rehab, and education — so you understand your
                 pain, know what’s driving it, and have a plan that makes sense for your goals.
               </p>
 
@@ -140,12 +140,12 @@ export default function AboutPage() {
                 <div className="rounded-xl border border-slate-200 bg-white p-3">
                   <h3 className="mb-1.5 text-base font-bold text-slate-900">Who we help</h3>
                   <ul className="m-0 list-disc pl-4 leading-relaxed text-slate-600">
-                    <li className="my-0.5">Footballers (all levels)</li>
+                    <li className="my-0.5">Footballers (all levels) in Ayrshire</li>
                     <li className="my-0.5">Runners & gym-goers</li>
                     <li className="my-0.5">Active adults</li>
                     <li className="my-0.5">People with persistent pain</li>
                     <li className="my-0.5">Return-to-play support</li>
-                    <li className="my-0.5">Online consultations</li>
+                    <li className="my-0.5">Online physio consultations</li>
                   </ul>
                 </div>
               </div>
@@ -156,7 +156,7 @@ export default function AboutPage() {
             <section className="rounded-2xl border border-blue-200 bg-gradient-to-b from-blue-50 to-white p-5 shadow-sm" aria-labelledby="jt-cta-title">
               <h2 id="jt-cta-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Ready to reduce pain and move better?</h2>
               <p className="mb-3 leading-relaxed text-slate-600">
-                Based in <strong>Kilmarnock</strong>, serving Ayrshire and surrounding areas. If you’re dealing with pain,
+                Based in <strong>Kilmarnock</strong>, serving Ayrshire and surrounding areas with expert physio. If you’re dealing with pain,
                 discomfort, or a recurring injury, book a quick discovery call and we’ll guide the next step.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -164,7 +164,7 @@ export default function AboutPage() {
                   href="/contact" 
                   className="inline-flex items-center justify-center rounded-full border border-[#1e3a8a] bg-[#1e3a8a] px-5 py-2.5 text-sm font-bold leading-none text-white shadow-sm transition-all hover:-translate-y-px hover:bg-blue-800 hover:shadow-lg"
                 >
-                  Book a free discovery call
+                  Book a free Kilmarnock physio discovery call
                 </Link>
                 <Link 
                   href="/" 

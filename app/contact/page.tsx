@@ -27,7 +27,7 @@ export default function ContactPage() {
                 Get in Touch
               </h1>
               <p className="mx-auto max-w-2xl text-lg text-blue-100">
-                Ready to start your recovery? Whether you have a question about our services or want to book an appointment, we're here to help.
+                Ready to start your physio recovery in Ayrshire? Whether you have a question about our services or want to book an appointment, we're here to help.
               </p>
             </FadeIn>
           </div>
@@ -51,7 +51,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900">Clinic Location</p>
-                        <p className="text-slate-600 mt-1">Kilmarnock, Ayrshire<br/>Scotland, UK</p>
+                        <p className="text-slate-600 mt-1">JT Football Physiotherapy, Kilmarnock<br/>Ayrshire, Scotland, UK</p>
                       </div>
                     </div>
 
