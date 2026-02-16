@@ -174,8 +174,8 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4 text-center divide-x divide-white/10">
               {[
-                { label: "Years Experience", value: "10+" },
-                { label: "Patients Helped", value: "1000+" },
+                { label: "Years Experience", value: "3+" },
+                { label: "Patients Helped", value: "400+" },
                 { label: "Google Rating", value: "5.0 ★" },
                 { label: "Dedicated Care", value: "100%" },
               ].map((stat, i) => (
