@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
   description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance. Specialist football physio helping you recover from injury and return to the pitch stronger.",
   icons: {
-    icon: "/jt-football-physio-logo.png",
-    shortcut: "/jt-football-physio-logo.png",
-    apple: "/jt-football-physio-logo.png",
+    icon: "/jt-football-physio-logo.svg",
+    shortcut: "/jt-football-physio-logo.svg",
+    apple: "/jt-football-physio-logo.svg",
   },
   openGraph: {
     title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
