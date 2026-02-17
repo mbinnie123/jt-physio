@@ -64,6 +64,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.jtfootballphysiotherapy.co.uk",
   },
+  title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
+  description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
 };
 
 export const revalidate = 0;
@@ -148,7 +150,7 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-
+      
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/20 min-h-screen flex items-center">
@@ -168,11 +170,11 @@ export default async function HomePage() {
                 <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
                   Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock and Ayrshire tailored to you.
                 </p>
-               <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4">
                   <a
                     href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
                     className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
-                 >
+                  >
                     Book Your Appointment
                   </a>
                 </div>
@@ -284,7 +286,7 @@ export default async function HomePage() {
                 Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
               </p>
             </FadeIn>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {[
                 { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players in Kilmarnock. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
@@ -310,17 +312,47 @@ export default async function HomePage() {
                 Comprehensive physiotherapy services in Kilmarnock and Ayrshire designed specifically for your physical health.
               </p>
             </FadeIn>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {[
-                { title: "Injury Assessment & Diagnosis", desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment." },
-                { title: "Rehabilitation & Return to Play", desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play." },
-                { title: "Prevention & Recovery Massage", desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery." }
+                { 
+                  title: "Free Discovery Session", 
+                  desc: "Not sure where to start? Book a free discovery session in Kilmarnock to discuss your injury, goals, and the best next steps — with no pressure.", 
+                  href: "/services/free-discovery-session",
+                  icon: "M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" // Chat Bubble
+                },
+                { 
+                  title: "Injury Assessment & Diagnosis", 
+                  desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment.", 
+                  href: "/services/injury-assessment",
+                  icon: "M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" // Magnifying Glass
+                },
+                { 
+                  title: "Rehabilitation & Return to Play", 
+                  desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play.", 
+                  href: "/services/rehabilitation",
+                  icon: "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" // Lightning Bolt
+                },
+                { 
+                  title: "Prevention & Recovery Massage", 
+                  desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery.", 
+                  href: "/services/sports-massage",
+                  icon: "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" // Heart
+                }
               ].map((service, i) => (
                 <FadeIn key={i} delay={i * 100} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100 hover:border-blue-100">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"><svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-[#1e3a8a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    <Link href={service.href} className="hover:text-[#1e3a8a] transition-colors">{service.title}</Link>
+                  </h3>
                   <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
-                  <a href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</a>
+                  <div className="flex items-center justify-between mt-auto">
+                    <Link href={service.href} className="text-sm font-semibold text-slate-500 hover:text-[#1e3a8a] hover:underline">Read More</Link>
+                    <a href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</a>
+                  </div>
                 </FadeIn>
               ))}
             </div>
@@ -401,6 +433,29 @@ export default async function HomePage() {
                 </Link>
               </FadeIn>
             )}
+          </div>
+        </section>
+
+        {/* Areas We Serve */}
+        <section className="py-16 bg-slate-50 border-t border-slate-200">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+            <FadeIn>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mb-4">
+                Serving Kilmarnock & Across Ayrshire
+              </h2>
+              <p className="mx-auto max-w-3xl text-lg text-slate-600 leading-relaxed mb-10">
+                At <strong>JT Football Physiotherapy</strong>, we provide expert <strong>physiotherapy in Kilmarnock</strong> for clients across Ayrshire. While our clinic is based in Kilmarnock, we regularly welcome players and patients from <strong>Irvine, Ayr, Troon, Prestwick, Kilwinning, Galston, Stewarton, and Cumnock</strong>. No matter where you are in Ayrshire, our specialist care is worth the journey.
+              </p>
+              <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl shadow-xl">
+                <Image
+                  src="/ayrshire-landscape.webp"
+                  alt="JT Football Physiotherapy clinic serving Kilmarnock and Ayrshire"
+                  width={1200}
+                  height={600}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </FadeIn>
           </div>
         </section>
 
