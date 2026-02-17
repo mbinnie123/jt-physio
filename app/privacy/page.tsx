@@ -6,7 +6,15 @@ import { FadeIn } from "../FadeIn";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | JT Football Physiotherapy",
-  description: "Privacy Policy for JT Football Physiotherapy describing how we collect, use and protect personal data.",
+  description: "Privacy Policy for JT Football Physiotherapy. Learn how we collect, use, and protect your personal and health data in line with UK GDPR.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy | JT Football Physiotherapy",
+    description: "Privacy Policy for JT Football Physiotherapy. Learn how we collect, use, and protect your personal and health data in line with UK GDPR.",
+    url: "https://www.jtfootballphysiotherapy.co.uk/privacy",
+  },
 };
 
 export default function PrivacyPage() {

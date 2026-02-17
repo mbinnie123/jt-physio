@@ -1,14 +1,21 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
 import { FadeIn } from "../FadeIn";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About Us | JT Football Physiotherapy",
-  description: "Football-first physiotherapy in Kilmarnock, built for pain relief and performance.",
+  description: "Meet Jordan Templeton and the team at JT Football Physiotherapy. Expert football-specific care in Kilmarnock for pain relief, rehab, and performance.",
   alternates: {
-    canonical: "https://www.jtfootballphysiotherapy.co.uk/about",
+    canonical: "/about",
   },
+  openGraph: {
+    title: "About Us | JT Football Physiotherapy",
+    description: "Meet Jordan Templeton and the team at JT Football Physiotherapy. Expert football-specific care in Kilmarnock for pain relief, rehab, and performance.",
+    url: "https://www.jtfootballphysiotherapy.co.uk/about",
+  },
+  keywords: ["Jordan Templeton", "football physio bio", "Kilmarnock physiotherapy team", "sports injury specialist"],
 };
 
 export default function AboutPage() {

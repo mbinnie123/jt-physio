@@ -6,8 +6,17 @@ import { ContactForm } from "./ContactForm";
 import { FadeIn } from "../FadeIn";
 
 export const metadata: Metadata = {
-  title: "Contact Us | JT Football Physiotherapy",
-  description: "Book your physiotherapy appointment in Kilmarnock. Get in touch for expert injury assessment and rehabilitation.",
+  title: "Contact Us | JT Football Physiotherapy Kilmarnock",
+  description: "Contact JT Football Physiotherapy in Kilmarnock. Book an appointment, ask about injury assessment, or find our clinic location in Ayrshire.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Us | JT Football Physiotherapy Kilmarnock",
+    description: "Contact JT Football Physiotherapy in Kilmarnock. Book an appointment, ask about injury assessment, or find our clinic location in Ayrshire.",
+    url: "https://www.jtfootballphysiotherapy.co.uk/contact",
+  },
+  keywords: ["contact physio Kilmarnock", "book physio Ayrshire", "physiotherapy appointment", "JT Football Physiotherapy location"],
 };
 
 export default function ContactPage() {

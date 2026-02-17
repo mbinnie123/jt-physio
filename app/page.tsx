@@ -62,10 +62,15 @@ function getFeaturedImageUrl(post: BlogPost): string | null {
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "https://www.jtfootballphysiotherapy.co.uk",
+    canonical: "/",
   },
   title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
   description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
+  openGraph: {
+    title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
+    description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
+    url: "https://www.jtfootballphysiotherapy.co.uk",
+  },
 };
 
 export const revalidate = 0;

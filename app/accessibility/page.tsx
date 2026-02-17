@@ -6,7 +6,15 @@ import { FadeIn } from "../FadeIn";
 
 export const metadata: Metadata = {
   title: "Accessibility Statement | JT Football Physiotherapy",
-  description: "Accessibility statement for JT Football Physiotherapy. Our commitment to inclusive care, physical access information, and digital accessibility standards.",
+  description: "Accessibility statement for JT Football Physiotherapy in Kilmarnock. Information on clinic access, wheelchair accessibility, and digital inclusion.",
+  alternates: {
+    canonical: "/accessibility",
+  },
+  openGraph: {
+    title: "Accessibility Statement | JT Football Physiotherapy",
+    description: "Accessibility statement for JT Football Physiotherapy in Kilmarnock. Information on clinic access, wheelchair accessibility, and digital inclusion.",
+    url: "https://www.jtfootballphysiotherapy.co.uk/accessibility",
+  },
 };
 
 export default function AccessibilityPage() {
