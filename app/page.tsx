@@ -227,6 +227,27 @@ export default async function HomePage() {
                 <div className="space-y-4 text-lg text-slate-600">
                   <p>JT Football Physiotherapy provides specialist physiotherapy for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
                   <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
+                  <div className="flex gap-4 my-6">
+                    <div className="flex-1">
+                      <Image
+                        src="/physiotherapy-kilmarnock-ayrshire-clinic-football.webp"
+                        alt="Football injury physiotherapy assessment in Kilmarnock Ayrshire"
+                        width={400}
+                        height={300}
+                        className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Image
+                        src="/physiotherapy-kilmarnock-ayrshire-clinic-table.webp"
+                        alt="Modern physiotherapy clinic treatment room in Kilmarnock"
+                        width={400}
+                        height={300}
+                        className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                      />
+                    </div>
+                  </div>
+
                   <p>Check out our FAQ on the <Link href="/about" className="text-[#1e3a8a] hover:underline">About</Link> page to learn how our straightforward physiotherapy in Kilmarnock Ayrshire supports pain relief and recovery — from football players to light joggers and seasonal athletes.</p>
                 </div>
               </FadeIn>
@@ -313,7 +334,13 @@ export default async function HomePage() {
               <FadeIn className="mx-auto max-w-md lg:max-w-none">
                 <Image
                   src="/jordan-templeton-jtfootballphysiotherapy-kilmarnock-ayrshire-clinic.jpg"
-                  alt="Jordan Templeton - Founder of JT Football Physiotherapy"
+                  alt="Jordan Templeton JT Football Physiotherapy Kilmarnock Ayrshire Clinic Football Specialist"
+                  width={600}
+                  height={750}
+                 />
+                 <Image
+                  src="/physiotherapy-kilmarnock-ayrshire-clinic-football.webp"
+                  alt="Physiotherapy Kilmarnock Ayrshire Clinic Specialising in Football"
                   width={600}
                   height={750}
                   className="w-full h-auto rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
