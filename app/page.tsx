@@ -337,6 +337,7 @@ export default async function HomePage() {
                   alt="Jordan Templeton JT Football Physiotherapy Kilmarnock Ayrshire Clinic Football Specialist"
                   width={600}
                   height={750}
+                  className="w-full h-auto rounded-3xl object-cover shadow-lg"
                  />
               </FadeIn>
               <FadeIn delay={200}>
