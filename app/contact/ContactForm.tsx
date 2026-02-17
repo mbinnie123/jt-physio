@@ -60,7 +60,7 @@ export function ContactForm() {
               name="name"
               id="name"
               required
-              className="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
+              className="block w-full rounded-xl border-0 px-5 py-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
               placeholder="John Doe"
             />
           </div>
@@ -74,7 +74,7 @@ export function ContactForm() {
               type="tel"
               name="phone"
               id="phone"
-              className="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
+              className="block w-full rounded-xl border-0 px-5 py-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
               placeholder="07123 456789"
             />
           </div>
@@ -91,7 +91,7 @@ export function ContactForm() {
             name="email"
             id="email"
             required
-            className="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
+            className="block w-full rounded-xl border-0 px-5 py-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 transition-all"
             placeholder="john@example.com"
           />
         </div>
@@ -107,7 +107,7 @@ export function ContactForm() {
             id="message"
             rows={4}
             required
-            className="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 resize-none transition-all"
+            className="block w-full rounded-xl border-0 px-5 py-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a8a] sm:text-sm sm:leading-6 resize-none transition-all"
             placeholder="Tell us about your injury or enquiry..."
           />
         </div>
@@ -139,4 +139,3 @@ export function ContactForm() {
     </form>
   );
 }
-
