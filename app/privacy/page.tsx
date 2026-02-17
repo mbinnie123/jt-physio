@@ -33,7 +33,7 @@ export default function PrivacyPage() {
                 This policy explains how we collect, use, and protect your personal information when you use our services.
               </p>
               <p className="text-lg text-blue-100">
-                Effective Date: December 2025
+                Effective Date: December 2025<br />Last Reviewed: December 2026
               </p>
             </FadeIn>
           </div>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
                 (UK GDPR) and the Data Protection Act 2018.
               </p>
               <p>
-                Practice address: 5 Bunting Place, Kilmarnock, KA1 3LE<br />
+                Practice address: <a href="https://www.google.com/maps/search/?api=1&query=JT+Football+Physiotherapy,+5+Bunting+Pl,+Kilmarnock+KA1+3LE" target="_blank" rel="noopener noreferrer" className="text-[#1e3a8a] hover:underline">5 Bunting Place, Kilmarnock, KA1 3LE</a><br />
                 Email: <a href="mailto:jtfootballphysiotherapy@gmail.com" className="text-[#1e3a8a] hover:underline">jtfootballphysiotherapy@gmail.com</a>
               </p>
               <p>

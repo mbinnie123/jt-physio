@@ -40,7 +40,11 @@ export function Footer() {
             </div>
             <div className="mt-6 text-sm text-slate-500 space-y-2">
               <p className="font-semibold text-slate-900">JT Football Physiotherapy</p>
-              <p>5 Bunting Pl, Kilmarnock KA1 3LE</p>
+              <p>
+                <a href="https://www.google.com/maps/search/?api=1&query=JT+Football+Physiotherapy,+5+Bunting+Pl,+Kilmarnock+KA1+3LE" target="_blank" rel="noopener noreferrer" className="hover:text-[#1e3a8a] transition-colors">
+                  5 Bunting Pl, Kilmarnock KA1 3LE
+                </a>
+              </p>
               <p>
                 <a href="tel:07841430205" className="hover:text-[#1e3a8a] transition-colors">07841 430205</a>
               </p>

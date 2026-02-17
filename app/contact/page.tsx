@@ -51,7 +51,9 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900">Clinic Location</p>
-                        <p className="text-slate-600 mt-1">JT Football Physiotherapy, 5 Bunting Pl<br/>Kilmarnock KA1 3LE</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=JT+Football+Physiotherapy,+5+Bunting+Pl,+Kilmarnock+KA1+3LE" target="_blank" rel="noopener noreferrer" className="text-slate-600 mt-1 hover:text-[#1e3a8a] transition-colors block">
+                          JT Football Physiotherapy, 5 Bunting Pl<br/>Kilmarnock KA1 3LE
+                        </a>
                       </div>
                     </div>
 
@@ -77,7 +79,9 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900">Phone / WhatsApp</p>
-                        <p className="text-slate-600 mt-1">07841 430205</p>
+                        <a href="tel:07841430205" className="text-slate-600 mt-1 hover:text-[#1e3a8a] transition-colors block">
+                          07841 430205
+                        </a>
                       </div>
                     </div>
                   </div>
