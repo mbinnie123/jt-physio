@@ -333,18 +333,11 @@ export default async function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn className="mx-auto max-w-md lg:max-w-none">
                 <Image
-                  src="/jordan-templeton-jtfootballphysiotherapy-kilmarnock-ayrshire-clinic.jpg"
+                  src="/jordan-templeton-jt-football-physiotherapy-kilmarnock-ayrshire-clinic.jpg"
                   alt="Jordan Templeton JT Football Physiotherapy Kilmarnock Ayrshire Clinic Football Specialist"
                   width={600}
                   height={750}
                  />
-                 <Image
-                  src="/physiotherapy-kilmarnock-ayrshire-clinic-football.webp"
-                  alt="Physiotherapy Kilmarnock Ayrshire Clinic Specialising in Football"
-                  width={600}
-                  height={750}
-                  className="w-full h-auto rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
-                />
               </FadeIn>
               <FadeIn delay={200}>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
