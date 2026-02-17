@@ -182,12 +182,13 @@ export default async function HomePage() {
                </p>
               </FadeIn>
               <FadeIn delay={200} className="relative hidden lg:block">
-                <img
+                <Image
                   src="/jt-football-physio-logo.svg"
                   alt="JT Football Physiotherapy Logo"
                   width={500}
                   height={500}
                   className="h-auto w-64 lg:w-full max-w-md mx-auto"
+                  priority
                 />
               </FadeIn>
             </div>
