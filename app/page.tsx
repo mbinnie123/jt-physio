@@ -163,7 +163,7 @@ export default async function HomePage() {
                   Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock</span> for Peak Performance
                 </h1>
                 <p className="text-xl font-medium text-slate-800 mb-4">
-                  Recover faster. Perform better. Stay injury-free.
+                  Recover faster. Improve your physical health. Stay injury-free.
                 </p>
                 <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
                   Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock and Ayrshire tailored to you.
@@ -222,10 +222,10 @@ export default async function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                  About Our <span className="text-[#1e3a8a]">Kilmarnock Physio</span> Process
+                  About Our <span className="text-[#1e3a8a]">Kilmarnock Physiotherapy</span> Process
                 </h2>
                 <div className="space-y-4 text-lg text-slate-600">
-                  <p>JT Football Physiotherapy provides specialist physiotherapy for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
+                  <p>JT Football Physiotherapy provides specialist physiotherapy and health services for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
                   <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
                   <div className="flex gap-4 my-6">
                     <div className="flex-1">
@@ -248,7 +248,7 @@ export default async function HomePage() {
                     </div>
                   </div>
 
-                  <p>Check out our FAQ on the <Link href="/about" className="text-[#1e3a8a] hover:underline">About</Link> page to learn how our straightforward physiotherapy in Kilmarnock Ayrshire supports pain relief and recovery — from football players to light joggers and seasonal athletes.</p>
+                  <p>Check out our FAQ on the <Link href="/about" className="text-[#1e3a8a] hover:underline">About</Link> page to learn how our straightforward physiotherapy and health care in Kilmarnock Ayrshire supports pain relief and recovery — from football players to light joggers and seasonal athletes.</p>
                 </div>
               </FadeIn>
               <FadeIn delay={200} className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
@@ -257,10 +257,10 @@ export default async function HomePage() {
                   {[
                     "What should I do if my pain hasn’t improved with rest?",
                     "How long does pain relief usually take with physiotherapy?",
-                    "Can physiotherapy help with long-term or persistent pain?",
+                    "Can physiotherapy improve my physical health and persistent pain?",
                     "Is it normal to feel pain during rehabilitation exercises?",
                     "Should I stop training completely if I’m in pain?",
-                    "When should I see a physiotherapist about pain?"
+                    "When should I see a physiotherapist about my health?"
                   ].map((q, i) => (
                     <li key={i} className="flex items-start gap-3 text-slate-600 transition-colors duration-200 hover:text-slate-900">
                       <svg className="h-6 w-6 text-[#1e3a8a] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -278,7 +278,7 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
-                Why Choose Our <span className="text-[#1e3a8a]">Physiotherapy Clinic</span> in Kilmarnock
+                Why Choose Our <span className="text-[#1e3a8a]">Physiotherapy & Health Clinic</span> in Kilmarnock
               </h2>
               <p className="text-lg text-slate-600">
                 Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
@@ -288,7 +288,7 @@ export default async function HomePage() {
               {[
                 { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players in Kilmarnock. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
-                { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy support no matter where you are." }
+                { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy and health support no matter where you are." }
               ].map((item, i) => (
                 <FadeIn key={i} delay={i * 100} className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
@@ -304,10 +304,10 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="mb-16 max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
-                Our <span className="text-[#1e3a8a]">Physiotherapy Services</span> in Ayrshire
+                Our <span className="text-[#1e3a8a]">Physiotherapy & Health Services</span> in Ayrshire
               </h2>
               <p className="text-lg text-slate-600">
-                Comprehensive physiotherapy services in Kilmarnock and Ayrshire designed specifically for footballers and athletes.
+                Comprehensive physiotherapy services in Kilmarnock and Ayrshire designed specifically for your physical health.
               </p>
             </FadeIn>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -342,7 +342,7 @@ export default async function HomePage() {
               </FadeIn>
               <FadeIn delay={200}>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                  About Jordan — Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
+                  About Jordan — Lead Physiotherapist & Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
                 </h2>
                 <div className="space-y-4 text-lg text-slate-600">
                   <p>Jordan Templeton is the founder and driving force behind JT Football Physiotherapy — a specialist physiotherapy service in Kilmarnock dedicated to helping football players and active individuals overcome injury and optimise performance.</p>
@@ -357,15 +357,15 @@ export default async function HomePage() {
         <section className="py-24 bg-gradient-to-r from-[#1e3a8a] via-[#4C6CD6] to-[#1e3a8a] text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Benefits of Football-Specific Physiotherapy in Ayrshire</h2>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Benefits of Football-Specific Physiotherapy for Better Physical and Mental Health in Ayrshire</h2>
               <p className="text-lg text-slate-100">JT Football Physiotherapy in Kilmarnock, Ayrshire, can help you to achieve the following:</p>
             </FadeIn>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season in Ayrshire with our specialized physio." },
-                { title: "Faster Recovery", desc: "Targeted treatment accelerates healing and helps you return stronger to the pitch, with football physio Kilmarnock. " },
+                { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season in Ayrshire with our specialized physiotherapy." },
+                { title: "Faster Recovery", desc: "Targeted treatment accelerates healing and helps you return stronger to the pitch, with football physiotherapy in Kilmarnock. " },
                 { title: "Performance Boost", desc: "Enhance strength, agility, and resilience specific to the game in Ayrshire, improving your performance." },
-                { title: "Ongoing Support", desc: "Education and guidance from our Kilmarnock physiotherapy team to maintain fitness long-term." }
+                { title: "Ongoing Support", desc: "Education and guidance from our Kilmarnock physiotherapy and health team to maintain fitness long-term." }
               ].map((benefit, i) => (
                 <FadeIn key={i} delay={i * 100} className="bg-white/10 p-6 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:scale-105">
                   <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
@@ -409,7 +409,7 @@ export default async function HomePage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
             <FadeIn>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                Contact Us Now For <span className="text-[#1e3a8a]">Pain Relief in Kilmarnock</span>, Ayrshire
+                Contact Us Now For <span className="text-[#1e3a8a]">Better Health & Pain Relief</span> in Kilmarnock
               </h2>
               <p className="text-xl text-slate-600 mb-8">
                 Get in touch today to book an assessment or ask a question. Our Free Discovery session in Kilmarnock lets you discuss your injury at no cost. Your recovery in Kilmarnock starts here, with JT Football Physiotherapy.
