@@ -39,4 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+Updated upstream
 /gcp-service-account.json
+
+# Secrets
+.env.local
+jt-football-physiotherapy-service.json
+Stashed changes
