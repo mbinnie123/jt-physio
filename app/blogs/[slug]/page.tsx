@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
 
 import { wixClient } from "../../lib/wix";
 import { Header } from "../../Header";
 import { Footer } from "../../Footer";
 import { FadeIn } from "../../FadeIn";
+import styles from "./blog-content.module.css";
 
 type BlogPost = {
   title?: string | null;
@@ -172,10 +176,14 @@ function ricosToHtml(rich: any): string {
 }
 
 function normaliseHtmlContent(post: BlogPost): string {
-  // 1) If we already have HTML, use it
+  // 1) If we already have HTML, use it — but only treat string content as HTML if it actually looks like HTML.
+  const looksLikeHtml = (value: string): boolean => /<\w+[^>]*>/.test(value);
+
   const rawHtml =
     typeof post.content === "string"
-      ? post.content
+      ? looksLikeHtml(post.content)
+        ? post.content
+        : ""
       : post.content?.html || post.content?.body || post.content?.text || post.richContent?.html || "";
 
   let html = String(rawHtml || "");
@@ -203,6 +211,21 @@ function normaliseHtmlContent(post: BlogPost): string {
   );
 
   return html;
+}
+
+function extractMarkdownContent(post: BlogPost, html: string): string {
+  // If we already have HTML, don't also treat it as Markdown.
+  if (html.trim()) return "";
+
+  if (typeof post.content === "string") {
+    return post.content;
+  }
+
+  if (typeof (post as any)?.content?.text === "string") {
+    return (post as any).content.text;
+  }
+
+  return "";
 }
 
 export const revalidate = 0;
@@ -302,6 +325,7 @@ export default async function BlogPostPage({
     resolveWixMediaUrl(post.media?.image?.url) ||
     resolveWixMediaUrl(post.media?.image?.id);
   const html = normaliseHtmlContent(post);
+  const markdown = extractMarkdownContent(post, html);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -339,9 +363,26 @@ export default async function BlogPostPage({
               </div>
             )}
 
-            <div className="prose prose-slate prose-lg mx-auto max-w-none">
+            <div className={`${styles.content} prose prose-slate prose-lg mx-auto max-w-none`}>
               {html ? (
                 <div dangerouslySetInnerHTML={{ __html: html }} />
+              ) : markdown ? (
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeSanitize]}
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a
+                        {...props}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      />
+                    ),
+                  }}
+                >
+                  {markdown}
+                </ReactMarkdown>
               ) : post.excerpt ? (
                 <p>{post.excerpt}</p>
               ) : (
