@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ricosToHtml } from "@/lib/blog-automation/writer-utils";
 
 interface BlogDraft {
   id: string;
@@ -32,6 +33,23 @@ interface ResearchData {
 
 async function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+function extractLinksFromHtml(html: string): Array<{ url: string; text: string }> {
+  const links: Array<{ url: string; text: string }> = [];
+  const linkRegex = /<a\s+href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/gi;
+  let match;
+  
+  while ((match = linkRegex.exec(html)) !== null) {
+    const url = match[1];
+    const text = match[2];
+    // Only add unique URLs
+    if (!links.some(link => link.url === url)) {
+      links.push({ url, text });
+    }
+  }
+  
+  return links;
 }
 
 async function readJsonSafely(res: Response): Promise<any> {
@@ -102,11 +120,14 @@ export default function AdminDashboard() {
   const [outline, setOutline] = useState<string[]>([]);
   const [editableOutline, setEditableOutline] = useState<string[]>([]); // Editable outline items
   const [sectionTargetWords, setSectionTargetWords] = useState<number[]>([]); // Target word count per section
+  const [generatingOutline, setGeneratingOutline] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [writingSection, setWritingSection] = useState(false); // Loading state for writing
   const [editableDraftLocation, setEditableDraftLocation] = useState(""); // Editable location
   const [editableDraftTopic, setEditableDraftTopic] = useState(""); // Editable topic
   const [editableDraftSport, setEditableDraftSport] = useState(""); // Editable sport
+  const [assembledBlog, setAssembledBlog] = useState<any>(null); // Store assembled blog data
+  const [expandedSectionIndex, setExpandedSectionIndex] = useState<number | null>(null); // For viewing full section content
   
   // Editable metadata fields
   const [editableTitle, setEditableTitle] = useState("");
@@ -120,10 +141,24 @@ export default function AdminDashboard() {
   const [selectedSourceIds, setSelectedSourceIds] = useState<string[]>([]); // Track selected sources
   const [researchQuery, setResearchQuery] = useState(""); // Search query for "Add More Sources"
   const [reapplyingMetadata, setReapplyingMetadata] = useState(false);
+  const [viewLinksMode, setViewLinksMode] = useState(false); // Toggle between content and links view
 
   const hydrateDraftEditor = (draft: BlogDraft) => {
     setSelectedDraft(draft);
-    setSections(draft.sections || []);
+    
+    // Ensure all sections have contentHtml
+    const sectionsWithHtml = (draft.sections || []).map((section: any) => {
+      if (!section.contentHtml && section.content && typeof section.content === 'object') {
+        // Generate contentHtml from Ricos object if it doesn't exist
+        return {
+          ...section,
+          contentHtml: ricosToHtml(section.content)
+        };
+      }
+      return section;
+    });
+    
+    setSections(sectionsWithHtml);
     setResearchData(draft.researchData || null);
     setSelectedSourceIds(draft.selectedSourceIds || []);
     setEditableDraftLocation(draft.location || "");
@@ -135,16 +170,68 @@ export default function AdminDashboard() {
     setEditableSeoTitle(draft.metadata?.seoTitle || "");
     setEditableSeoDescription(draft.metadata?.seoDescription || "");
     setEditableFeaturedImageUrl(draft.metadata?.featuredImageUrl || "");
-    const content = (draft.sections || [])
+    const content = sectionsWithHtml
       .map((section: any) => {
         if (!section?.title || !section?.content) {
           return "";
         }
-        return `## ${section.title}\n\n${section.content}`;
+        // Handle both string and Ricos object content
+        const contentText = typeof section.content === 'string'
+          ? section.content
+          : section.contentHtml
+          ? section.contentHtml.replace(/<[^>]*>/g, '')
+          : '';
+        return `## ${section.title}\n\n${contentText}`;
       })
       .filter(Boolean)
       .join("\n\n");
     setEditableContent(content);
+  };
+
+  const persistSelectedSources = async (
+    draftId: string,
+    updatedIds: string[]
+  ) => {
+    if (!draftId) return;
+    const auth = localStorage.getItem("admin_auth") || "";
+    if (!auth) return;
+
+    try {
+      const { res: response, json: data } = await fetchJsonWithRetry(
+        "/api/blog/draft",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth,
+            "X-Request-ID": "ba6adc02-0b45-4780-84ba-dc1fde492045",
+          },
+          body: JSON.stringify({
+            draftId,
+            selectedSourceIds: updatedIds,
+          }),
+        },
+        1
+      );
+
+      if (!response.ok) {
+        const message =
+          data?.error ||
+          `HTTP ${response.status}: Failed to save source selection`;
+        console.error("Persist sources failed:", message);
+        return;
+      }
+
+      if (data?.draft) {
+        setDrafts((prev) =>
+          prev.map((draft) =>
+            draft.id === draftId ? data.draft : draft
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to persist selected sources:", error);
+    }
   };
 
   // Check if authenticated
@@ -240,10 +327,15 @@ export default function AdminDashboard() {
     }
   };
 
-  const generateOutline = async (draftId: string, auth: string) => {
+  const generateOutline = async (draftId: string, auth: string, numSections: number = 5) => {
+    if (!draftId || !auth) {
+      alert("Missing draft or authentication. Please reload the page.");
+      return;
+    }
+    setGeneratingOutline(true);
     try {
       const { res: response, json: data } = await fetchJsonWithRetry(
-        `/api/blog/write-section?draftId=${draftId}&action=generateOutline`,
+        `/api/blog/write-section?draftId=${draftId}&action=generateOutline&numSections=${numSections}`,
         {
           method: "GET",
           headers: { 
@@ -254,14 +346,21 @@ export default function AdminDashboard() {
         1
       );
 
-      if (response.ok) {
-        setOutline(data.outline || []);
-        setEditableOutline(data.outline || []);
-        setSectionTargetWords((data.outline || []).map(() => 300)); // Initialize all sections to 300 words
+      if (response.ok && data.outline && data.outline.length > 0) {
+        setOutline(data.outline);
+        setEditableOutline(data.outline);
+        setSectionTargetWords(data.outline.map(() => 300)); // Initialize all sections to 300 words
         setCurrentSectionIndex(0);
+      } else {
+        const errorMsg = data?.error || `HTTP ${response.status}: Failed to generate outline`;
+        console.error("Outline generation failed:", errorMsg);
+        alert(`Failed to generate outline: ${errorMsg}`);
       }
     } catch (error) {
       console.error("Failed to generate outline:", error);
+      const errorMsg = error instanceof Error ? error.message : "Unknown error";
+      alert(`Error generating outline: ${errorMsg}`);
+      
       // Set a default outline if generation fails
       const defaultOutline = [
         "Introduction",
@@ -273,7 +372,22 @@ export default function AdminDashboard() {
       setOutline(defaultOutline);
       setEditableOutline(defaultOutline);
       setSectionTargetWords(defaultOutline.map(() => 300)); // Initialize all sections to 300 words
+    } finally {
+      setGeneratingOutline(false);
     }
+  };
+
+  const handleGenerateOutline = () => {
+    if (!selectedDraft?.id) {
+      alert("Select or create a draft first.");
+      return;
+    }
+    const auth = localStorage.getItem("admin_auth") || "";
+    if (!auth) {
+      alert("Please log in again to generate an outline.");
+      return;
+    }
+    generateOutline(selectedDraft.id, auth, numSections);
   };
 
   const writeNextSection = async () => {
@@ -307,7 +421,12 @@ export default function AdminDashboard() {
       if (response.ok) {
         // Update the specific section index, not append
         const updatedSections = [...sections];
-        updatedSections[currentSectionIndex] = data.section;
+        const newSection = data.section;
+        // Ensure contentHtml is generated if section has Ricos content
+        if (!newSection.contentHtml && newSection.content && typeof newSection.content === 'object') {
+          newSection.contentHtml = ricosToHtml(newSection.content);
+        }
+        updatedSections[currentSectionIndex] = newSection;
         setSections(updatedSections);
         
         // Move to next section
@@ -322,6 +441,57 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Failed to write section:", error);
       alert(`Error writing section: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setWritingSection(false);
+    }
+  };
+
+  const regenerateSection = async (sectionIndex: number) => {
+    if (!selectedDraft || !editableOutline[sectionIndex]) return;
+
+    setWritingSection(true);
+    const auth = localStorage.getItem("admin_auth") || "";
+
+    try {
+      const { res: response, json: data } = await fetchJsonWithRetry(
+        "/api/blog/write-section",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth,
+            "X-Request-ID": "ba6adc02-0b45-4780-84ba-dc1fde492045",
+          },
+          body: JSON.stringify({
+            draftId: selectedDraft.id,
+            sectionTitle: editableOutline[sectionIndex],
+            sectionNumber: sectionIndex + 1,
+            tone: "professional",
+            targetAudience: "physiotherapy patients",
+            targetWords: sectionTargetWords[sectionIndex] || 300,
+          }),
+        },
+        1
+      );
+
+      if (response.ok) {
+        // Update the specific section
+        const updatedSections = [...sections];
+        const newSection = data.section;
+        // Ensure contentHtml is generated if section has Ricos content
+        if (!newSection.contentHtml && newSection.content && typeof newSection.content === 'object') {
+          newSection.contentHtml = ricosToHtml(newSection.content);
+        }
+        updatedSections[sectionIndex] = newSection;
+        setSections(updatedSections);
+      } else {
+        const errorMessage = data?.error || `HTTP ${response.status}: Failed to regenerate section`;
+        console.error("Regenerate section failed:", response.status, data);
+        alert(`Error: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Failed to regenerate section:", error);
+      alert(`Error regenerating section: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setWritingSection(false);
     }
@@ -350,15 +520,19 @@ export default function AdminDashboard() {
             location: editableDraftLocation,
             sport: editableDraftSport,
             selectedSourceIds,
-            refreshMetadata: true,
           }),
         },
         1
       );
 
       if (response.ok) {
+        console.log("Assembly successful! Response data:", data);
+        console.log("Draft status after assembly:", data.draft?.status);
         alert("Blog post assembled successfully!");
         setSelectedDraft(data.draft);
+        setAssembledBlog(data.blogPost); // Store assembled blog data
+        // Regenerate outline to show in the UI
+        generateOutline(data.draft.id, auth, numSections);
         loadDrafts(auth);
       } else {
         const errorMessage = data?.error || `HTTP ${response.status}: Failed to assemble`;
@@ -374,11 +548,14 @@ export default function AdminDashboard() {
   };
 
   const reapplyMetadata = async () => {
-    if (!selectedDraft) return;
+    if (!selectedDraft?.researchData) {
+      alert("Run research first to generate metadata from your selections.");
+      return;
+    }
 
-    const allowedStatuses = ["assembled"] as const;
-    if (!allowedStatuses.includes(selectedDraft.status)) {
-      alert("Assemble the blog before refreshing metadata.");
+    if (!selectedDraft?.id) {
+      alert("Draft ID is missing. Please reload the page and try again.");
+      console.error("Missing draft ID:", selectedDraft);
       return;
     }
 
@@ -403,6 +580,7 @@ export default function AdminDashboard() {
             sport: editableDraftSport,
             selectedSourceIds,
             refreshMetadata: true,
+            preserveStatus: selectedDraft.status !== "assembled",
           }),
         },
         1
@@ -410,7 +588,9 @@ export default function AdminDashboard() {
 
       if (response.ok) {
         hydrateDraftEditor(data.draft);
-        loadDrafts(auth);
+        // Also update the drafts list and ensure the selected draft is updated
+        await loadDrafts(auth);
+        setSelectedDraft(data.draft);
       } else {
         const errorMessage =
           data?.error || `HTTP ${response.status}: Failed to refresh metadata`;
@@ -485,7 +665,11 @@ export default function AdminDashboard() {
     }
   };
 
-  const canReapplyMetadata = selectedDraft?.status === "assembled";
+  const completedSections = (selectedDraft?.sections || []).filter(Boolean);
+  const canReapplyMetadata = !!selectedDraft?.researchData;
+  const canWriteSections =
+    !!selectedDraft &&
+    (selectedDraft.status === "writing" || selectedDraft.status === "draft");
 
   // Simple markdown to HTML converter for preview
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -1027,6 +1211,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="space-y-3">
                   {researchData.sources.map((source: any, i: number) => {
+                    // Use URL as stable identifier (same as backend)
                     const sourceId = source.url || `${source.title}-${i}`;
                     const isSelected = selectedSourceIds.includes(sourceId);
                     return (
@@ -1038,19 +1223,22 @@ export default function AdminDashboard() {
                             : "border-gray-200 bg-gray-50 hover:border-gray-300"
                         }`}
                         onClick={() => {
-                          setSelectedSourceIds(prev =>
-                            isSelected
-                              ? prev.filter(id => id !== sourceId)
-                              : [...prev, sourceId]
+                          const updatedIds = isSelected
+                            ? selectedSourceIds.filter(id => id !== sourceId)
+                            : [...selectedSourceIds, sourceId];
+
+                          setSelectedSourceIds(updatedIds);
+                          setSelectedDraft(prev =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  selectedSourceIds: updatedIds,
+                                }
+                              : prev
                           );
-                          // Update draft
-                          if (selectedDraft) {
-                            setSelectedDraft({
-                              ...selectedDraft,
-                              selectedSourceIds: isSelected
-                                ? (selectedDraft.selectedSourceIds || []).filter(id => id !== sourceId)
-                                : [...(selectedDraft.selectedSourceIds || []), sourceId],
-                            });
+
+                          if (selectedDraft?.id) {
+                            persistSelectedSources(selectedDraft.id, updatedIds);
                           }
                         }}
                       >
@@ -1091,49 +1279,81 @@ export default function AdminDashboard() {
             )}
 
             {/* Outline & Target Words Per Section */}
-            {outline.length > 0 && (
+            {selectedDraft && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Blog Outline (Editable)
-                </h3>
-                <ol className="space-y-3">
-                  {editableOutline.map((section, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <span className="font-semibold text-blue-600 min-w-6">
-                        {i + 1}.
-                      </span>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Blog Outline (Editable)
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm font-medium text-gray-700">Sections:</label>
                       <input
-                        type="text"
-                        value={section}
-                        onChange={(e) => {
-                          const updated = [...editableOutline];
-                          updated[i] = e.target.value;
-                          setEditableOutline(updated);
-                        }}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Section title"
+                        type="number"
+                        min="3"
+                        max="10"
+                        value={numSections}
+                        onChange={(e) => setNumSections(parseInt(e.target.value))}
+                        className="px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-16 text-sm"
                       />
-                      <div className="flex items-center gap-2">
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleGenerateOutline}
+                    disabled={generatingOutline}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:bg-gray-400"
+                  >
+                    {generatingOutline
+                      ? "Generating..."
+                      : outline.length > 0
+                      ? "Regenerate Outline"
+                      : "Generate Outline"}
+                  </button>
+                </div>
+                {outline.length > 0 ? (
+                  <ol className="space-y-3">
+                    {editableOutline.map((section, i) => (
+                      <li key={i} className="flex items-center gap-3">
+                        <span className="font-semibold text-blue-600 min-w-6">
+                          {i + 1}.
+                        </span>
                         <input
-                          type="number"
-                          min="100"
-                          max="2000"
-                          value={sectionTargetWords[i] || 300}
+                          type="text"
+                          value={section}
                           onChange={(e) => {
-                            const updated = [...sectionTargetWords];
-                            updated[i] = Math.max(100, parseInt(e.target.value) || 300);
-                            setSectionTargetWords(updated);
+                            const updated = [...editableOutline];
+                            updated[i] = e.target.value;
+                            setEditableOutline(updated);
                           }}
-                          className="px-2 py-1 border border-gray-300 rounded lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-16 text-sm"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="Section title"
                         />
-                        <span className="text-xs text-gray-600 whitespace-nowrap">words</span>
-                      </div>
-                      {sections[i] && (
-                        <span className="ml-2 text-green-600 text-sm font-medium">✓</span>
-                      )}
-                    </li>
-                  ))}
-                </ol>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            min="100"
+                            max="2000"
+                            value={sectionTargetWords[i] || 300}
+                            onChange={(e) => {
+                              const updated = [...sectionTargetWords];
+                              updated[i] = Math.max(100, parseInt(e.target.value) || 300);
+                              setSectionTargetWords(updated);
+                            }}
+                            className="px-2 py-1 border border-gray-300 rounded lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-16 text-sm"
+                          />
+                          <span className="text-xs text-gray-600 whitespace-nowrap">words</span>
+                        </div>
+                        {sections[i] && (
+                          <span className="ml-2 text-green-600 text-sm font-medium">✓</span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <div className="p-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 text-sm text-gray-600">
+                    No outline yet. Click "Generate Outline" to create one using the latest research data.
+                  </div>
+                )}
               </div>
             )}
 
@@ -1146,17 +1366,191 @@ export default function AdminDashboard() {
                 <div className="space-y-4">
                   {sections.map((section, i) => section && (
                     <div key={i} className="border-l-4 border-green-500 pl-4 bg-green-50 p-3 rounded">
-                      <h4 className="font-semibold text-gray-900">
-                        {i + 1}. {section.title}
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {section.wordCount} words
-                      </p>
-                      <p className="text-gray-700 mt-2 line-clamp-3">
-                        {section.content}
-                      </p>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-900">
+                            {i + 1}. {section.title}
+                          </h4>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {section.wordCount} words
+                          </p>
+                          <p className="text-gray-700 mt-2 line-clamp-3">
+                            {typeof section.content === 'string' 
+                              ? section.content 
+                              : section.contentHtml 
+                                ? section.contentHtml.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
+                                : 'No preview available'}
+                          </p>
+                        </div>
+                        <div className="ml-3 flex flex-col gap-2 whitespace-nowrap">
+                          <button
+                            onClick={() => setExpandedSectionIndex(i)}
+                            className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                          >
+                            View Full
+                          </button>
+                          <button
+                            onClick={() => regenerateSection(i)}
+                            disabled={writingSection}
+                            className="px-3 py-1 text-sm bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:bg-gray-400"
+                          >
+                            {writingSection ? "..." : "Regenerate"}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Section Content Modal */}
+            {expandedSectionIndex !== null && sections[expandedSectionIndex] && (
+              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] flex flex-col">
+                  <div className="flex justify-between items-center p-6 border-b">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      {expandedSectionIndex + 1}. {sections[expandedSectionIndex].title}
+                    </h3>
+                    <div className="flex gap-2 items-center">
+                      <button
+                        onClick={() => setViewLinksMode(!viewLinksMode)}
+                        className={`px-3 py-1 text-sm rounded font-medium transition-colors ${
+                          viewLinksMode 
+                            ? 'bg-purple-600 text-white hover:bg-purple-700' 
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                      >
+                        {viewLinksMode ? 'View Content' : 'View Links'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setExpandedSectionIndex(null);
+                          setViewLinksMode(false);
+                        }}
+                        className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                  <div className="overflow-y-auto flex-1 p-6">
+                    {viewLinksMode ? (
+                      // Links View
+                      (() => {
+                        const links = extractLinksFromHtml(sections[expandedSectionIndex].contentHtml || '');
+                        return links.length > 0 ? (
+                          <div className="space-y-3">
+                            <p className="text-sm text-gray-600 font-medium mb-4">
+                              Found {links.length} link{links.length !== 1 ? 's' : ''} in this section
+                            </p>
+                            {links.map((link, idx) => (
+                              <div key={idx} className="p-4 bg-gray-50 rounded border border-gray-200 hover:bg-gray-100 transition-colors">
+                                <div className="mb-2">
+                                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Anchor Text</p>
+                                  <p className="text-sm font-semibold text-gray-900">
+                                    {link.text}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">URL</p>
+                                  <a
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-700 text-xs break-all hover:underline"
+                                  >
+                                    {link.url}
+                                  </a>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-center text-gray-400">
+                            No links found in this section
+                          </div>
+                        );
+                      })()
+                    ) : (
+                      // Content View
+                      <>
+                        <style jsx>{`
+                          .section-content a {
+                            color: #2563eb;
+                            text-decoration: underline;
+                            cursor: pointer;
+                            font-weight: 500;
+                          }
+                          .section-content a:hover {
+                            color: #1d4ed8;
+                            text-decoration-thickness: 2px;
+                          }
+                          .section-content h3 {
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            font-size: 1.125rem;
+                            font-weight: 600;
+                            color: #111827;
+                          }
+                          .section-content h3:first-child {
+                            margin-top: 0;
+                          }
+                          .section-content p {
+                            margin-bottom: 1rem;
+                            line-height: 1.6;
+                            color: #374151;
+                          }
+                        `}</style>
+                        <div className="prose prose-sm max-w-none">
+                          <p className="text-sm text-gray-600 mb-4">
+                            {sections[expandedSectionIndex].wordCount} words
+                          </p>
+                          {typeof sections[expandedSectionIndex].content === 'string'
+                            ? (
+                                <div className="section-content text-gray-800 whitespace-pre-wrap leading-relaxed">
+                                  {sections[expandedSectionIndex].content}
+                                </div>
+                              )
+                            : sections[expandedSectionIndex].contentHtml
+                            ? (
+                                <div 
+                                  className="section-content text-gray-800 leading-relaxed"
+                                  dangerouslySetInnerHTML={{ 
+                                    __html: sections[expandedSectionIndex].contentHtml 
+                                  }}
+                                />
+                              )
+                            : (
+                                <div className="text-gray-400">No content available</div>
+                              )
+                          }
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="p-6 border-t bg-gray-50 flex gap-3 justify-end">
+                    <button
+                      onClick={() => {
+                        setExpandedSectionIndex(null);
+                        setViewLinksMode(false);
+                      }}
+                      className="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-100"
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={() => {
+                        regenerateSection(expandedSectionIndex);
+                        setExpandedSectionIndex(null);
+                        setViewLinksMode(false);
+                      }}
+                      disabled={writingSection}
+                      className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:bg-gray-400"
+                    >
+                      {writingSection ? "Regenerating..." : "Regenerate & Close"}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -1294,63 +1688,59 @@ export default function AdminDashboard() {
             )}
 
             {/* Generated Extras */}
-            {selectedDraft.status === "assembled" && (
+            {selectedDraft.status === "assembled" && assembledBlog && (
               <div className="bg-white rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Generated Extras
                 </h3>
                 <div className="space-y-6">
                   {/* FAQs */}
-                  <div>
-                    <h4 className="font-semibold text-gray-700 mb-3">FAQs</h4>
-                    <div className="space-y-3">
-                      {[
-                        { q: `What should I expect when treating ${editableTitle}?`, a: "Treatment depends on severity. Initially expect assessment and personalized exercises." },
-                        { q: `How long does recovery take?`, a: "Recovery varies by individual. Most see improvement within 2-4 weeks." },
-                        { q: `Can this be prevented?`, a: "Yes. Strengthening exercises and proper posture significantly reduce recurrence." },
-                      ].map((faq, i) => (
-                        <div key={i} className="bg-gray-50 p-3 rounded">
-                          <p className="font-medium text-gray-900">{faq.q}</p>
-                          <p className="text-sm text-gray-600 mt-1">{faq.a}</p>
-                        </div>
-                      ))}
+                  {assembledBlog.metadata?.faqs && assembledBlog.metadata.faqs.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-700 mb-3">Frequently Asked Questions</h4>
+                      <div className="space-y-3">
+                        {assembledBlog.metadata.faqs.map((faq: any, i: number) => (
+                          <div key={i} className="bg-gray-50 p-3 rounded">
+                            <p className="font-medium text-gray-900">{faq.question}</p>
+                            <p className="text-sm text-gray-600 mt-1">{faq.answer}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Recovery Checklist */}
-                  <div>
-                    <h4 className="font-semibold text-gray-700 mb-3">Recovery Checklist</h4>
-                    <ul className="space-y-2 text-sm text-gray-700">
-                      <li>✓ Schedule assessment with qualified physiotherapist</li>
-                      <li>✓ Follow personalized exercise program daily</li>
-                      <li>✓ Maintain proper posture throughout the day</li>
-                      <li>✓ Attend all scheduled therapy sessions</li>
-                      <li>✓ Track pain levels and progress</li>
-                    </ul>
-                  </div>
+                  {assembledBlog.metadata?.checklist && assembledBlog.metadata.checklist.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-700 mb-3">Recovery Checklist</h4>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {assembledBlog.metadata.checklist.map((item: string, i: number) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Outbound Links */}
-                  {researchData?.sources && researchData.sources.length > 0 && (
+                  {assembledBlog.metadata?.outboundLinks && assembledBlog.metadata.outboundLinks.length > 0 && (
                     <div>
                       <h4 className="font-semibold text-gray-700 mb-3">
-                        Sources & Outbound Links ({researchData.sources.length})
+                        Sources & Further Reading
                       </h4>
                       <ul className="space-y-2 text-sm">
-                        {researchData.sources.slice(0, 8).map((source: any, i: number) => (
+                        {assembledBlog.metadata.outboundLinks.map((link: any, i: number) => (
                           <li key={i} className="flex items-start">
                             <span className="text-gray-500 mr-2">•</span>
                             <div>
-                              <p className="font-medium text-gray-900">{source.title}</p>
-                              {source.url && (
-                                <a
-                                  href={source.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-blue-600 hover:underline text-xs"
-                                >
-                                  {source.url}
-                                </a>
-                              )}
+                              <a
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline font-medium"
+                              >
+                                {link.title}
+                              </a>
+                              <p className="text-xs text-gray-500 mt-1">{link.url}</p>
                             </div>
                           </li>
                         ))}
@@ -1364,7 +1754,7 @@ export default function AdminDashboard() {
             {/* Action Buttons */}
             <div className="bg-white rounded-lg shadow p-6">
               <div className="flex gap-4 flex-wrap">
-                {selectedDraft.status === "writing" && (
+                {canWriteSections && (
                   <>
                     {sections.length < editableOutline.length && (
                       <div>

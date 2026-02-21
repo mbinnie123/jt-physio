@@ -35,6 +35,12 @@ interface WixRichTextNode {
     text: string;
     decorations: Array<Record<string, unknown>>;
   };
+  linkData?: {
+    link?: {
+      url?: string;
+      target?: "_blank" | "_self";
+    };
+  };
 }
 
 interface WixDraftPostPayload {
@@ -244,13 +250,25 @@ function buildRichContent(post: BlogPost): {
 } {
   const nodes: WixRichTextNode[] = [];
 
-  post.sections.forEach((section) => {
-    nodes.push(createHeadingNode(section.title, 2));
+  post.sections.forEach((section, index) => {
+    // Skip heading for first section if it matches the post title (to avoid duplication)
+    const isFirstSection = index === 0;
+    const titleMatches = post.title && section.title.toLowerCase().trim() === post.title.toLowerCase().trim();
+    
+    if (!(isFirstSection && titleMatches)) {
+      nodes.push(createHeadingNode(section.title, 2));
+    }
 
-    const paragraphChunks = splitIntoParagraphs(section.content);
-    paragraphChunks.forEach((chunk) => {
-      nodes.push(createParagraphNode(chunk));
-    });
+    // Handle both Ricos format (object) and legacy string format
+    if (section.content && typeof section.content === 'object' && section.content.nodes) {
+      // Content is already in Ricos format - convert to Wix nodes
+      const ricosNodes = convertRicosToWixNodes(section.content.nodes);
+      nodes.push(...ricosNodes);
+    } else if (typeof section.content === 'string') {
+      // Legacy string format - parse with subheadings
+      const contentNodes = parseContentWithSubheadings(section.content);
+      nodes.push(...contentNodes);
+    }
   });
 
   if (post.faqs?.length) {
@@ -271,10 +289,29 @@ function buildRichContent(post: BlogPost): {
 
   if (post.outboundLinks?.length) {
     nodes.push(createHeadingNode("Sources & Further Reading", 2));
-    post.outboundLinks.forEach((link) => {
-      const text = `${link.title} (${link.url})`;
-      nodes.push(createParagraphNode(text));
-    });
+    const sourceListItems = post.outboundLinks
+      .map((link) => {
+        const childNodes: WixRichTextNode[] = [];
+        const descriptor = link.source || extractHostname(link.url);
+
+        if (descriptor) {
+          childNodes.push(createTextNode(`${descriptor}: `));
+        }
+
+        if (link.url) {
+          const label = link.title?.trim() || link.url;
+          childNodes.push(createLinkNode(label, link.url));
+        } else if (link.title) {
+          childNodes.push(createTextNode(link.title));
+        }
+
+        return childNodes.length ? createListItemNode(childNodes) : null;
+      })
+      .filter((item): item is WixRichTextNode => Boolean(item));
+
+    if (sourceListItems.length) {
+      nodes.push(createBulletedListNode(sourceListItems));
+    }
   }
 
   return {
@@ -309,16 +346,128 @@ function createParagraphNode(text: string): WixRichTextNode {
   };
 }
 
-function createTextNode(text: string): WixRichTextNode {
+function createParagraphNodeFromNodes(childNodes: WixRichTextNode[]): WixRichTextNode {
+  return {
+    id: nextNodeId("paragraph"),
+    type: "PARAGRAPH",
+    paragraphData: {
+      textStyle: { textAlignment: "AUTO" },
+      indentation: null,
+      level: null,
+    },
+    nodes: childNodes,
+  };
+}
+
+function createTextNode(text: string, link?: { url: string; target?: string }): WixRichTextNode {
+  const decorations: Array<Record<string, unknown>> = [];
+  
+  if (link) {
+    decorations.push({
+      type: "LINK",
+      linkData: {
+        link: {
+          url: link.url,
+          target: "BLANK",
+        },
+      },
+    });
+  }
+
   return {
     id: nextNodeId("text"),
     type: "TEXT",
     nodes: [],
     textData: {
       text: sanitizeText(text),
-      decorations: [],
+      decorations,
     },
   };
+}
+
+function createLinkNode(text: string, url: string): WixRichTextNode {
+  return createTextNode(text, { url, target: "BLANK" });
+}
+
+function createListItemNode(childNodes: WixRichTextNode[]): WixRichTextNode {
+  return {
+    id: nextNodeId("list-item"),
+    type: "LIST_ITEM",
+    nodes: [createParagraphNodeFromNodes(childNodes)],
+  };
+}
+
+function createBulletedListNode(items: WixRichTextNode[]): WixRichTextNode {
+  return {
+    id: nextNodeId("bulleted-list"),
+    type: "BULLETED_LIST",
+    nodes: items,
+  };
+}
+
+/**
+ * Convert Ricos nodes to Wix rich text nodes
+ */
+function convertRicosToWixNodes(ricosNodes: any[]): WixRichTextNode[] {
+  const wixNodes: WixRichTextNode[] = [];
+
+  for (const ricoNode of ricosNodes) {
+    if (ricoNode.type === "heading") {
+      // Heading node - extract text from child nodes
+      const text = extractTextFromRicosNodes(ricoNode.nodes);
+      wixNodes.push(createHeadingNode(text, ricoNode.level || 3));
+    } else if (ricoNode.type === "paragraph") {
+      // Paragraph node - convert inline nodes
+      const wixInlineNodes: WixRichTextNode[] = [];
+      
+      for (const inlineNode of ricoNode.nodes || []) {
+        if (inlineNode.type === "text") {
+          wixInlineNodes.push({
+            id: nextNodeId("text"),
+            type: "TEXT",
+            textData: {
+              text: inlineNode.data || "",
+              decorations: [],
+            },
+          });
+        } else if (inlineNode.type === "link") {
+          // Use createTextNode with link parameter to get the correct structure
+          const linkText = extractTextFromRicosNodes(inlineNode.nodes || []);
+          wixInlineNodes.push(
+            createTextNode(linkText, {
+              url: inlineNode.href,
+              target: inlineNode.target || "_blank",
+            })
+          );
+        }
+      }
+
+      if (wixInlineNodes.length > 0) {
+        wixNodes.push({
+          id: nextNodeId("paragraph"),
+          type: "PARAGRAPH",
+          nodes: wixInlineNodes,
+        });
+      }
+    }
+  }
+
+  return wixNodes;
+}
+
+/**
+ * Extract plain text from Ricos nodes
+ */
+function extractTextFromRicosNodes(ricosNodes: any[]): string {
+  let text = "";
+  for (const node of ricosNodes || []) {
+    if (node.type === "text") {
+      text += node.data || "";
+    } else if (node.nodes) {
+      text += extractTextFromRicosNodes(node.nodes);
+    }
+  }
+  return text;
 }
 
 function splitIntoParagraphs(content: string): string[] {
@@ -328,12 +477,102 @@ function splitIntoParagraphs(content: string): string[] {
     .filter(Boolean);
 }
 
+function parseContentWithSubheadings(content: string): WixRichTextNode[] {
+  const nodes: WixRichTextNode[] = [];
+  
+  // Pattern to match [H3]Title[/H3] - using 's' flag to match newlines in content
+  const h3Pattern = /\[H3\](.*?)\[\/H3\]/gis;
+  
+  // Split content by h3 tags
+  const parts = content.split(h3Pattern);
+  
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+    
+    // If this is an h3 title (odd indices after split are the captured groups)
+    if (i % 2 === 1) {
+      const h3Title = part.trim();
+      if (h3Title) {
+        nodes.push(createHeadingNode(h3Title, 3));
+      }
+      i++;
+      continue;
+    }
+    
+    // Regular content part
+    if (part && part.trim()) {
+      const paragraphs = splitIntoParagraphs(part);
+      paragraphs.forEach((para) => {
+        if (para) {
+          nodes.push(createParagraphWithLinks(para));
+        }
+      });
+    }
+    i++;
+  }
+  
+  return nodes;
+}
+
+/**
+ * Create a paragraph node that supports markdown links [text](url)
+ */
+function createParagraphWithLinks(text: string): WixRichTextNode {
+  const childNodes: WixRichTextNode[] = [];
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    // Add text before the link
+    if (match.index > lastIndex) {
+      const beforeText = text.slice(lastIndex, match.index);
+      childNodes.push(createTextNode(beforeText));
+    }
+
+    // Add the link
+    const linkText = match[1];
+    const linkUrl = match[2];
+    childNodes.push(
+      createTextNode(linkText, {
+        url: linkUrl,
+        target: "_blank",
+      })
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text after last link
+  if (lastIndex < text.length) {
+    const afterText = text.slice(lastIndex);
+    childNodes.push(createTextNode(afterText));
+  }
+
+  // If no links were found, just create a simple text node
+  if (childNodes.length === 0) {
+    childNodes.push(createTextNode(text));
+  }
+
+  return createParagraphNodeFromNodes(childNodes);
+}
+
 function sanitizeText(text: string): string {
   return text
     .replace(/\[(.*?)\]\((.*?)\)/g, "$1 ($2)")
     .replace(/[*_`>#-]/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function extractHostname(url?: string): string | undefined {
+  if (!url) return undefined;
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return undefined;
+  }
 }
 
 function extractPostUrl(post?: any): string | undefined {

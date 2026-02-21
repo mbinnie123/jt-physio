@@ -7,7 +7,6 @@ import rehypeSanitize from "rehype-sanitize";
 import { wixClient } from "../../lib/wix";
 import { Header } from "../../Header";
 import { Footer } from "../../Footer";
-import { FadeIn } from "../../FadeIn";
 import styles from "./blog-content.module.css";
 
 type BlogPost = {
@@ -65,15 +64,33 @@ function escapeHtml(input: string): string {
 
 function applyTextDecorations(text: string, decorations: any[] | undefined): string {
   if (!decorations?.length) return text;
-  return decorations.reduce((acc, deco) => {
+  
+  let result = text;
+  
+  // Process decorations in order
+  for (const deco of decorations) {
     const t = String(deco?.type || "").toUpperCase();
-    if (t === "BOLD") return `<strong>${acc}</strong>`;
-    if (t === "ITALIC") return `<em>${acc}</em>`;
-    if (t === "UNDERLINE") return `<u>${acc}</u>`;
-    if (t === "CODE") return `<code>${acc}</code>`;
-    if (t === "STRIKETHROUGH") return `<s>${acc}</s>`;
-    return acc;
-  }, text);
+    
+    if (t === "BOLD") {
+      result = `<strong>${result}</strong>`;
+    } else if (t === "ITALIC") {
+      result = `<em>${result}</em>`;
+    } else if (t === "UNDERLINE") {
+      result = `<u>${result}</u>`;
+    } else if (t === "CODE") {
+      result = `<code>${result}</code>`;
+    } else if (t === "STRIKETHROUGH") {
+      result = `<s>${result}</s>`;
+    } else if (t === "LINK") {
+      const href = deco?.linkData?.link?.url || deco?.linkData?.url;
+      const target = deco?.linkData?.link?.target || "_blank";
+      if (href) {
+        result = `<a href="${escapeHtml(String(href))}" rel="noopener noreferrer" target="${target}">${result}</a>`;
+      }
+    }
+  }
+  
+  return result;
 }
 
 function ricosToHtml(rich: any): string {
@@ -333,8 +350,7 @@ export default async function BlogPostPage({
 
       <main className="flex-1 py-24">
         <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <FadeIn>
-            <div className="mb-8 text-center">
+          <div className="mb-8 text-center">
               <h1 className="mb-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
                 {post.title}
               </h1>
@@ -363,7 +379,7 @@ export default async function BlogPostPage({
               </div>
             )}
 
-            <div className={`${styles.content} prose prose-slate prose-lg mx-auto max-w-none`}>
+            <div className={`${styles.content} mx-auto max-w-3xl`}>
               {html ? (
                 <div dangerouslySetInnerHTML={{ __html: html }} />
               ) : markdown ? (
@@ -389,7 +405,7 @@ export default async function BlogPostPage({
                 <p>This post doesn’t have body content available.</p>
               )}
             </div>
-          </FadeIn>
+
         </article>
       </main>
 
