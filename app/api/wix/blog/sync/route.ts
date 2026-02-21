@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { listWixPosts, getWixPost } from "@/lib/blog-automation/wix-publisher";
+import { wixClient } from "@/app/lib/wix";
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,19 +16,30 @@ export async function POST(request: NextRequest) {
 
     if (action === "sync") {
       // Fetch latest posts from Wix and sync metadata
-      const posts = await listWixPosts(20);
+      try {
+        const { items: posts } = await wixClient.posts.queryPosts().limit(20).find();
 
-      return NextResponse.json({
-        success: true,
-        synced: true,
-        postsCount: posts.length,
-        posts: posts.map((p: any) => ({
-          id: p.id,
-          title: p.title,
-          slug: p.slug,
-          publishedDate: p.publishedDate,
-        })),
-      });
+        return NextResponse.json({
+          success: true,
+          synced: true,
+          postsCount: posts.length,
+          posts: posts.map((p: any) => ({
+            id: p._id,
+            title: p.title,
+            slug: p.slug,
+            publishedDate: p.firstPublishedDate,
+          })),
+        });
+      } catch (err) {
+        console.error("Wix query error:", err);
+        // Return empty success if query fails
+        return NextResponse.json({
+          success: true,
+          synced: false,
+          postsCount: 0,
+          posts: [],
+        });
+      }
     }
 
     return NextResponse.json(
@@ -56,12 +67,20 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const posts = await listWixPosts(20);
+    try {
+      const { items: posts } = await wixClient.posts.queryPosts().limit(20).find();
 
-    return NextResponse.json({
-      count: posts.length,
-      posts,
-    });
+      return NextResponse.json({
+        count: posts.length,
+        posts,
+      });
+    } catch (err) {
+      console.error("Wix query error:", err);
+      return NextResponse.json({
+        count: 0,
+        posts: [],
+      });
+    }
   } catch (error) {
     console.error("Wix sync GET error:", error);
     return NextResponse.json(
