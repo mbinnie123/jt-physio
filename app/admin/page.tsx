@@ -142,6 +142,8 @@ export default function AdminDashboard() {
   const [researchQuery, setResearchQuery] = useState(""); // Search query for "Add More Sources"
   const [reapplyingMetadata, setReapplyingMetadata] = useState(false);
   const [viewLinksMode, setViewLinksMode] = useState(false); // Toggle between content and links view
+  const [generatingImage, setGeneratingImage] = useState(false); // Image generation state
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null); // Store generated image
 
   const hydrateDraftEditor = (draft: BlogDraft) => {
     setSelectedDraft(draft);
@@ -494,6 +496,46 @@ export default function AdminDashboard() {
       alert(`Error regenerating section: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setWritingSection(false);
+    }
+  };
+
+  const generateFeaturedImage = async () => {
+    if (!selectedDraft?.topic) {
+      alert("Please enter a topic first");
+      return;
+    }
+
+    setGeneratingImage(true);
+    
+    try {
+      const response = await fetch("/api/blog/generate-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          topic: selectedDraft.topic,
+          keywords: researchData?.keywords || [],
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to generate image");
+      }
+
+      const data = await response.json();
+      if (data.imageUrl) {
+        setGeneratedImageUrl(data.imageUrl);
+        setEditableFeaturedImageUrl(data.imageUrl);
+      } else {
+        throw new Error("No image URL returned");
+      }
+    } catch (error) {
+      console.error("Image generation error:", error);
+      alert(`Error generating image: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setGeneratingImage(false);
     }
   };
 
@@ -1607,13 +1649,32 @@ export default function AdminDashboard() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Featured Image URL (Optional)
                     </label>
-                    <input
-                      type="url"
-                      value={editableFeaturedImageUrl}
-                      onChange={(e) => setEditableFeaturedImageUrl(e.target.value)}
-                      placeholder="https://example.com/image.jpg"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                    <div className="space-y-2">
+                      <input
+                        type="url"
+                        value={editableFeaturedImageUrl}
+                        onChange={(e) => setEditableFeaturedImageUrl(e.target.value)}
+                        placeholder="https://example.com/image.jpg"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                      <button
+                        onClick={generateFeaturedImage}
+                        disabled={generatingImage || !selectedDraft?.topic}
+                        className="w-full px-4 py-2 bg-purple-600 text-white rounded lg hover:bg-purple-700 disabled:bg-gray-400 font-medium transition-colors"
+                      >
+                        {generatingImage ? "Generating Image..." : "Generate Image with AI"}
+                      </button>
+                      {generatedImageUrl && (
+                        <div className="mt-3 p-3 bg-purple-50 rounded border border-purple-200">
+                          <p className="text-sm font-medium text-purple-900 mb-2">Generated Image Preview:</p>
+                          <img 
+                            src={generatedImageUrl} 
+                            alt="Generated featured image" 
+                            className="w-full h-auto rounded border border-purple-300"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* SEO Title */}
