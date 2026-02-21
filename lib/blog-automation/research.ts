@@ -147,18 +147,7 @@ async function searchVertexEngine(
     const results = response.data.results || [];
     console.log(`[Vertex] Success! Got ${results.length} results from Vertex`);
 
-    return results.map((result: any, index: number) => {
-      const doc = result.document || {};
-      const structData = doc.structData || {};
-      
-      return {
-        title: structData.title || structData.h1 || doc.id || "Untitled",
-        content: structData.textSnippet || doc.snippet || "",
-        source: structData.url ? new URL(structData.url).hostname : "Vertex Search",
-        url: structData.url,
-        relevanceScore: 1 - index * 0.1,
-      };
-    });
+    return results.map((result: any, index: number) => mapVertexResult(result, index));
   } catch (error) {
     console.error("[Vertex] Search error:", error instanceof Error ? error.message : error);
     if (error instanceof Error && error.message.includes("401")) {
@@ -167,6 +156,57 @@ async function searchVertexEngine(
     // Fallback on error
     return [];
   }
+}
+
+function mapVertexResult(result: any, index: number): ResearchResult {
+  const doc = result?.document || {};
+  const structData = doc.structData || {};
+  const derivedStructData = doc.derivedStructData || {};
+  const metadata = structData.metadata || derivedStructData.metadata || {};
+
+  const rawUrl =
+    structData.url ||
+    structData.link ||
+    structData.uri ||
+    derivedStructData.url ||
+    derivedStructData.link ||
+    metadata.url ||
+    metadata.link ||
+    doc.uri ||
+    doc.contentUri ||
+    undefined;
+
+  const normalizedUrl = normalizeUrl(rawUrl);
+  const title =
+    structData.title ||
+    structData.pageTitle ||
+    derivedStructData.title ||
+    derivedStructData.pageTitle ||
+    doc.id ||
+    doc.name ||
+    `Result ${index + 1}`;
+
+  const snippet =
+    structData.textSnippet ||
+    derivedStructData.snippet ||
+    derivedStructData.description ||
+    result.snippet?.snippet ||
+    doc.snippet ||
+    "";
+
+  const sourceHost =
+    structData.source ||
+    derivedStructData.source ||
+    metadata.source ||
+    (normalizedUrl ? extractHostname(normalizedUrl) : "Vertex Search");
+
+  return {
+    title,
+    content: snippet,
+    source: sourceHost,
+    url: normalizedUrl,
+    relevanceScore: 1 - index * 0.1,
+  };
 }
 
 /**
@@ -334,4 +374,26 @@ function extractKeywords(topic: string): string[] {
     .split(/\s+/)
     .filter((word) => !commonWords.has(word) && word.length > 3)
     .slice(0, 5);
+}
+
+function normalizeUrl(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  const trimmed = raw.trim();
+  if (!trimmed) return undefined;
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+  if (trimmed.startsWith("www.")) {
+    return `https://${trimmed}`;
+  }
+  return trimmed;
+}
+
+function extractHostname(url?: string): string | undefined {
+  if (!url) return undefined;
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return undefined;
+  }
 }

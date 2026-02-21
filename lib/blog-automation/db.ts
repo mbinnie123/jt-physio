@@ -68,9 +68,13 @@ class BlogDatabase {
         this.drafts = new Map(parsed.drafts || []);
         this.idCounter = parsed.idCounter || 1;
         this.initialized = true;
+        console.log(`[DB] Loaded ${this.drafts.size} drafts from file`);
+      } else {
+        console.log("[DB] No persisted database file found, starting fresh");
       }
     } catch (error) {
-      console.warn("[DB] Failed to load from file, starting fresh:", error);
+      console.error("[DB] Failed to load from file:", error);
+      console.log("[DB] Starting with empty database");
     }
   }
 
@@ -136,10 +140,14 @@ class BlogDatabase {
   }
 
   getDraft(id: string): BlogDraft | null {
+    // Reload from file to ensure we have the latest data
+    this.loadFromFile();
     return this.drafts.get(id) || null;
   }
 
   getAllDrafts(): BlogDraft[] {
+    // Reload from file to ensure we have the latest data
+    this.loadFromFile();
     return Array.from(this.drafts.values());
   }
 

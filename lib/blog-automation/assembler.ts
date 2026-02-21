@@ -100,7 +100,17 @@ export function assembleBlogPost(
 function assembleBlogContent(sections: BlogSection[]): string {
   return sections
     .map((section) => {
-      return `## ${section.title}\n\n${section.content}\n\n`;
+      // Handle both Ricos objects and string content
+      let content = '';
+      if (typeof section.content === 'string') {
+        content = section.content;
+      } else if (section.contentHtml) {
+        // If Ricos format, use the HTML version and strip tags for markdown
+        content = section.contentHtml.replace(/<[^>]*>/g, '');
+      } else {
+        content = 'No content available';
+      }
+      return `## ${section.title}\n\n${content}\n\n`;
     })
     .join("");
 }
@@ -112,13 +122,13 @@ function extractOutboundLinks(
   sections: BlogSection[],
   researchData: ResearchData
 ): Array<{ title: string; url: string; source: string }> {
-  const links: Array<{ title: string; url: string; source: string }> = [];
+  const linkMap = new Map<string, { title: string; url: string; source: string }>();
 
-  // Add research sources
+  // Add research sources (deduplicated by URL)
   if (researchData.sources) {
     researchData.sources.forEach((source: any) => {
-      if (source.url) {
-        links.push({
+      if (source.url && !linkMap.has(source.url)) {
+        linkMap.set(source.url, {
           title: source.title,
           url: source.url,
           source: source.source || "Research",
@@ -127,14 +137,16 @@ function extractOutboundLinks(
     });
   }
 
-  // Extract links from section content (markdown URLs)
+  // Extract links from section content (markdown URLs, also deduplicated)
   sections.forEach((section) => {
     const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
     let match;
-    while ((match = linkRegex.exec(section.content)) !== null) {
+    // Use contentHtml if available (Ricos format), otherwise use content as string
+    const content = typeof section.content === 'string' ? section.content : (section.contentHtml || '');
+    while ((match = linkRegex.exec(content)) !== null) {
       const [, title, url] = match;
-      if (!links.find((l) => l.url === url)) {
-        links.push({
+      if (!linkMap.has(url)) {
+        linkMap.set(url, {
           title,
           url,
           source: section.title,
@@ -143,7 +155,34 @@ function extractOutboundLinks(
     }
   });
 
-  return links;
+  return Array.from(linkMap.values());
+}
+
+/**
+ * Extract condition name from topic (removes case study suffix)
+ * E.g., "Neck Pain and Cardiff City striker Yousef Salech Neck Pain Case Study" → "Neck Pain"
+ */
+function extractConditionName(topic: string): string {
+  // If topic contains "and", take only the part before "and"
+  if (topic.includes(" and ")) {
+    return topic.split(" and ")[0].trim();
+  }
+  
+  // If topic ends with common case study patterns, remove them
+  const caseStudyPatterns = [
+    / Case Study$/i,
+    / Example$/i,
+    / Story$/i,
+    / Experience$/i,
+  ];
+  
+  for (const pattern of caseStudyPatterns) {
+    if (pattern.test(topic)) {
+      return topic.replace(pattern, "").trim();
+    }
+  }
+  
+  return topic;
 }
 
 /**
@@ -154,22 +193,25 @@ function generateFAQs(
   sections: BlogSection[],
   researchData: ResearchData
 ): Array<{ question: string; answer: string }> {
+  // Extract just the condition name (e.g., "Neck Pain" from "Neck Pain and Cardiff City striker Yousef Salech Neck Pain Case Study")
+  const conditionName = extractConditionName(topic);
+
   // Common physiotherapy questions
   const commonFAQs = [
     {
-      question: `What should I expect when treating ${topic}?`,
+      question: `What should I expect when treating ${conditionName}?`,
       answer: `Treatment depends on severity. Initially, expect assessment, personalized exercises, and advice. Most patients see improvement within 2-4 weeks of consistent treatment.`,
     },
     {
-      question: `How long does recovery from ${topic} typically take?`,
+      question: `How long does recovery from ${conditionName} typically take?`,
       answer: `Recovery varies by individual and severity. Mild cases may resolve in weeks, while complex cases may require several months of targeted physiotherapy.`,
     },
     {
-      question: `Can physiotherapy prevent ${topic} from returning?`,
+      question: `Can physiotherapy prevent ${conditionName} from returning?`,
       answer: `Yes. Strengthening exercises, proper posture, and ergonomic adjustments significantly reduce recurrence risk.`,
     },
     {
-      question: `Is ${topic} painful to treat?`,
+      question: `Is ${conditionName} painful to treat?`,
       answer: `Physiotherapy aims to reduce pain progressively. Some discomfort is normal during rehabilitation, but treatment should not cause sharp pain.`,
     },
   ];
@@ -360,6 +402,19 @@ export function formatAsHTML(post: BlogPost): string {
   <meta name="description" content="${post.seoDescription}">
   <meta name="keywords" content="${post.seoKeywords.join(", ")}">
   <title>${post.seoTitle} | JT Physiotherapy</title>
+  <style>
+    body { font-family: system-ui, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #374151; }
+    h1 { color: #111827; font-size: 2.25em; margin-bottom: 0.5em; }
+    h2 { color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; margin-top: 2.5rem; }
+    h3 { color: #374151; margin-top: 1.5rem; font-size: 1.5em; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1.25rem; }
+    a { color: #2563eb; text-decoration: underline; }
+    .meta { color: #6b7280; font-size: 0.9em; margin-bottom: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; }
+    dt { font-weight: bold; margin-top: 1rem; }
+    dd { margin-left: 0; margin-bottom: 1rem; }
+  </style>
 </head>
 <body>
   <article>
@@ -375,14 +430,47 @@ export function formatAsHTML(post: BlogPost): string {
     <main>
       ${post.sections
         .map(
-          (section) => `
+          (section) => {
+            // Use contentHtml for Ricos format, or format string content
+            const contentHtml = typeof section.content === 'string' 
+              ? formatMarkdownToHTML(section.content)
+              : (section.contentHtml || 'No content');
+            return `
         <section>
           <h2>${section.title}</h2>
-          ${formatMarkdownToHTML(section.content)}
+          ${contentHtml}
         </section>
-      `
+      `;
+          }
         )
         .join("")}
+
+      ${post.faqs.length > 0 ? `
+        <section>
+          <h2>Frequently Asked Questions</h2>
+          <dl>
+            ${post.faqs.map(f => `<dt>${f.question}</dt><dd>${f.answer}</dd>`).join("")}
+          </dl>
+        </section>
+      ` : ""}
+
+      ${post.checklist.length > 0 ? `
+        <section>
+          <h2>Recovery Checklist</h2>
+          <ul>
+            ${post.checklist.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </section>
+      ` : ""}
+
+      ${post.outboundLinks.length > 0 ? `
+        <section>
+          <h2>Sources & Further Reading</h2>
+          <ul>
+            ${post.outboundLinks.map(link => `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.source}: ${link.title}</a></li>`).join("")}
+          </ul>
+        </section>
+      ` : ""}
     </main>
   </article>
 </body>
@@ -398,7 +486,39 @@ export function formatAsMarkdown(post: BlogPost): string {
   markdown += `---\n\n`;
 
   for (const section of post.sections) {
-    markdown += `## ${section.title}\n\n${section.content}\n\n`;
+    // Handle both Ricos objects and string content
+    let content = '';
+    if (typeof section.content === 'string') {
+      content = section.content;
+    } else if (section.contentHtml) {
+      // If Ricos format, use the HTML version and strip tags for markdown
+      content = section.contentHtml.replace(/<[^>]*>/g, '');
+    } else {
+      content = 'No content available';
+    }
+    markdown += `## ${section.title}\n\n${content}\n\n`;
+  }
+
+  if (post.faqs.length > 0) {
+    markdown += `## Frequently Asked Questions\n\n`;
+    for (const faq of post.faqs) {
+      markdown += `### ${faq.question}\n${faq.answer}\n\n`;
+    }
+  }
+
+  if (post.checklist.length > 0) {
+    markdown += `## Recovery Checklist\n\n`;
+    for (const item of post.checklist) {
+      markdown += `- ${item}\n`;
+    }
+    markdown += `\n`;
+  }
+
+  if (post.outboundLinks.length > 0) {
+    markdown += `## Sources & Further Reading\n\n`;
+    for (const link of post.outboundLinks) {
+      markdown += `- ${link.source}: ${link.title}\n`;
+    }
   }
 
   return markdown;
@@ -410,10 +530,13 @@ export function formatAsMarkdown(post: BlogPost): string {
 function formatMarkdownToHTML(markdown: string): string {
   let html = markdown;
 
-  // Headers
-  html = html.replace(/### (.*?)\n/g, "<h3>$1</h3>\n");
-  html = html.replace(/## (.*?)\n/g, "<h2>$1</h2>\n");
-  html = html.replace(/# (.*?)\n/g, "<h1>$1</h1>\n");
+  // Handle [H3] style headers (seen in drafts)
+  html = html.replace(/\[H([1-6])\](.*?)\[\/H\1\]/gi, "<h$1>$2</h$1>");
+
+  // Standard Markdown Headers (handle potential missing space)
+  html = html.replace(/^### ?(.*$)/gm, "<h3>$1</h3>");
+  html = html.replace(/^## ?(.*$)/gm, "<h2>$1</h2>");
+  html = html.replace(/^# ?(.*$)/gm, "<h1>$1</h1>");
 
   // Bold
   html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
@@ -423,18 +546,28 @@ function formatMarkdownToHTML(markdown: string): string {
   html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
   html = html.replace(/_(.*?)_/g, "<em>$1</em>");
 
-  // Line breaks
-  html = html.replace(/\n\n/g, "</p><p>");
-  html = `<p>${html}</p>`;
-
-  // Lists
-  html = html.replace(/^\* (.*?)$/gm, "<li>$1</li>");
-  html = html.replace(/(<li>.*?<\/li>)/s, "<ul>$1</ul>");
-
   // Links
-  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
-  return html;
+  // Lists - convert lines starting with * or - to li
+  html = html.replace(/^[\*\-] (.*$)/gm, "<li>$1</li>");
+  
+  // Wrap adjacent li elements in ul
+  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, "<ul>\n$1</ul>\n");
+
+  // Paragraphs - split by double newlines to avoid wrapping block elements
+  const blocks = html.split(/\n\s*\n/);
+  const processedBlocks = blocks.map(block => {
+    const trimmed = block.trim();
+    if (!trimmed) return "";
+    // If block starts with an HTML tag that shouldn't be wrapped
+    if (trimmed.match(/^<(h[1-6]|ul|ol|p|div|blockquote|pre|table|section)/i)) {
+      return trimmed;
+    }
+    return `<p>${trimmed}</p>`;
+  });
+
+  return processedBlocks.join("\n\n");
 }
 
 /**
