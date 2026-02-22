@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import FormData from "form-data";
 import { BlogPost } from "./assembler";
 
 const WIX_API_BASE = "https://www.wixapis.com";
@@ -210,41 +211,57 @@ class WixPublisher {
         const buffer = imageResponse.data;
         console.log("[wix-publisher] Downloaded image, size:", buffer.length, "bytes");
 
-        // Try using native fetch API instead of axios for better SSL handling
-        const formData = new FormData();
-        const blob = new Blob([buffer], { type: "image/png" });
-        formData.append("file", blob, "featured-image.png");
+        const contentType = imageResponse.headers["content-type"] || "image/png";
 
-        const uploadResponse = await fetch(
-          "https://www.wixapis.com/files/v1/files/upload",
+        const formData = new FormData();
+        formData.append("file", buffer, {
+          filename: "featured-image.png",
+          contentType,
+        });
+
+        const apiKey = process.env.WIX_API_KEY;
+        const siteId = process.env.WIX_SITE_ID;
+        const accountId = process.env.WIX_ACCOUNT_ID;
+
+        if (!apiKey || !siteId) {
+          throw new Error("Missing WIX_API_KEY or WIX_SITE_ID for media upload");
+        }
+
+        const uploadResponse = await axios.post(
+          "https://www.wixapis.com/media-platform/v1/files/upload?purpose=site-files",
+          formData,
           {
-            method: "POST",
             headers: {
-              Authorization: process.env.WIX_API_KEY || "",
-              "wix-site-id": process.env.WIX_SITE_ID || "",
+              ...formData.getHeaders(),
+              Authorization: apiKey.startsWith("Bearer ") ? apiKey : `Bearer ${apiKey}`,
+              "wix-site-id": siteId,
+              ...(accountId ? { "wix-account-id": accountId } : {}),
             },
-            body: formData,
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
+            timeout: 30000,
           }
         );
 
-        if (!uploadResponse.ok) {
-          throw new Error(
-            `Wix upload failed: ${uploadResponse.status} ${uploadResponse.statusText}`
-          );
-        }
-
-        const responseData = await uploadResponse.json() as { file?: { url: string } };
+        const responseData = uploadResponse.data as { file?: { url: string; fileName?: string } };
         const wixFileUrl = responseData?.file?.url;
 
         if (wixFileUrl) {
           console.log("[wix-publisher] ✓ Image uploaded to Wix Media Manager:", wixFileUrl);
           return wixFileUrl;
         } else {
-          console.warn("[wix-publisher] No file URL in Wix response");
+          console.warn("[wix-publisher] No file URL in Wix response", { responseData });
           return null;
         }
       } catch (error) {
         lastError = error;
+        if (axios.isAxiosError(error) && error.response) {
+          console.error("[wix-publisher] Wix upload error response:", {
+            status: error.response.status,
+            statusText: error.response.statusText,
+            data: error.response.data,
+          });
+        }
         const errorMsg = error instanceof Error ? error.message : String(error);
         console.error(`[wix-publisher] Upload attempt ${attempt} failed:`, errorMsg);
 
@@ -278,20 +295,25 @@ export async function publishToWix(
   try {
     const publisher = getPublisher();
     
-    // If post has a featured image URL, upload it to Wix File Manager first
-    if (post.featuredImageUrl) {
-      console.log("[publishToWix] Processing featured image for Wix Media Manager...");
-      const wixImageUrl = await publisher.uploadImageToWixFileManager(
-        post.featuredImageUrl
+    if (!post.featuredImageUrl) {
+      throw new Error(
+        "Featured image is required before publishing. Generate or upload one before continuing."
       );
-      if (wixImageUrl) {
-        post.featuredImageUrl = wixImageUrl;
-        console.log("[publishToWix] ✓ Image successfully stored in Wix Media Manager");
-      } else {
-        console.warn("[publishToWix] ⚠️  Failed to upload image to Wix Media Manager - post will be published without featured image");
-        post.featuredImageUrl = undefined;
-      }
     }
+
+    console.log("[publishToWix] Processing featured image for Wix Media Manager...");
+    const wixImageUrl = await publisher.uploadImageToWixFileManager(
+      post.featuredImageUrl
+    );
+
+    if (!wixImageUrl) {
+      throw new Error(
+        "Failed to upload featured image to Wix Media Manager. Publish aborted."
+      );
+    }
+
+    post.featuredImageUrl = wixImageUrl;
+    console.log("[publishToWix] ✓ Image stored in Wix Media Manager");
     
     return await publisher.publish(post, options);
   } catch (error) {
@@ -317,11 +339,16 @@ function buildDraftPayload(post: BlogPost, authorId: string): WixDraftPostPayloa
     },
   };
 
-  if (post.featuredImageUrl) {
-    console.log("[buildDraftPayload] Setting featured image URL:", post.featuredImageUrl);
+  const normalizedImageUrl = normalizeFeaturedImageUrl(post.featuredImageUrl);
+
+  if (normalizedImageUrl) {
+    if (normalizedImageUrl !== post.featuredImageUrl) {
+      console.log("[buildDraftPayload] Normalized featured image URL:", normalizedImageUrl);
+    }
+    console.log("[buildDraftPayload] Setting featured image URL:", normalizedImageUrl);
     payload.coverMedia = {
       image: {
-        url: post.featuredImageUrl,
+        url: normalizedImageUrl,
       },
     };
     console.log("[buildDraftPayload] coverMedia payload:", JSON.stringify(payload.coverMedia));
@@ -337,6 +364,34 @@ function buildDraftPayload(post: BlogPost, authorId: string): WixDraftPostPayloa
   });
 
   return payload;
+}
+
+function normalizeFeaturedImageUrl(url?: string | null): string | undefined {
+  if (!url) {
+    return undefined;
+  }
+
+  let normalized = url.trim();
+
+  const cloudConsolePrefix = "https://storage.cloud.google.com/";
+  if (normalized.startsWith(cloudConsolePrefix)) {
+    normalized = normalized.replace(
+      cloudConsolePrefix,
+      "https://storage.googleapis.com/"
+    );
+  }
+
+  if (normalized.startsWith("gs://")) {
+    const withoutScheme = normalized.substring(5); // remove gs://
+    const firstSlash = withoutScheme.indexOf("/");
+    if (firstSlash > 0) {
+      const bucket = withoutScheme.substring(0, firstSlash);
+      const objectPath = withoutScheme.substring(firstSlash + 1);
+      normalized = `https://storage.googleapis.com/${bucket}/${objectPath}`;
+    }
+  }
+
+  return normalized;
 }
 
 let nodeIdCounter = 0;
