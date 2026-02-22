@@ -138,7 +138,7 @@ async function uploadImageToGCS(
 
       console.log(`[ImageGen] Uploading to GCS (attempt ${attempt}/${maxRetries})...`);
 
-      // Upload without setting ACLs (bucket has uniform bucket-level access)
+      // Upload and make file publicly readable
       await file.save(buffer, {
         metadata: {
           contentType: "image/png",
@@ -146,17 +146,16 @@ async function uploadImageToGCS(
         timeout: 30000, // Increase timeout to 30 seconds
       });
 
+      // Make file public (permanently accessible without token)
+      await file.makePublic();
+
       console.log(`[ImageGen] ✓ Uploaded to GCS: gs://${bucketName}/${filename}`);
 
-      // Generate a signed URL valid for 7 days (GCS maximum)
-      const [signedUrl] = await file.getSignedUrl({
-        version: "v4",
-        action: "read",
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days (GCS max)
-      });
+      // Generate permanent public URL (no expiration)
+      const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
 
-      console.log(`[ImageGen] ✓ Generated signed URL (valid 7 days)`);
-      return signedUrl;
+      console.log(`[ImageGen] ✓ Generated public URL (permanent)`);
+      return publicUrl;
     } catch (error) {
       lastError = error;
       const errorMsg = error instanceof Error ? error.message : String(error);
