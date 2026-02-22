@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { BlogPost } from "./assembler";
+import FormData from "form-data";
 
 const WIX_API_BASE = "https://www.wixapis.com";
 
@@ -109,19 +110,26 @@ class WixPublisher {
   private async createAndPublishPost(post: BlogPost): Promise<WixPublishResult> {
     const payload = buildDraftPayload(post, this.authorId);
 
+    console.log("[wix-publisher] Creating draft post with payload...");
     const draftResponse = await this.client.post("/blog/v3/draft-posts", {
       draftPost: payload,
     });
+    
+    console.log("[wix-publisher] Draft response media field:", draftResponse.data?.draftPost?.media);
+    
     const draftId = draftResponse.data?.draftPost?.id;
 
     if (!draftId) {
       throw new Error("Wix API did not return a draft ID");
     }
 
+    console.log("[wix-publisher] Publishing draft with ID:", draftId);
     const publishResponse = await this.client.post(
       `/blog/v3/draft-posts/${draftId}/publish`
     );
 
+    console.log("[wix-publisher] Publish response media field:", publishResponse.data?.post?.media);
+    
     const publishedPost = publishResponse.data?.post;
     const postId = publishedPost?.id || publishResponse.data?.postId;
     let url = extractPostUrl(publishedPost);
@@ -169,7 +177,9 @@ class WixPublisher {
   private async fetchPostUrl(postId: string): Promise<string | undefined> {
     try {
       const response = await this.client.get(`/blog/v3/posts/${postId}`);
-      return extractPostUrl(response.data?.post);
+      const post = response.data?.post;
+      console.log("[wix-publisher] Fetched post media after publish:", post?.media);
+      return extractPostUrl(post);
     } catch (error) {
       console.warn("[wix-publisher] Failed to fetch post URL", {
         postId,
@@ -183,6 +193,69 @@ class WixPublisher {
       });
       return undefined;
     }
+  }
+
+  async uploadImageToWixFileManager(externalImageUrl: string): Promise<string | null> {
+    const maxRetries = 3;
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[wix-publisher] Uploading image to Wix File Manager (attempt ${attempt}/${maxRetries})...`);
+        
+        // Download image from external URL (GCS)
+        const imageResponse = await axios.get(externalImageUrl, {
+          responseType: "arraybuffer",
+        });
+        
+        const buffer = imageResponse.data;
+        console.log("[wix-publisher] Downloaded image, size:", buffer.length, "bytes");
+
+        // Upload to Wix using multipart form data
+        const formData = new FormData();
+        formData.append("file", buffer, {
+          filename: "featured-image.png",
+          contentType: "image/png",
+        });
+
+        const uploadResponse = await axios.post(
+          "https://www.wixapis.com/files/v1/files/upload",
+          formData,
+          {
+            headers: {
+              Authorization: process.env.WIX_API_KEY,
+              "wix-site-id": process.env.WIX_SITE_ID,
+              ...formData.getHeaders(),
+            },
+            timeout: 30000,
+          }
+        );
+
+        const wixFileUrl = uploadResponse.data?.file?.url;
+        if (wixFileUrl) {
+          console.log("[wix-publisher] ✓ Image uploaded to Wix Media Manager:", wixFileUrl);
+          return wixFileUrl;
+        } else {
+          console.warn("[wix-publisher] No file URL in Wix response");
+          return null;
+        }
+      } catch (error) {
+        lastError = error;
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        console.error(`[wix-publisher] Upload attempt ${attempt} failed:`, errorMsg);
+
+        if (attempt < maxRetries) {
+          // Wait before retrying (exponential backoff)
+          const delay = Math.pow(2, attempt - 1) * 1000;
+          console.log(`[wix-publisher] Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+
+    console.error("[wix-publisher] Failed to upload to Wix after all retries:", lastError);
+    // Return null instead of falling back to signed URL
+    return null;
   }
 }
 
@@ -201,6 +274,22 @@ export async function publishToWix(
 ): Promise<WixPublishResult> {
   try {
     const publisher = getPublisher();
+    
+    // If post has a featured image URL, upload it to Wix File Manager first
+    if (post.featuredImageUrl) {
+      console.log("[publishToWix] Processing featured image for Wix Media Manager...");
+      const wixImageUrl = await publisher.uploadImageToWixFileManager(
+        post.featuredImageUrl
+      );
+      if (wixImageUrl) {
+        post.featuredImageUrl = wixImageUrl;
+        console.log("[publishToWix] ✓ Image successfully stored in Wix Media Manager");
+      } else {
+        console.warn("[publishToWix] ⚠️  Failed to upload image to Wix Media Manager - post will be published without featured image");
+        post.featuredImageUrl = undefined;
+      }
+    }
+    
     return await publisher.publish(post, options);
   } catch (error) {
     throw normalizeWixError(error);
@@ -226,12 +315,23 @@ function buildDraftPayload(post: BlogPost, authorId: string): WixDraftPostPayloa
   };
 
   if (post.featuredImageUrl) {
+    console.log("[buildDraftPayload] Setting featured image URL:", post.featuredImageUrl);
     payload.coverMedia = {
       image: {
         url: post.featuredImageUrl,
       },
     };
+    console.log("[buildDraftPayload] coverMedia payload:", JSON.stringify(payload.coverMedia));
+  } else {
+    console.log("[buildDraftPayload] No featured image URL provided");
   }
+
+  console.log("[buildDraftPayload] Full payload being sent to Wix:", {
+    title: payload.title,
+    slug: payload.slug,
+    coverMedia: payload.coverMedia,
+    excerpt: payload.excerpt?.substring(0, 50),
+  });
 
   return payload;
 }
