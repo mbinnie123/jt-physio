@@ -33,3 +33,5 @@ next-env.d.ts
 .env.local
 gcp-service-account.json
 jt-football-physiotherapy-service.json
+jt-football-physiotherapy-*.json
+submit-sitemap-to-vertex.json
