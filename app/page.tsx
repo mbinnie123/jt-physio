@@ -241,18 +241,22 @@ export default async function HomePage() {
                       <Image
                         src="/physiotherapy-kilmarnock-ayrshire-clinic-football.webp"
                         alt="Football injury physiotherapy assessment in Kilmarnock Ayrshire"
-                        width={400}
-                        height={300}
+                        width={765}
+                        height={1020}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                         className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                        priority={false}
                       />
                     </div>
                     <div className="flex-1">
                       <Image
                         src="/physiotherapy-kilmarnock-ayrshire-clinic-table.webp"
                         alt="Modern physiotherapy clinic treatment room in Kilmarnock"
-                        width={400}
-                        height={300}
+                        width={765}
+                        height={1020}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                         className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                        priority={false}
                       />
                     </div>
                   </div>
