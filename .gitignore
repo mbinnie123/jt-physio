@@ -31,4 +31,5 @@ next-env.d.ts
 
 # Secrets
 .env.local
+gcp-service-account.json
 jt-football-physiotherapy-service.json
