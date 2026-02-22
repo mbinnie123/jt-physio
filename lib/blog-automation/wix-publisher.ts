@@ -193,80 +193,6 @@ class WixPublisher {
       return undefined;
     }
   }
-
-  async uploadImageToWixFileManager(externalImageUrl: string): Promise<string | null> {
-    const maxRetries = 3;
-    let lastError: unknown;
-
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        console.log(`[wix-publisher] Importing image to Wix File Manager (attempt ${attempt}/${maxRetries})...`);
-        
-        const apiKey = process.env.WIX_API_KEY;
-        const siteId = process.env.WIX_SITE_ID;
-        const accountId = process.env.WIX_ACCOUNT_ID;
-
-        if (!apiKey || !siteId) {
-          throw new Error("Missing WIX_API_KEY or WIX_SITE_ID for media import");
-        }
-
-        // Use Import Files API: Wix fetches the image from the URL server-side
-        const importResponse = await axios.post(
-          "https://www.wixapis.com/v1/media/import/files",
-          {
-            mediaFiles: [
-              {
-                url: externalImageUrl,
-                fileName: "featured-image.png",
-                mediaType: "IMAGE",
-              },
-            ],
-          },
-          {
-            headers: {
-              Authorization: apiKey.startsWith("Bearer ") ? apiKey : `Bearer ${apiKey}`,
-              "wix-site-id": siteId,
-              ...(accountId ? { "wix-account-id": accountId } : {}),
-              "Content-Type": "application/json",
-            },
-            timeout: 30000,
-          }
-        );
-
-        const responseData = importResponse.data as { results?: Array<{ url?: string }> };
-        const wixFileUrl = responseData?.results?.[0]?.url;
-
-        if (wixFileUrl) {
-          console.log("[wix-publisher] ✓ Image imported to Wix Media Manager:", wixFileUrl);
-          return wixFileUrl;
-        } else {
-          console.warn("[wix-publisher] No file URL in import response", { responseData });
-          return null;
-        }
-      } catch (error) {
-        lastError = error;
-        if (axios.isAxiosError(error) && error.response) {
-          console.error("[wix-publisher] Wix import error response:", {
-            status: error.response.status,
-            statusText: error.response.statusText,
-            data: error.response.data,
-          });
-        }
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        console.error(`[wix-publisher] Import attempt ${attempt} failed:`, errorMsg);
-
-        if (attempt < maxRetries) {
-          // Wait before retrying (exponential backoff)
-          const delay = Math.pow(2, attempt - 1) * 1000;
-          console.log(`[wix-publisher] Retrying in ${delay}ms...`);
-          await new Promise(resolve => setTimeout(resolve, delay));
-        }
-      }
-    }
-
-    console.error("[wix-publisher] Failed to import to Wix after all retries:", lastError);
-    return null;
-  }
 }
 
 let publisherInstance: WixPublisher | null = null;
@@ -291,19 +217,8 @@ export async function publishToWix(
       );
     }
 
-    console.log("[publishToWix] Processing featured image for Wix Media Manager...");
-    const wixImageUrl = await publisher.uploadImageToWixFileManager(
-      post.featuredImageUrl
-    );
-
-    if (!wixImageUrl) {
-      throw new Error(
-        "Failed to import featured image to Wix Media Manager. Publish aborted."
-      );
-    }
-
-    post.featuredImageUrl = wixImageUrl;
-    console.log("[publishToWix] ✓ Image imported to Wix Media Manager");
+    // Use GCS URL directly as coverMedia. Wix will fetch and display it.
+    console.log("[publishToWix] Using GCS URL for featured image:", post.featuredImageUrl);
     
     return await publisher.publish(post, options);
   } catch (error) {
