@@ -66,6 +66,16 @@ export default function RootLayout({
 
   return (
     <html lang="en-GB">
+      <head>
+        {/* Preload hero SVGs for optimal LCP performance */}
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/jt-football-physio-logo.svg" 
+          fetchPriority="high"
+          type="image/svg+xml"
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/5 text-slate-900 min-h-screen`}>
         <script
           type="application/ld+json"
