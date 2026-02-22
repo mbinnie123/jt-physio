@@ -64,11 +64,6 @@ interface WixDraftPostPayload {
     title?: string;
     description?: string;
   };
-  coverMedia?: {
-    image: {
-      url: string;
-    };
-  };
 }
 
 class WixPublisher {
@@ -109,15 +104,12 @@ class WixPublisher {
   private async createAndPublishPost(post: BlogPost): Promise<WixPublishResult> {
     const payload = buildDraftPayload(post, this.authorId);
 
-    console.log("[wix-publisher] Creating draft post with payload...");
-    console.log("[wix-publisher] Draft payload coverMedia:", JSON.stringify(payload.coverMedia));
+    console.log("[wix-publisher] Creating draft post...");
     const draftResponse = await this.client.post("/blog/v3/draft-posts", {
       draftPost: payload,
     });
     
-    console.log("[wix-publisher] Draft response full:", JSON.stringify(draftResponse.data?.draftPost, null, 2));
-    console.log("[wix-publisher] Draft response media field:", draftResponse.data?.draftPost?.media);
-    
+    console.log("[wix-publisher] Draft created successfully");
     const draftId = draftResponse.data?.draftPost?.id;
 
     if (!draftId) {
@@ -129,9 +121,7 @@ class WixPublisher {
       `/blog/v3/draft-posts/${draftId}/publish`
     );
 
-    console.log("[wix-publisher] Publish response full:", JSON.stringify(publishResponse.data?.post, null, 2));
-    console.log("[wix-publisher] Publish response media field:", publishResponse.data?.post?.media);
-    
+    console.log("[wix-publisher] Post published successfully");
     const publishedPost = publishResponse.data?.post;
     const postId = publishedPost?.id || publishResponse.data?.postId;
     let url = extractPostUrl(publishedPost);
@@ -180,8 +170,6 @@ class WixPublisher {
     try {
       const response = await this.client.get(`/blog/v3/posts/${postId}`);
       const post = response.data?.post;
-      console.log("[wix-publisher] Fetched post full response:", JSON.stringify(post, null, 2));
-      console.log("[wix-publisher] Fetched post media after publish:", post?.media);
       return extractPostUrl(post);
     } catch (error) {
       console.warn("[wix-publisher] Failed to fetch post URL", {
@@ -248,29 +236,13 @@ function buildDraftPayload(post: BlogPost, authorId: string): WixDraftPostPayloa
     },
   };
 
-  const normalizedImageUrl = normalizeFeaturedImageUrl(post.featuredImageUrl);
+  // Note: Featured images are now embedded as IMAGE nodes in richContent (not coverMedia)
+  // This is because Wix ignores the coverMedia field but preserves IMAGE nodes
 
-  if (normalizedImageUrl) {
-    if (normalizedImageUrl !== post.featuredImageUrl) {
-      console.log("[buildDraftPayload] Normalized featured image URL:", normalizedImageUrl);
-    }
-    console.log("[buildDraftPayload] Setting featured image URL:", normalizedImageUrl);
-    payload.coverMedia = {
-      image: {
-        url: normalizedImageUrl,
-      },
-    };
-    console.log("[buildDraftPayload] coverMedia payload:", JSON.stringify(payload.coverMedia));
-  } else {
-    console.log("[buildDraftPayload] No featured image URL provided");
+  console.log("[buildDraftPayload] Building draft for:", post.title);
+  if (post.featuredImageUrl) {
+    console.log("[buildDraftPayload] Featured image will be added as first content node:", post.featuredImageUrl);
   }
-
-  console.log("[buildDraftPayload] Full payload being sent to Wix:", {
-    title: payload.title,
-    slug: payload.slug,
-    coverMedia: payload.coverMedia,
-    excerpt: payload.excerpt?.substring(0, 50),
-  });
 
   return payload;
 }
@@ -316,6 +288,15 @@ function buildRichContent(post: BlogPost): {
   documentStyle: Record<string, unknown>;
 } {
   const nodes: WixRichTextNode[] = [];
+
+  // Add featured image as the first node if it exists
+  // This is more reliable than coverMedia which Wix ignores
+  if (post.featuredImageUrl) {
+    const normalizedUrl = normalizeFeaturedImageUrl(post.featuredImageUrl);
+    if (normalizedUrl) {
+      nodes.push(createImageNode(normalizedUrl, post.title || "Featured image"));
+    }
+  }
 
   post.sections.forEach((section, index) => {
     // Skip heading for first section if it matches the post title (to avoid duplication)
@@ -454,6 +435,21 @@ function createTextNode(text: string, link?: { url: string; target?: string }): 
 
 function createLinkNode(text: string, url: string): WixRichTextNode {
   return createTextNode(text, { url, target: "BLANK" });
+}
+
+function createImageNode(url: string, altText?: string): WixRichTextNode {
+  return {
+    id: nextNodeId("image"),
+    type: "IMAGE",
+    imageData: {
+      image: {
+        src: {
+          url: url,
+        },
+      },
+      altText: altText || "Image",
+    },
+  };
 }
 
 function createListItemNode(childNodes: WixRichTextNode[]): WixRichTextNode {
