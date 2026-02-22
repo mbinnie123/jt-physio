@@ -361,7 +361,7 @@ export default async function HomePage() {
                   </h3>
                   <p className="text-slate-600 mb-6 flex-grow">{service.desc}</p>
                   <div className="flex items-center justify-between mt-auto">
-                    <Link href={service.href} className="text-sm font-semibold text-slate-500 hover:text-[#1e3a8a] hover:underline">Read More</Link>
+                    <Link href={service.href} className="text-sm font-semibold text-slate-500 hover:text-[#1e3a8a] hover:underline">Learn more about {service.title}</Link>
                     <a href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service" className="font-semibold text-[#1e3a8a] hover:underline">Book Now &rarr;</a>
                   </div>
                 </FadeIn>
