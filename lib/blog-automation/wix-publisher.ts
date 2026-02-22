@@ -41,6 +41,14 @@ interface WixRichTextNode {
       target?: "_blank" | "_self";
     };
   };
+  imageData?: {
+    image?: {
+      src?: {
+        url: string;
+      };
+    };
+    altText?: string;
+  };
 }
 
 interface WixDraftPostPayload {
