@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import FormData from "form-data";
 import { BlogPost } from "./assembler";
 
 const WIX_API_BASE = "https://www.wixapis.com";
@@ -201,69 +200,60 @@ class WixPublisher {
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        console.log(`[wix-publisher] Uploading image to Wix File Manager (attempt ${attempt}/${maxRetries})...`);
+        console.log(`[wix-publisher] Importing image to Wix File Manager (attempt ${attempt}/${maxRetries})...`);
         
-        // Download image from external URL (GCS)
-        const imageResponse = await axios.get(externalImageUrl, {
-          responseType: "arraybuffer",
-        });
-        
-        const buffer = imageResponse.data;
-        console.log("[wix-publisher] Downloaded image, size:", buffer.length, "bytes");
-
-        const contentType = imageResponse.headers["content-type"] || "image/png";
-
-        const formData = new FormData();
-        formData.append("file", buffer, {
-          filename: "featured-image.png",
-          contentType,
-        });
-
         const apiKey = process.env.WIX_API_KEY;
         const siteId = process.env.WIX_SITE_ID;
         const accountId = process.env.WIX_ACCOUNT_ID;
 
         if (!apiKey || !siteId) {
-          throw new Error("Missing WIX_API_KEY or WIX_SITE_ID for media upload");
+          throw new Error("Missing WIX_API_KEY or WIX_SITE_ID for media import");
         }
 
-        const uploadResponse = await axios.post(
-          "https://www.wixapis.com/media-platform/v1/files/upload?purpose=site-files",
-          formData,
+        // Use Import Files API: Wix fetches the image from the URL server-side
+        const importResponse = await axios.post(
+          "https://www.wixapis.com/v1/media/import/files",
+          {
+            mediaFiles: [
+              {
+                url: externalImageUrl,
+                fileName: "featured-image.png",
+                mediaType: "IMAGE",
+              },
+            ],
+          },
           {
             headers: {
-              ...formData.getHeaders(),
               Authorization: apiKey.startsWith("Bearer ") ? apiKey : `Bearer ${apiKey}`,
               "wix-site-id": siteId,
               ...(accountId ? { "wix-account-id": accountId } : {}),
+              "Content-Type": "application/json",
             },
-            maxBodyLength: Infinity,
-            maxContentLength: Infinity,
             timeout: 30000,
           }
         );
 
-        const responseData = uploadResponse.data as { file?: { url: string; fileName?: string } };
-        const wixFileUrl = responseData?.file?.url;
+        const responseData = importResponse.data as { results?: Array<{ url?: string }> };
+        const wixFileUrl = responseData?.results?.[0]?.url;
 
         if (wixFileUrl) {
-          console.log("[wix-publisher] ✓ Image uploaded to Wix Media Manager:", wixFileUrl);
+          console.log("[wix-publisher] ✓ Image imported to Wix Media Manager:", wixFileUrl);
           return wixFileUrl;
         } else {
-          console.warn("[wix-publisher] No file URL in Wix response", { responseData });
+          console.warn("[wix-publisher] No file URL in import response", { responseData });
           return null;
         }
       } catch (error) {
         lastError = error;
         if (axios.isAxiosError(error) && error.response) {
-          console.error("[wix-publisher] Wix upload error response:", {
+          console.error("[wix-publisher] Wix import error response:", {
             status: error.response.status,
             statusText: error.response.statusText,
             data: error.response.data,
           });
         }
         const errorMsg = error instanceof Error ? error.message : String(error);
-        console.error(`[wix-publisher] Upload attempt ${attempt} failed:`, errorMsg);
+        console.error(`[wix-publisher] Import attempt ${attempt} failed:`, errorMsg);
 
         if (attempt < maxRetries) {
           // Wait before retrying (exponential backoff)
@@ -274,7 +264,7 @@ class WixPublisher {
       }
     }
 
-    console.error("[wix-publisher] Failed to upload to Wix after all retries:", lastError);
+    console.error("[wix-publisher] Failed to import to Wix after all retries:", lastError);
     return null;
   }
 }
@@ -308,12 +298,12 @@ export async function publishToWix(
 
     if (!wixImageUrl) {
       throw new Error(
-        "Failed to upload featured image to Wix Media Manager. Publish aborted."
+        "Failed to import featured image to Wix Media Manager. Publish aborted."
       );
     }
 
     post.featuredImageUrl = wixImageUrl;
-    console.log("[publishToWix] ✓ Image stored in Wix Media Manager");
+    console.log("[publishToWix] ✓ Image imported to Wix Media Manager");
     
     return await publisher.publish(post, options);
   } catch (error) {
