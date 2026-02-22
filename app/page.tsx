@@ -202,7 +202,7 @@ export default async function HomePage() {
 
           {/* Decorative background element */}
           <div className="absolute top-0 right-0 -z-10 translate-x-1/3 -translate-y-1/4 opacity-10">
-             <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" />
+             <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" fetchPriority="high" />
           </div>
         </section>
 
