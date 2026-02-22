@@ -52,6 +52,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/blogs/:slug',
+        destination: '/post/:slug',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
