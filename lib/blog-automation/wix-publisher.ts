@@ -110,10 +110,12 @@ class WixPublisher {
     const payload = buildDraftPayload(post, this.authorId);
 
     console.log("[wix-publisher] Creating draft post with payload...");
+    console.log("[wix-publisher] Draft payload coverMedia:", JSON.stringify(payload.coverMedia));
     const draftResponse = await this.client.post("/blog/v3/draft-posts", {
       draftPost: payload,
     });
     
+    console.log("[wix-publisher] Draft response full:", JSON.stringify(draftResponse.data?.draftPost, null, 2));
     console.log("[wix-publisher] Draft response media field:", draftResponse.data?.draftPost?.media);
     
     const draftId = draftResponse.data?.draftPost?.id;
@@ -127,6 +129,7 @@ class WixPublisher {
       `/blog/v3/draft-posts/${draftId}/publish`
     );
 
+    console.log("[wix-publisher] Publish response full:", JSON.stringify(publishResponse.data?.post, null, 2));
     console.log("[wix-publisher] Publish response media field:", publishResponse.data?.post?.media);
     
     const publishedPost = publishResponse.data?.post;
@@ -177,6 +180,7 @@ class WixPublisher {
     try {
       const response = await this.client.get(`/blog/v3/posts/${postId}`);
       const post = response.data?.post;
+      console.log("[wix-publisher] Fetched post full response:", JSON.stringify(post, null, 2));
       console.log("[wix-publisher] Fetched post media after publish:", post?.media);
       return extractPostUrl(post);
     } catch (error) {
