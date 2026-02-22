@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeSection, generateOutline } from "@/lib/blog-automation/writer";
-import { blogDatabase } from "@/lib/blog-automation/db";
+import { blogDatabase, type BlogDraft } from "@/lib/blog-automation/db";
+import { type ResearchData } from "@/lib/blog-automation/research";
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,6 +42,8 @@ export async function POST(request: NextRequest) {
 
     const draft = blogDatabase.getDraft(draftId);
     if (!draft) {
+      console.error(`[Write-Section] Draft not found. Requested ID: ${draftId}`);
+      console.error(`[Write-Section] Available drafts: ${blogDatabase.getAllDrafts().map(d => d.id).join(', ')}`);
       return NextResponse.json(
         { error: "Draft not found" },
         { status: 404 }
@@ -57,24 +60,41 @@ export async function POST(request: NextRequest) {
     // Write the section
     let section;
     if (content) {
-      // If content is provided directly, use it
+      // If content is provided directly, convert it to Ricos format
+      // For simplicity, wrap in a paragraph node
       section = {
         title: sectionTitle,
-        content,
+        content: {
+          nodes: [
+            {
+              type: "paragraph",
+              nodes: [
+                {
+                  type: "text",
+                  data: content,
+                },
+              ],
+            },
+          ],
+        },
         wordCount: content.split(/\s+/).length,
       };
     } else {
-      // Otherwise, generate the content
+      // Filter research data by selected sources
+      const filteredResearch = filterResearchBySelection(draft, draft.researchData);
+      
+      // Otherwise, generate the content (returns Ricos format)
       section = await writeSection(
         draft.topic,
         sectionTitle,
-        draft.researchData,
+        filteredResearch,
         index + 1,
         {
           tone,
           targetAudience,
           wordCountPerSection: targetWords,
-        }
+        },
+        draft.selectedSourceIds // Pass selected source IDs for contextual linking
       );
     }
 
@@ -86,6 +106,14 @@ export async function POST(request: NextRequest) {
     const updatedDraft = blogDatabase.updateDraft(draft.id, {
       sections: updatedSections,
     });
+
+    // Debug: Log what's being returned
+    console.log(`[API Response] Section has contentHtml: ${'contentHtml' in section}`);
+    if (section.contentHtml) {
+      const linkCount = (section.contentHtml.match(/<a /g) || []).length;
+      console.log(`[API Response] contentHtml length: ${section.contentHtml.length}, links: ${linkCount}`);
+      console.log(`[API Response] First 300 chars of contentHtml: ${section.contentHtml.substring(0, 300)}`);
+    }
 
     return NextResponse.json({
       success: true,
@@ -126,6 +154,7 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const draftId = url.searchParams.get("draftId");
     const action = url.searchParams.get("action");
+    const numSections = parseInt(url.searchParams.get("numSections") || "5");
 
     if (!draftId) {
       return NextResponse.json(
@@ -136,6 +165,8 @@ export async function GET(request: NextRequest) {
 
     const draft = blogDatabase.getDraft(draftId);
     if (!draft) {
+      console.error(`[Write-Section-GET] Draft not found. Requested ID: ${draftId}`);
+      console.error(`[Write-Section-GET] Available drafts: ${blogDatabase.getAllDrafts().map(d => d.id).join(', ')}`);
       return NextResponse.json(
         { error: "Draft not found" },
         { status: 404 }
@@ -150,8 +181,29 @@ export async function GET(request: NextRequest) {
     }
 
     if (action === "generateOutline") {
-      const outline = await generateOutline(draft.topic, draft.researchData);
-      return NextResponse.json({ outline });
+      try {
+        const outline = await generateOutline(
+          draft.topic,
+          filterResearchBySelection(draft, draft.researchData),
+          numSections
+        );
+        
+        if (!outline || outline.length === 0) {
+          console.error("Generated outline is empty", { topic: draft.topic, sourcesCount: draft.researchData?.sources?.length });
+          return NextResponse.json({ 
+            error: "Failed to generate outline - empty result from AI",
+            outline: [] 
+          }, { status: 400 });
+        }
+        
+        return NextResponse.json({ outline });
+      } catch (err) {
+        console.error("Error generating outline:", err);
+        return NextResponse.json(
+          { error: `Failed to generate outline: ${err instanceof Error ? err.message : "Unknown error"}` },
+          { status: 500 }
+        );
+      }
     }
 
     return NextResponse.json({
@@ -165,4 +217,32 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+function filterResearchBySelection(
+  draft: BlogDraft,
+  researchData: ResearchData
+): ResearchData {
+  const selections = draft.selectedSourceIds || [];
+  if (!researchData?.sources || selections.length === 0) {
+    return researchData;
+  }
+
+  const filteredSources = researchData.sources.filter((source) => {
+    if (!source) return false;
+    // Always use URL as the primary identifier since it's stable
+    if (source.url) {
+      return selections.includes(source.url);
+    }
+    return false;
+  });
+
+  if (filteredSources.length === 0) {
+    return researchData;
+  }
+
+  return {
+    ...researchData,
+    sources: filteredSources,
+  };
 }

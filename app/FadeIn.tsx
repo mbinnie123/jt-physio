@@ -43,7 +43,7 @@ export function FadeIn({ children, className = "", delay = 0 }: FadeInProps) {
       className={`transition-all duration-1000 ease-out ${
         isVisible ? "opacity-100 blur-0 translate-y-0" : "opacity-0 blur-sm translate-y-12"
       } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, pointerEvents: isVisible ? "auto" : "none" }}
     >
       {children}
     </div>

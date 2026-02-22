@@ -144,18 +144,34 @@ async function uploadImageToGCS(
           contentType: "image/png",
         },
         timeout: 30000, // Increase timeout to 30 seconds
+        resumable: false, // avoid chunked uploads that can trigger SSL MAC errors
       });
-
-      // Make file public (permanently accessible without token)
-      await file.makePublic();
 
       console.log(`[ImageGen] ✓ Uploaded to GCS: gs://${bucketName}/${filename}`);
 
-      // Generate permanent public URL (no expiration)
-      const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+      try {
+        // Prefer permanent public URL when IAM allows it
+        await file.makePublic();
+        const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+        console.log(`[ImageGen] ✓ Generated public URL (permanent)`);
+        return publicUrl;
+      } catch (makePublicError) {
+        const errorMsg = makePublicError instanceof Error ? makePublicError.message : String(makePublicError);
+        console.warn(
+          "[ImageGen] ⚠️ makePublic failed; falling back to signed URL",
+          errorMsg
+        );
 
-      console.log(`[ImageGen] ✓ Generated public URL (permanent)`);
-      return publicUrl;
+        // Fallback: signed URL (7 days) to keep pipeline working until IAM is fixed
+        const [signedUrl] = await file.getSignedUrl({
+          version: "v4",
+          action: "read",
+          expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        });
+
+        console.log(`[ImageGen] ✓ Generated fallback signed URL (valid 7 days)`);
+        return signedUrl;
+      }
     } catch (error) {
       lastError = error;
       const errorMsg = error instanceof Error ? error.message : String(error);

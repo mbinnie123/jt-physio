@@ -108,9 +108,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Update draft with research data
+    // Automatically select all sources for linking
+    const selectedSourceIds = researchData?.sources?.length > 0
+      ? researchData.sources.map((source: any, index: number) => 
+          source.url || `${source.title || "source"}-${index}`
+        )
+      : [];
+
     const finalDraft = blogDatabase.updateDraft(draft.id, {
       status: researchMore ? draft.status : "writing",
       researchData,
+      selectedSourceIds,
     });
 
     if (!finalDraft) {
@@ -128,9 +136,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Research API error:", error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error("Error details:", errorMsg, error);
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : "Research failed",
+        error: errorMsg || "Research failed",
+        debug: process.env.NODE_ENV === 'development' ? String(error) : undefined,
       },
       { status: 500 }
     );

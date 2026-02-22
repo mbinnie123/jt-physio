@@ -194,6 +194,7 @@ export default async function HomePage() {
                   height={500}
                   className="h-auto w-64 lg:w-full max-w-md mx-auto"
                   priority
+                  fetchPriority="high"
                 />
               </FadeIn>
             </div>
