@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from "axios";
 import { BlogPost } from "./assembler";
-import FormData from "form-data";
 
 const WIX_API_BASE = "https://www.wixapis.com";
 
@@ -211,27 +210,32 @@ class WixPublisher {
         const buffer = imageResponse.data;
         console.log("[wix-publisher] Downloaded image, size:", buffer.length, "bytes");
 
-        // Upload to Wix using multipart form data
+        // Try using native fetch API instead of axios for better SSL handling
         const formData = new FormData();
-        formData.append("file", buffer, {
-          filename: "featured-image.png",
-          contentType: "image/png",
-        });
+        const blob = new Blob([buffer], { type: "image/png" });
+        formData.append("file", blob, "featured-image.png");
 
-        const uploadResponse = await axios.post(
+        const uploadResponse = await fetch(
           "https://www.wixapis.com/files/v1/files/upload",
-          formData,
           {
+            method: "POST",
             headers: {
-              Authorization: process.env.WIX_API_KEY,
-              "wix-site-id": process.env.WIX_SITE_ID,
-              ...formData.getHeaders(),
+              Authorization: process.env.WIX_API_KEY || "",
+              "wix-site-id": process.env.WIX_SITE_ID || "",
             },
-            timeout: 30000,
+            body: formData,
           }
         );
 
-        const wixFileUrl = uploadResponse.data?.file?.url;
+        if (!uploadResponse.ok) {
+          throw new Error(
+            `Wix upload failed: ${uploadResponse.status} ${uploadResponse.statusText}`
+          );
+        }
+
+        const responseData = await uploadResponse.json() as { file?: { url: string } };
+        const wixFileUrl = responseData?.file?.url;
+
         if (wixFileUrl) {
           console.log("[wix-publisher] ✓ Image uploaded to Wix Media Manager:", wixFileUrl);
           return wixFileUrl;
@@ -254,7 +258,6 @@ class WixPublisher {
     }
 
     console.error("[wix-publisher] Failed to upload to Wix after all retries:", lastError);
-    // Return null instead of falling back to signed URL
     return null;
   }
 }
