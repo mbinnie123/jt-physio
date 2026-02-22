@@ -72,6 +72,7 @@ interface WixDraftPostPayload {
     title?: string;
     description?: string;
   };
+  coverImage?: string;
 }
 
 class WixPublisher {
@@ -244,12 +245,18 @@ function buildDraftPayload(post: BlogPost, authorId: string): WixDraftPostPayloa
     },
   };
 
-  // Note: Featured images are now embedded as IMAGE nodes in richContent (not coverMedia)
-  // This is because Wix ignores the coverMedia field but preserves IMAGE nodes
+  // Set the featured image as the cover image for blog post previews/lists
+  if (post.featuredImageUrl) {
+    const normalizedUrl = normalizeFeaturedImageUrl(post.featuredImageUrl);
+    if (normalizedUrl) {
+      payload.coverImage = normalizedUrl;
+      console.log("[buildDraftPayload] Featured image set as coverImage:", normalizedUrl);
+    }
+  }
 
   console.log("[buildDraftPayload] Building draft for:", post.title);
   if (post.featuredImageUrl) {
-    console.log("[buildDraftPayload] Featured image will be added as first content node:", post.featuredImageUrl);
+    console.log("[buildDraftPayload] Featured image (also embedded as first content node):", post.featuredImageUrl);
   }
 
   return payload;
