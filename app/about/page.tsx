@@ -1,21 +1,30 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
 import { FadeIn } from "../FadeIn";
 
 export const metadata: Metadata = {
-  title: "About Us | JT Football Physiotherapy",
-  description: "Meet Jordan Templeton and the team at JT Football Physiotherapy. Expert football-specific care in Kilmarnock for pain relief, rehab, and performance.",
+  title: "About Jordan Templeton | JT Football Physiotherapy - Kilmarnock Clinic",
+  description: "Meet Jordan Templeton, MSc Physiotherapist. With 7+ years in professional football at Kilmarnock, Hearts, experience across Ayrshire and Kilmarnock. Expert physiotherapy for footballers.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
-    title: "About Us | JT Football Physiotherapy",
-    description: "Meet Jordan Templeton and the team at JT Football Physiotherapy. Expert football-specific care in Kilmarnock for pain relief, rehab, and performance.",
+    title: "About Jordan Templeton | JT Football Physiotherapy - Kilmarnock Clinic",
+    description: "Meet Jordan Templeton, MSc Physiotherapist. With 7+ years in professional football at Kilmarnock, Hearts, experience across Ayrshire and Kilmarnock. Expert physiotherapy for footballers.",
     url: "https://www.jtfootballphysiotherapy.co.uk/about",
+    images: [
+      {
+        url: "https://www.jtfootballphysiotherapy.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
+        width: 600,
+        height: 750,
+        alt: "Jordan Templeton - MSc Physiotherapist at JT Football Physiotherapy Kilmarnock Ayrshire",
+      }
+    ],
   },
-  keywords: ["Jordan Templeton", "football physio bio", "Kilmarnock physiotherapy team", "sports injury specialist"],
+  keywords: ["Jordan Templeton", "physiotherapist", "MSc", "Kilmarnock", "football physio", "Ayrshire physio", "professional physiotherapy", "sports injury specialist", "football rehabilitation", "JT Football Physiotherapy Kilmarnock", "Hearts FC physio", "Kilmarnock FC physio"],
 };
 
 export default function AboutPage() {
@@ -58,6 +67,52 @@ export default function AboutPage() {
               <li className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-2 text-sm text-slate-900">Pain & mobility focused Ayrshire Physiotherapy</li>
             </ul>
             </FadeIn>
+          </div>
+        </section>
+
+        {/* Meet Jordan Section */}
+        <section className="py-16 bg-gradient-to-r from-[#1e3a8a] via-[#4C6CD6] to-[#1e3a8a] text-white">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="grid lg:grid-cols-2 gap-8 items-center lg:items-start">
+              <FadeIn>
+                <Image
+                  src="/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp"
+                  alt="Jordan Templeton MSc Physiotherapist - Professional headshot - JT Football Physiotherapy Kilmarnock Ayrshire clinic specialist"
+                  title="Jordan Templeton - Football Physiotherapist in Kilmarnock, Ayrshire"
+                  width={500}
+                  height={625}
+                  className="w-full h-auto rounded-2xl shadow-lg object-cover"
+                />
+              </FadeIn>
+              <FadeIn delay={100}>
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-widest text-blue-100 mb-3">Meet the Founder</p>
+                  <h2 className="text-3xl font-bold text-white mb-4">Jordan Templeton</h2>
+                  <p className="text-lg font-semibold text-blue-100 mb-4">MSc Physiotherapist & Founder</p>
+                  <div className="space-y-4 text-blue-50 leading-relaxed">
+                    <p>
+                      With over 7 years of professional experience in elite football, Jordan combines practical expertise from Kilmarnock FC and Hearts of Midlothian FC with evidence-based rehabilitation principles.
+                    </p>
+                    <div>
+                      <h3 className="font-bold text-white mb-2 text-lg">Professional Experience</h3>
+                      <ul className="list-disc pl-5 space-y-1 text-sm">
+                        <li>4 years coaching at Kilmarnock FC Academy</li>
+                        <li>Academy Physiotherapist at Kilmarnock FC</li>
+                        <li>Professional Development Phase Physiotherapist at Hearts of Midlothian FC</li>
+                        <li>Current: Full-time Physiotherapist at Kilmarnock FC</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-white mb-2 text-lg">Qualifications</h3>
+                      <ul className="list-disc pl-5 space-y-1 text-sm">
+                        <li><strong>MSc Physiotherapy (Pre-Registration)</strong> — Glasgow Caledonian University</li>
+                        <li><strong>BSc Sport & Exercise Science (First Class)</strong> — University of the West of Scotland</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
           </div>
         </section>
 
@@ -120,39 +175,33 @@ export default function AboutPage() {
             </FadeIn>
 
             <FadeIn>
-            <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-founder-title">
-              <h2 id="jt-founder-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">About <span className="text-blue-600">Jordan Templeton</span></h2>
-              <p className="mb-2.5 leading-relaxed text-slate-600">
-                <strong>Jordan Templeton</strong> is the founder and driving force behind
-                JT Football Physiotherapy — a leading physiotherapy provider in Kilmarnock, focused on helping football players and active people in Ayrshire overcome injury, optimise
-                performance, and return to the sport they love.
-              </p>
-              <p className="mb-0 leading-relaxed text-slate-600">
-                Jordan’s work in physiotherapy and physical health is built around practical assessment, evidence-led rehab, and education — so you understand your
-                pain, know what’s driving it, and have a plan that makes sense for your goals.
+            <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" aria-labelledby="jt-services-title">
+              <h2 id="jt-services-title" className="mb-2.5 text-xl font-bold tracking-tight text-slate-900">Football Physio Services in <span className="text-blue-600">Kilmarnock & Ayrshire</span></h2>
+              <p className="mb-4 leading-relaxed text-slate-600">
+                Whether you're a competitive footballer, active player, or dealing with pain that's affecting your sport, we provide tailored physiotherapy assessment and rehabilitation.
               </p>
 
-              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="rounded-xl border border-slate-200 bg-white p-3">
-                  <h3 className="mb-1.5 text-base font-bold text-slate-900">What we treat</h3>
-                  <ul className="m-0 list-disc pl-4 leading-relaxed text-slate-600">
-                    <li className="my-0.5">Ankle sprains</li>
+                  <h3 className="mb-1.5 text-base font-bold text-slate-900">Injuries we specialise in</h3>
+                  <ul className="m-0 list-disc pl-4 leading-relaxed text-slate-600 text-sm">
+                    <li className="my-0.5">Ankle sprains & instability</li>
                     <li className="my-0.5">Hamstring pain & strains</li>
-                    <li className="my-0.5">Knee ligament injuries</li>
+                    <li className="my-0.5">Knee ligament & ACL injuries</li>
                     <li className="my-0.5">Hip & groin pain</li>
                     <li className="my-0.5">Lower back pain</li>
-                    <li className="my-0.5">Calf / foot / leg pain</li>
+                    <li className="my-0.5">Calf, foot & leg pain</li>
                   </ul>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-white p-3">
                   <h3 className="mb-1.5 text-base font-bold text-slate-900">Who we help</h3>
-                  <ul className="m-0 list-disc pl-4 leading-relaxed text-slate-600">
-                    <li className="my-0.5">Footballers (all levels) in Ayrshire</li>
-                    <li className="my-0.5">Runners & gym-goers</li>
-                    <li className="my-0.5">Active adults</li>
-                    <li className="my-0.5">People with persistent pain</li>
-                    <li className="my-0.5">Return-to-play support</li>
-                    <li className="my-0.5">Online physio consultations</li>
+                  <ul className="m-0 list-disc pl-4 leading-relaxed text-slate-600 text-sm">
+                    <li className="my-0.5">Footballers at all levels</li>
+                    <li className="my-0.5">Runners, gym-goers & athletes</li>
+                    <li className="my-0.5">Active adults managing pain</li>
+                    <li className="my-0.5">Return-to-play rehabilitation</li>
+                    <li className="my-0.5">Injury prevention & performance</li>
+                    <li className="my-0.5">Online consultations available</li>
                   </ul>
                 </div>
               </div>
@@ -299,6 +348,61 @@ export default function AboutPage() {
                   "@type": "Question",
                   "name": "Can physiotherapy help prevent injuries as well as treat them?",
                   "acceptedAnswer": { "@type": "Answer", "text": "Yes. Prevention is a huge part of performance. We identify risk factors (strength imbalances, mobility restrictions, load spikes) and build a plan that reduces your chances of repeat injuries." }
+                }
+              ]
+            })
+          }}
+        />
+
+        {/* Person Schema - Jordan Templeton */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Jordan Templeton",
+              "image": "https://www.jtfootballphysiotherapy.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
+              "jobTitle": "MSc Physiotherapist, Founder & Lead Physiotherapist",
+              "email": "contact@jtfootballphysiotherapy.co.uk",
+              "telephone": "+44",
+              "url": "https://www.jtfootballphysiotherapy.co.uk/about",
+              "sameAs": [
+                "https://www.linkedin.com/in/jordan-templeton-53530a137/"
+              ],
+              "affiliation": {
+                "@type": "Organization",
+                "name": "JT Football Physiotherapy",
+                "url": "https://www.jtfootballphysiotherapy.co.uk"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressRegion": "Kilmarnock, Ayrshire",
+                "addressCountry": "GB"
+              },
+              "description": "Football physiotherapist with 7+ years of professional experience in elite football. Specialist in football-specific injury assessment, rehabilitation, and return-to-play protocols.",
+              "educationalCredential": [
+                {
+                  "@type": "EducationalOccupationalCredential",
+                  "credentialCategory": "degree",
+                  "name": "MSc Physiotherapy (Pre-Registration)",
+                  "educationalLevel": "Master's degree",
+                  "issuingOrganization": {
+                    "@type": "EducationalOrganization",
+                    "name": "Glasgow Caledonian University"
+                  },
+                  "dateIssued": "2022"
+                },
+                {
+                  "@type": "EducationalOccupationalCredential",
+                  "credentialCategory": "degree",
+                  "name": "BSc Sport & Exercise Science (First Class Honours)",
+                  "educationalLevel": "Bachelor's degree",
+                  "issuingOrganization": {
+                    "@type": "EducationalOrganization",
+                    "name": "University of the West of Scotland"
+                  },
+                  "dateIssued": "2018"
                 }
               ]
             })

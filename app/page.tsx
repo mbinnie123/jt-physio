@@ -377,7 +377,8 @@ export default async function HomePage() {
               <FadeIn className="mx-auto max-w-md lg:max-w-none">
                 <Image
                   src="/jordan-templeton-jt-football-physiotherapy-kilmarnock-ayrshire-clinic.jpg"
-                  alt="Jordan Templeton JT Football Physiotherapy Kilmarnock Ayrshire Clinic Football Specialist"
+                  alt="Jordan Templeton MSc Physiotherapist - JT Football Physiotherapy Kilmarnock Ayrshire - Professional Football Physio Specialist"
+                  title="Jordan Templeton - Football Physiotherapist in Kilmarnock, Ayrshire"
                   width={600}
                   height={750}
                   className="w-full h-auto rounded-3xl object-cover shadow-lg"
@@ -387,9 +388,14 @@ export default async function HomePage() {
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
                   About Jordan — Lead Physiotherapist & Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
                 </h2>
-                <div className="space-y-4 text-lg text-slate-600">
-                  <p>Jordan Templeton is the founder and driving force behind JT Football Physiotherapy — a specialist physiotherapy service in Kilmarnock dedicated to helping football players and active individuals overcome injury and optimise performance.</p>
-                  <p>Frustrated by the limitations of traditional clinic-based treatment, Jordan launched JT Football Physiotherapy to bridge the gap between rehabilitation and real-world sport requirements. His vision is simple: provide tailored, football-specific care that moves beyond symptom relief to address the underlying physical demands of the sport.</p>
+                <div className="space-y-4 text-base text-slate-600">
+                  <p><strong>Jordan Templeton</strong> is a highly experienced football physiotherapist with over seven years of professional experience working within the elite football game. He is the founder and lead physiotherapist at JT Football Physiotherapy in Kilmarnock, Ayrshire — a specialist service dedicated to helping football players and active individuals overcome injury, optimise performance, and return to sport with confidence.</p>
+                  
+                  <p><strong>Professional Experience:</strong> Jordan spent four years as a coach at Kilmarnock FC Academy, where he developed youth players across key stages of their athlete pathway. He then progressed into physiotherapy, working as an academy physiotherapist at Kilmarnock FC before moving to Hearts of Midlothian FC as the Professional Development Phase Physiotherapist, supporting the academy, B team, and first team with injury management, rehabilitation, and return-to-play planning in a high-performance environment. He currently works full-time as a physiotherapist for Kilmarnock FC.</p>
+                  
+                  <p><strong>Education & Qualifications:</strong> Jordan holds an MSc in Physiotherapy (Pre-Registration) from Glasgow Caledonian University (2022) and graduated with First Class Honours in Sport and Exercise Science from the University of the West of Scotland (2018), combining strong academic achievement with extensive practical experience in elite professional football.</p>
+                  
+                  <p>Frustrated by the limitations of traditional clinic-based treatment, Jordan launched JT Football Physiotherapy to bridge the gap between rehabilitation and real-world sport requirements. His vision is simple: provide tailored, football-specific, evidence-led care that moves beyond symptom relief to address the underlying physical demands of the sport.</p>
                 </div>
               </FadeIn>
             </div>
