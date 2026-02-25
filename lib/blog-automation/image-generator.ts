@@ -1,7 +1,8 @@
 import "server-only";
 
 const PROJECT_ID = process.env.GCP_PROJECT_ID;
-const LOCATION = process.env.GCP_LOCATION || "us-central1";
+// Imagen API requires a specific region, not "global"
+const LOCATION = process.env.GCP_IMAGE_LOCATION || "us-central1";
 const STORAGE_BUCKET = process.env.GCP_IMAGE_STORAGE_BUCKET || "gs://jt-physio-images";
 
 /**
@@ -138,14 +139,26 @@ async function uploadImageToGCS(
 
       console.log(`[ImageGen] Uploading to GCS (attempt ${attempt}/${maxRetries})...`);
 
-      // Upload and make file publicly readable
-      await file.save(buffer, {
-        metadata: {
-          contentType: "image/png",
-        },
-        timeout: 30000, // Increase timeout to 30 seconds
-        resumable: false, // avoid chunked uploads that can trigger SSL MAC errors
-      });
+      // Upload with optimized settings for macOS
+      // Use resumable: false to avoid SSL MAC error, and strict timeout handling
+      try {
+        await file.save(buffer, {
+          metadata: {
+            contentType: "image/png",
+          },
+          timeout: 30000,
+          resumable: false,
+        });
+      } catch (uploadError) {
+        // If resumable fails, try with different settings
+        const errorMsg = uploadError instanceof Error ? uploadError.message : String(uploadError);
+        if (errorMsg.includes("SSL") || errorMsg.includes("ssl3_read_bytes")) {
+          console.warn("[ImageGen] SSL error detected, trying alternative upload method...");
+          // Try the slower but more reliable createWriteStream approach
+          return await uploadImageToGCSViaStream(buffer, bucketName, filename);
+        }
+        throw uploadError;
+      }
 
       console.log(`[ImageGen] ✓ Uploaded to GCS: gs://${bucketName}/${filename}`);
 
@@ -188,6 +201,60 @@ async function uploadImageToGCS(
 
   console.error("[ImageGen] GCS upload failed after all retries:", lastError);
   return null;
+}
+
+/**
+ * Alternative upload method using streams (slower but more reliable on macOS)
+ */
+async function uploadImageToGCSViaStream(
+  buffer: Buffer,
+  bucketName: string,
+  filename: string
+): Promise<string | null> {
+  try {
+    const { Storage } = await import("@google-cloud/storage");
+    const storage = new Storage({ projectId: PROJECT_ID });
+    const bucket = storage.bucket(bucketName);
+    const file = bucket.file(filename);
+
+    // Use createWriteStream which is more reliable
+    return new Promise((resolve, reject) => {
+      const stream = file.createWriteStream({
+        metadata: {
+          contentType: "image/png",
+        },
+        timeout: 60000, // Longer timeout for stream
+      });
+
+      stream.on("error", (error) => {
+        console.error("[ImageGen] Stream upload error:", error);
+        reject(error);
+      });
+
+      stream.on("finish", async () => {
+        console.log(`[ImageGen] ✓ Stream upload complete`);
+        try {
+          await file.makePublic();
+          const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+          console.log(`[ImageGen] ✓ Generated public URL`);
+          resolve(publicUrl);
+        } catch {
+          const [signedUrl] = await file.getSignedUrl({
+            version: "v4",
+            action: "read",
+            expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+          });
+          console.log(`[ImageGen] ✓ Generated signed URL (fallback)`);
+          resolve(signedUrl);
+        }
+      });
+
+      stream.end(buffer);
+    });
+  } catch (error) {
+    console.error("[ImageGen] Stream upload failed:", error);
+    return null;
+  }
 }
 
 /**

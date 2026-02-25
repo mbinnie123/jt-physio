@@ -7,6 +7,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { wixClient } from "../../lib/wix";
 import { Header } from "../../Header";
 import { Footer } from "../../Footer";
+import { AuthorCard } from "../../AuthorCard";
 import styles from "./blog-content.module.css";
 
 type BlogPost = {
@@ -405,7 +406,7 @@ export default async function BlogPostPage({
                 <p>This post doesn’t have body content available.</p>
               )}
             </div>
-
+            <AuthorCard />
         </article>
       </main>
 

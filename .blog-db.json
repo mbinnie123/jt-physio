@@ -22289,7 +22289,1731 @@
         "location": "Kilmarnock Ayrshire",
         "sport": "Football Professional Amateur "
       }
+    ],
+    [
+      "blog_1771818664214_87",
+      {
+        "id": "blog_1771818664214_87",
+        "topic": "Shoulder",
+        "status": "writing",
+        "sections": [],
+        "metadata": {
+          "title": "Shoulder",
+          "slug": "shoulder",
+          "excerpt": "",
+          "seoTitle": "Shoulder",
+          "seoDescription": "",
+          "seoKeywords": [],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-23",
+          "readTime": 0,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [],
+          "checklist": [],
+          "outboundLinks": []
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Shoulder Exercises – Weak and Painful (MSK Patient Portal)",
+              "content": "",
+              "source": "www.nhsaaa.net",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Top 5 Jo Gibson Shoulder Exercises - Surrey Physio",
+              "content": "",
+              "source": "www.surreyphysio.co.uk",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Forbes: Don’t Worry, Egypt: Mohamed Salah’s Shoulder Injury Shouldn’t Keep Him Out Of World Cup",
+              "content": "",
+              "source": "dinesorthopedics.com",
+              "url": "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck pain",
+              "content": "a pillow. 1. Bend your head forward until you feel a stretch behind your neck, bring your head back to neutral repeat this little and often throughout the day. 2. Tilt your head toward one shoulder until you feel the stretch on the opposite side. Bring your head back to neutral. Repeat this little and often throughout the day. 3. Pull your chin in, keeping your neck and back straight (not tipping your head forwards). Hold at the end position and feel the stretch in your neck. Repeat this exercis",
+              "source": "mskdorset.nhs.uk",
+              "url": "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+              "relevanceScore": 0.5
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-23T03:54:31.015Z"
+        },
+        "selectedSourceIds": [
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+          "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+          "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+          "https://bess.ac.uk/exercises-for-shoulder-pain/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-23T03:51:04.215Z",
+        "updatedAt": "2026-02-23T03:54:39.223Z"
+      }
+    ],
+    [
+      "blog_1771818889133_88",
+      {
+        "id": "blog_1771818889133_88",
+        "topic": "shoulder",
+        "status": "writing",
+        "sections": [],
+        "metadata": {
+          "title": "shoulder",
+          "slug": "shoulder",
+          "excerpt": "",
+          "seoTitle": "shoulder",
+          "seoDescription": "",
+          "seoKeywords": [],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-23",
+          "readTime": 0,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [],
+          "checklist": [],
+          "outboundLinks": []
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Shoulder Exercises – Weak and Painful (MSK Patient Portal)",
+              "content": "",
+              "source": "www.nhsaaa.net",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Top 5 Jo Gibson Shoulder Exercises - Surrey Physio",
+              "content": "",
+              "source": "www.surreyphysio.co.uk",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Forbes: Don’t Worry, Egypt: Mohamed Salah’s Shoulder Injury Shouldn’t Keep Him Out Of World Cup",
+              "content": "",
+              "source": "dinesorthopedics.com",
+              "url": "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck pain",
+              "content": "a pillow. 1. Bend your head forward until you feel a stretch behind your neck, bring your head back to neutral repeat this little and often throughout the day. 2. Tilt your head toward one shoulder until you feel the stretch on the opposite side. Bring your head back to neutral. Repeat this little and often throughout the day. 3. Pull your chin in, keeping your neck and back straight (not tipping your head forwards). Hold at the end position and feel the stretch in your neck. Repeat this exercis",
+              "source": "mskdorset.nhs.uk",
+              "url": "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+              "relevanceScore": 0.5
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-23T04:02:14.275Z"
+        },
+        "selectedSourceIds": [
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+          "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+          "https://www.mskdorset.nhs.uk/head-and-neck-pain/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-23T03:54:49.133Z",
+        "updatedAt": "2026-02-23T04:02:14.278Z"
+      }
+    ],
+    [
+      "blog_1771819345773_89",
+      {
+        "id": "blog_1771819345773_89",
+        "topic": "shoulder",
+        "status": "writing",
+        "sections": [],
+        "metadata": {
+          "title": "shoulder",
+          "slug": "shoulder",
+          "excerpt": "",
+          "seoTitle": "shoulder",
+          "seoDescription": "",
+          "seoKeywords": [],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-23",
+          "readTime": 0,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [],
+          "checklist": [],
+          "outboundLinks": []
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Shoulder Exercises – Weak and Painful (MSK Patient Portal)",
+              "content": "",
+              "source": "www.nhsaaa.net",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Top 5 Jo Gibson Shoulder Exercises - Surrey Physio",
+              "content": "",
+              "source": "www.surreyphysio.co.uk",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Forbes: Don’t Worry, Egypt: Mohamed Salah’s Shoulder Injury Shouldn’t Keep Him Out Of World Cup",
+              "content": "",
+              "source": "dinesorthopedics.com",
+              "url": "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck pain",
+              "content": "a pillow. 1. Bend your head forward until you feel a stretch behind your neck, bring your head back to neutral repeat this little and often throughout the day. 2. Tilt your head toward one shoulder until you feel the stretch on the opposite side. Bring your head back to neutral. Repeat this little and often throughout the day. 3. Pull your chin in, keeping your neck and back straight (not tipping your head forwards). Hold at the end position and feel the stretch in your neck. Repeat this exercis",
+              "source": "mskdorset.nhs.uk",
+              "url": "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+              "relevanceScore": 0.5
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-23T12:39:51.525Z"
+        },
+        "selectedSourceIds": [
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+          "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.mskdorset.nhs.uk/head-and-neck-pain/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-23T04:02:25.773Z",
+        "updatedAt": "2026-02-23T12:39:55.624Z"
+      }
+    ],
+    [
+      "blog_1771851355747_90",
+      {
+        "id": "blog_1771851355747_90",
+        "topic": "Neck Pain",
+        "status": "writing",
+        "sections": [],
+        "metadata": {
+          "title": "Neck Pain",
+          "slug": "neck-pain",
+          "excerpt": "",
+          "seoTitle": "Neck Pain",
+          "seoDescription": "",
+          "seoKeywords": [],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-23",
+          "readTime": 0,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [],
+          "checklist": [],
+          "outboundLinks": []
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "neck",
+            "pain",
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "your neck. They’ll ask about your pain, including when it started, where it’s located, how long it lasts and how intense it is.Physical exam: Your provider will check your head and neck alignment and observe your range of motion when you move your neck. They’ll feel your neck and supporting muscles to check for tenderness and signs of strain.Imaging tests usually aren’t necessary to identify what’s causing neck pain. Still, a provider may take images of the inside of your neck if they suspect a ",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "the muscles and tendons in your neck and improve flexibility.Transcutaneous electrical nerve stimulation (TENS) unit: A TENS unit applies a low-level electrical current to your skin near your nerves to disrupt the pain signal causing discomfort. Always check with a healthcare provider before using a TENS unit.Steroid injections: A shot near the nerve roots can reduce inflammation and relieve pain.Alternative therapies: Your provider may recommend acupuncture to relieve pain, or massage to help l",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "Locations:Abu Dhabi|Canada|Florida|London|Nevada|Ohio|855.733.3712|MyChart|Need Help?|Careers|Donate Now|Find a ProviderLocations and DirectionsServicesPatients and VisitorsHealth LibraryFind a ProviderLocations and DirectionsServicesPatients and VisitorsHealth LibraryMenuAppointmentsHome/Health Library/Symptoms/Neck PainAdvertisementAdvertisementNeck PainMedically Reviewed.Last updated on 12/09/2022.Neck pain, or cervicalgia, can last from days to years, depending on the cause. Common causes in",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "experts can find ways to ease your cervical neck pain.Cervical Neck Pain TreatmentFind a Doctor and SpecialistsMake an AppointmentAdvertisementAdvertisementAdAppointments 866.588.2264Appointments & LocationsRequest an AppointmentFind a ProviderNeed a primary care doctor or a specialist? Our Find a Provider tool makes it easy to search Cleveland Clinic’s trusted network. LocationsFind any of our 300+ locations.AppointmentsGet the in-person or virtual care you need.Subscribe to Cleveland Clinic He",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "can be a sign of a medical emergency.Seek urgent medical care if your neck pain:Develops after an accident.Involves a loss of bowel or bladder control.Persists whether you’re moving or staying still.Involves a headache, dizziness, nausea or vomiting.Occurs with chills, fever or unexplained weight loss.Occurs with numbness or tingling in your arms, shoulders or legs.Occurs with weakness in your legs or loss of coordination in your arms or legs.Doesn’t get better with over-the-counter medications.",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "in women. Your chance of developing it increases with age.Possible CausesImage content: This image is available to view online.View image online (https://my.clevelandclinic.org/-/scassets/Images/org/health/articles/21179-neck-pain-cervicalgia)Neck pain can result from physical changes related to strain, injury or aging, or it may be related to stress.What are the possible causes of neck pain?Neck pain has many potential causes, including:Aging: As you age, natural wear and tear can cause parts o",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.5
+            },
+            {
+              "title": "Neck Pain: 6 Common Causes and Treatments",
+              "content": "disappears entirely.AdvertisementHow can I prevent neck pain?You can take steps to prevent neck pain related to strains and tense muscles.Practice good posture. Position electronic devices, like computers and phones, so you don’t have to slouch or strain your neck when using them. Keep your shoulders aligned and your back straight when seated so you’re not straining your neck. Adjust the seats in your car to maintain good posture while traveling.Adjust your sleep position.Maintain good posture w",
+              "source": "my.clevelandclinic.org",
+              "url": "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+              "relevanceScore": 0.3999999999999999
+            },
+            {
+              "title": "Neck pain - Symptoms and causes",
+              "content": "a healthy position. Your head and neck should be aligned with your body. Use a small pillow under your neck. Try sleeping on your back with your thighs elevated on pillows, which will flatten your spinal muscles. Stay active. If you don't move much, increase your activity level. By Mayo Clinic Staff Request an appointment Diagnosis & treatment Aug. 25, 2022 PrintShow references Neck pain. American College of Rheumatology. https://www.rheumatology.org/I-Am-A/Patient-Caregiver/Diseases-Conditions/",
+              "source": "mayoclinic.org",
+              "url": "https://www.mayoclinic.org/diseases-conditions/neck-pain/symptoms-causes/syc-20375581",
+              "relevanceScore": 0.29999999999999993
+            },
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Shoulder Exercises – Weak and Painful (MSK Patient Portal)",
+              "content": "",
+              "source": "www.nhsaaa.net",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Top 5 Jo Gibson Shoulder Exercises - Surrey Physio",
+              "content": "",
+              "source": "www.surreyphysio.co.uk",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Forbes: Don’t Worry, Egypt: Mohamed Salah’s Shoulder Injury Shouldn’t Keep Him Out Of World Cup",
+              "content": "",
+              "source": "dinesorthopedics.com",
+              "url": "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck pain",
+              "content": "a pillow. 1. Bend your head forward until you feel a stretch behind your neck, bring your head back to neutral repeat this little and often throughout the day. 2. Tilt your head toward one shoulder until you feel the stretch on the opposite side. Bring your head back to neutral. Repeat this little and often throughout the day. 3. Pull your chin in, keeping your neck and back straight (not tipping your head forwards). Hold at the end position and feel the stretch in your neck. Repeat this exercis",
+              "source": "mskdorset.nhs.uk",
+              "url": "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+              "relevanceScore": 0.5
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-23T20:36:11.180Z"
+        },
+        "selectedSourceIds": [
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://my.clevelandclinic.org/health/symptoms/21179-neck-pain",
+          "https://www.mayoclinic.org/diseases-conditions/neck-pain/symptoms-causes/syc-20375581",
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+          "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+          "https://www.mskdorset.nhs.uk/head-and-neck-pain/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-23T12:55:55.747Z",
+        "updatedAt": "2026-02-23T20:36:11.182Z"
+      }
+    ],
+    [
+      "blog_1771890594819_91",
+      {
+        "id": "blog_1771890594819_91",
+        "topic": "Shoulder",
+        "status": "writing",
+        "sections": [],
+        "metadata": {
+          "title": "Effective Shoulder Exercises for Pain Relief & Strength",
+          "slug": "effective-shoulder-exercises-for-pain-relief",
+          "excerpt": "Explore top shoulder exercises to alleviate pain and enhance strength, tailored for athletes and everyday wellness.",
+          "seoTitle": "Effective Shoulder Exercises for Pain Relief & Strength",
+          "seoDescription": "Explore top shoulder exercises to alleviate pain and enhance strength, tailored for athletes and everyday wellness.",
+          "seoKeywords": [
+            "shoulder exercises",
+            "shoulder pain relief",
+            "athletic shoulder workouts",
+            "MSK patient portal",
+            "shoulder strength training"
+          ],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-23",
+          "readTime": 0,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [],
+          "checklist": [],
+          "outboundLinks": []
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "Shoulder Exercises – Weak and Painful (MSK Patient Portal)",
+              "content": "",
+              "source": "www.nhsaaa.net",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "Top 5 Jo Gibson Shoulder Exercises - Surrey Physio",
+              "content": "",
+              "source": "www.surreyphysio.co.uk",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "Forbes: Don’t Worry, Egypt: Mohamed Salah’s Shoulder Injury Shouldn’t Keep Him Out Of World Cup",
+              "content": "",
+              "source": "dinesorthopedics.com",
+              "url": "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "Neck pain",
+              "content": "a pillow. 1. Bend your head forward until you feel a stretch behind your neck, bring your head back to neutral repeat this little and often throughout the day. 2. Tilt your head toward one shoulder until you feel the stretch on the opposite side. Bring your head back to neutral. Repeat this little and often throughout the day. 3. Pull your chin in, keeping your neck and back straight (not tipping your head forwards). Hold at the end position and feel the stretch in your neck. Repeat this exercis",
+              "source": "mskdorset.nhs.uk",
+              "url": "https://www.mskdorset.nhs.uk/head-and-neck-pain/",
+              "relevanceScore": 0.5
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-23T23:56:12.591Z"
+        },
+        "selectedSourceIds": [
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+          "https://dinesorthopedics.com/forbes-dont-worry-egypt-mohamed-salahs-shoulder-injury-shouldnt-keep-him-out-of-world-cup/",
+          "https://www.mskdorset.nhs.uk/head-and-neck-pain/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-23T23:49:54.819Z",
+        "updatedAt": "2026-02-24T00:23:35.462Z"
+      }
+    ],
+    [
+      "blog_1771893817294_92",
+      {
+        "id": "blog_1771893817294_92",
+        "topic": "shoulder nhs approved frozen shoulder",
+        "status": "published",
+        "sections": [
+          {
+            "title": "Understanding Frozen Shoulder: An NHS Overview",
+            "content": {
+              "nodes": [
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "What is Frozen Shoulder?"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Frozen shoulder, also known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. It typically develops gradually, worsens over time, and then resolves, usually within one to three years. Understanding the nature of this condition and the recommended exercises can significantly aid in managing symptoms and improving shoulder function."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Symptoms and Progression"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "The development of frozen shoulder occurs in three stages: the freezing stage, where the shoulder becomes painful and movement starts to become limited; the frozen stage, where the pain might decrease but the stiffness worsens; and the thawing stage, where the range of motion begins to improve. During these stages, performing specific exercises can be crucial in restoring mobility and alleviating discomfort."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "NHS-Approved Exercises for Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "The NHS provides valuable resources on exercises tailored for those suffering from weak and painful shoulders, which are also applicable to frozen shoulder. One effective exercise is gentle stretching, which helps to maintain as much mobility in the shoulder as possible without exacerbating pain. According to "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "NHS-approved shoulder exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", it's important to perform stretches slowly and to increase the intensity gradually to avoid potential setbacks."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Another recommended approach involves strengthening exercises once the pain starts to subside. These exercises are designed to rebuild strength in the shoulder muscles and prevent future injuries. Detailed guidelines and exercises can be found on the "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "BESS website"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", which offers a range of movements specifically designed to aid recovery from shoulder conditions like frozen shoulder."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Managing Pain and Improving Mobility"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "While exercises are essential, managing pain effectively is also crucial for recovery. Techniques such as applying heat or cold to the affected area can help reduce pain and inflammation. As each stage of frozen shoulder varies in symptoms, adapting the type of exercises and pain management techniques as recommended by healthcare professionals, including physiotherapists, is key. For personalized exercise plans and detailed guidance, resources such as "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "Surrey Physio's top shoulder exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " can be particularly useful."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Understanding and adhering to these NHS-approved guidelines and exercises can greatly assist in the journey towards recovery from frozen shoulder, helping patients regain both function and quality of life."
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentHtml": "<h3>What is Frozen Shoulder?</h3><p>Frozen shoulder, also known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. It typically develops gradually, worsens over time, and then resolves, usually within one to three years. Understanding the nature of this condition and the recommended exercises can significantly aid in managing symptoms and improving shoulder function.</p><h3>Symptoms and Progression</h3><p>The development of frozen shoulder occurs in three stages: the freezing stage, where the shoulder becomes painful and movement starts to become limited; the frozen stage, where the pain might decrease but the stiffness worsens; and the thawing stage, where the range of motion begins to improve. During these stages, performing specific exercises can be crucial in restoring mobility and alleviating discomfort.</p><h3>NHS-Approved Exercises for Frozen Shoulder</h3><p>The NHS provides valuable resources on exercises tailored for those suffering from weak and painful shoulders, which are also applicable to frozen shoulder. One effective exercise is gentle stretching, which helps to maintain as much mobility in the shoulder as possible without exacerbating pain. According to <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">NHS-approved shoulder exercises</a>, it&#039;s important to perform stretches slowly and to increase the intensity gradually to avoid potential setbacks.</p><p>Another recommended approach involves strengthening exercises once the pain starts to subside. These exercises are designed to rebuild strength in the shoulder muscles and prevent future injuries. Detailed guidelines and exercises can be found on the <a href=\"https://bess.ac.uk/exercises-for-shoulder-pain/\" target=\"_blank\">BESS website</a>, which offers a range of movements specifically designed to aid recovery from shoulder conditions like frozen shoulder.</p><h3>Managing Pain and Improving Mobility</h3><p>While exercises are essential, managing pain effectively is also crucial for recovery. Techniques such as applying heat or cold to the affected area can help reduce pain and inflammation. As each stage of frozen shoulder varies in symptoms, adapting the type of exercises and pain management techniques as recommended by healthcare professionals, including physiotherapists, is key. For personalized exercise plans and detailed guidance, resources such as <a href=\"https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/\" target=\"_blank\">Surrey Physio&#039;s top shoulder exercises</a> can be particularly useful.</p><p>Understanding and adhering to these NHS-approved guidelines and exercises can greatly assist in the journey towards recovery from frozen shoulder, helping patients regain both function and quality of life.</p>",
+            "sectionNumber": 1,
+            "wordCount": 358
+          },
+          {
+            "title": "Recognised Symptoms and Diagnosis of Frozen Shoulder",
+            "content": {
+              "nodes": [
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Recognised Symptoms of Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Frozen shoulder, also known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. The symptoms typically begin gradually, worsen over time, and then resolve within one to three years. Key symptoms to be aware of include a persistent pain in the shoulder, which often worsens at night, and a noticeable limitation in the range of motion. The shoulder might feel stiff and merely rotating the arm might be a painful endeavour."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "These symptoms can be particularly troubling and may affect daily activities, leading to frustration and decreased quality of life. Understanding these symptoms is crucial as it can prompt timely consultation with a healthcare provider, which can lead to an earlier diagnosis and management plan."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Diagnosis of Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "The diagnosis of frozen shoulder is primarily clinical, often based on the patient's history and a physical examination. During the assessment, a physiotherapist or doctor will evaluate the shoulder's active and passive range of motions. One of the distinctive features of frozen shoulder is that both active and passive movements are equally limited and painful."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "In some cases, imaging tests such as an MRI or X-rays might be used to rule out other conditions that can mimic the symptoms of a frozen shoulder, such as a rotator cuff tear. According to "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "expert recommendations from the NHS on shoulder health"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", a detailed examination followed by appropriate imaging tests ensures an accurate diagnosis, which is essential for effective treatment planning."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "For those experiencing symptoms, it is advisable to consult healthcare professionals who can provide a tailored treatment plan. Techniques and exercises, such as those outlined in "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "BESS's guide on shoulder pain"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", can be particularly beneficial in managing symptoms and improving shoulder function during the recovery process."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Understanding the symptoms and getting a timely diagnosis are key steps towards managing and overcoming frozen shoulder. With appropriate physiotherapy interventions, individuals can regain shoulder mobility and return to their normal activities."
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentHtml": "<h3>Recognised Symptoms of Frozen Shoulder</h3><p>Frozen shoulder, also known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. The symptoms typically begin gradually, worsen over time, and then resolve within one to three years. Key symptoms to be aware of include a persistent pain in the shoulder, which often worsens at night, and a noticeable limitation in the range of motion. The shoulder might feel stiff and merely rotating the arm might be a painful endeavour.</p><p>These symptoms can be particularly troubling and may affect daily activities, leading to frustration and decreased quality of life. Understanding these symptoms is crucial as it can prompt timely consultation with a healthcare provider, which can lead to an earlier diagnosis and management plan.</p><h3>Diagnosis of Frozen Shoulder</h3><p>The diagnosis of frozen shoulder is primarily clinical, often based on the patient&#039;s history and a physical examination. During the assessment, a physiotherapist or doctor will evaluate the shoulder&#039;s active and passive range of motions. One of the distinctive features of frozen shoulder is that both active and passive movements are equally limited and painful.</p><p>In some cases, imaging tests such as an MRI or X-rays might be used to rule out other conditions that can mimic the symptoms of a frozen shoulder, such as a rotator cuff tear. According to <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">expert recommendations from the NHS on shoulder health</a>, a detailed examination followed by appropriate imaging tests ensures an accurate diagnosis, which is essential for effective treatment planning.</p><p>For those experiencing symptoms, it is advisable to consult healthcare professionals who can provide a tailored treatment plan. Techniques and exercises, such as those outlined in <a href=\"https://bess.ac.uk/exercises-for-shoulder-pain/\" target=\"_blank\">BESS&#039;s guide on shoulder pain</a>, can be particularly beneficial in managing symptoms and improving shoulder function during the recovery process.</p><p>Understanding the symptoms and getting a timely diagnosis are key steps towards managing and overcoming frozen shoulder. With appropriate physiotherapy interventions, individuals can regain shoulder mobility and return to their normal activities.</p>",
+            "sectionNumber": 2,
+            "wordCount": 326
+          },
+          {
+            "title": "NHS-Approved Exercises for Managing Frozen Shoulder",
+            "content": {
+              "nodes": [
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Understanding Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Frozen shoulder, clinically known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. This discomfort typically worsens until it reaches a plateau, a phase known as the 'frozen' stage. Managing this condition effectively often involves specific exercises that aim to restore mobility and reduce pain."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "NHS-Approved Exercises for Managing Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Incorporating regular, targeted exercises into your routine can significantly aid in alleviating the symptoms of a frozen shoulder. The NHS provides a range of exercises designed to restore shoulder functionality and relieve discomfort."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "One effective exercise recommended by the "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "NHS guidelines"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " is the 'Pendulum Stretch'. This involves leaning over slightly, allowing the affected arm to hang down, and gently swinging it in small circles. This movement helps to reduce stiffness and increase the range of motion in the shoulder joint."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Another beneficial movement is the 'Doorway Stretch', as outlined in "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "exercises for shoulder pain"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ". To perform this, stand in a doorway with both arms on the wall slightly above your head, and slowly lean forward until you feel a gentle stretch in your shoulders. This exercise is particularly good for extending the shoulder muscles and enhancing flexibility."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Additionally, the 'Towel Stretch' is a simple yet effective technique highlighted by "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "expert recommendations"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ". Hold a towel behind your back with both hands, and use the good arm to pull the affected arm upward to stretch it. This helps in regaining movement in the shoulders and reducing tightness."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Implementing Your Exercise Routine"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "It is crucial to perform these exercises consistently and with proper form to gain the maximum benefit. Start with gentle movements to ensure you do not exacerbate the pain. As your condition improves, gradually increase the intensity of the stretches under the guidance of a physiotherapist. Regularly incorporating these "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "NHS-approved exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " into your daily routine can significantly aid in the recovery process of frozen shoulder, enhancing both mobility and quality of life."
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentHtml": "<h3>Understanding Frozen Shoulder</h3><p>Frozen shoulder, clinically known as adhesive capsulitis, is a condition characterised by stiffness and pain in the shoulder joint. This discomfort typically worsens until it reaches a plateau, a phase known as the &#039;frozen&#039; stage. Managing this condition effectively often involves specific exercises that aim to restore mobility and reduce pain.</p><h3>NHS-Approved Exercises for Managing Frozen Shoulder</h3><p>Incorporating regular, targeted exercises into your routine can significantly aid in alleviating the symptoms of a frozen shoulder. The NHS provides a range of exercises designed to restore shoulder functionality and relieve discomfort.</p><p>One effective exercise recommended by the <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">NHS guidelines</a> is the &#039;Pendulum Stretch&#039;. This involves leaning over slightly, allowing the affected arm to hang down, and gently swinging it in small circles. This movement helps to reduce stiffness and increase the range of motion in the shoulder joint.</p><p>Another beneficial movement is the &#039;Doorway Stretch&#039;, as outlined in <a href=\"https://bess.ac.uk/exercises-for-shoulder-pain/\" target=\"_blank\">exercises for shoulder pain</a>. To perform this, stand in a doorway with both arms on the wall slightly above your head, and slowly lean forward until you feel a gentle stretch in your shoulders. This exercise is particularly good for extending the shoulder muscles and enhancing flexibility.</p><p>Additionally, the &#039;Towel Stretch&#039; is a simple yet effective technique highlighted by <a href=\"https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/\" target=\"_blank\">expert recommendations</a>. Hold a towel behind your back with both hands, and use the good arm to pull the affected arm upward to stretch it. This helps in regaining movement in the shoulders and reducing tightness.</p><h3>Implementing Your Exercise Routine</h3><p>It is crucial to perform these exercises consistently and with proper form to gain the maximum benefit. Start with gentle movements to ensure you do not exacerbate the pain. As your condition improves, gradually increase the intensity of the stretches under the guidance of a physiotherapist. Regularly incorporating these <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">NHS-approved exercises</a> into your daily routine can significantly aid in the recovery process of frozen shoulder, enhancing both mobility and quality of life.</p>",
+            "sectionNumber": 3,
+            "wordCount": 321
+          },
+          {
+            "title": "Expert Advice: Enhancing Recovery from Frozen Shoulder",
+            "content": {
+              "nodes": [
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Understanding Frozen Shoulder"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Frozen shoulder, also known as adhesive capsulitis, involves stiffness and pain in the shoulder joint. It typically develops gradually, worsens over time, and then resolves, usually within one to three years. Key to managing and recovering from this condition is a structured physiotherapy regimen that focuses on restoring joint mobility and reducing pain."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Effective Exercises for Mobility"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Engaging in specific exercises can significantly enhance the recovery process from a frozen shoulder. According to "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "NHS-approved shoulder exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", gentle stretching and strengthening activities are crucial. One beneficial exercise is the 'pendulum stretch', which involves leaning over slightly and allowing the affected arm to hang down. This helps decrease tension in the shoulder muscles and improves movement range gradually."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Strength Building Techniques"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "As mobility begins to return, it’s important to incorporate strength-building exercises to support the shoulder's recovery. The "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "BESS guide on shoulder pain exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " suggests exercises like the ‘doorway stretch’ where you stretch your arms on a door frame to strengthen the muscles around the shoulder. This not only aids in pain relief but also helps in regaining full function of the shoulder."
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Consistent Practice and Patience"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Recovery from frozen shoulder is a gradual process that requires consistent effort and patience. Implementing a daily routine of "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "recommended shoulder exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " can accelerate healing and ensure that improvements are maintained. It's crucial to increase the intensity and frequency of exercises only under the guidance of a physiotherapy professional to avoid exacerbating the condition."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Understanding the stages of your condition and closely following a physiotherapist’s advice are essential steps in overcoming the challenges of a frozen shoulder. Regularly performing prescribed exercises and attending follow-up sessions with your physiotherapist can lead to a successful recovery, restoring both movement and strength to your shoulder."
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentHtml": "<h3>Understanding Frozen Shoulder</h3><p>Frozen shoulder, also known as adhesive capsulitis, involves stiffness and pain in the shoulder joint. It typically develops gradually, worsens over time, and then resolves, usually within one to three years. Key to managing and recovering from this condition is a structured physiotherapy regimen that focuses on restoring joint mobility and reducing pain.</p><h3>Effective Exercises for Mobility</h3><p>Engaging in specific exercises can significantly enhance the recovery process from a frozen shoulder. According to <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">NHS-approved shoulder exercises</a>, gentle stretching and strengthening activities are crucial. One beneficial exercise is the &#039;pendulum stretch&#039;, which involves leaning over slightly and allowing the affected arm to hang down. This helps decrease tension in the shoulder muscles and improves movement range gradually.</p><h3>Strength Building Techniques</h3><p>As mobility begins to return, it’s important to incorporate strength-building exercises to support the shoulder&#039;s recovery. The <a href=\"https://bess.ac.uk/exercises-for-shoulder-pain/\" target=\"_blank\">BESS guide on shoulder pain exercises</a> suggests exercises like the ‘doorway stretch’ where you stretch your arms on a door frame to strengthen the muscles around the shoulder. This not only aids in pain relief but also helps in regaining full function of the shoulder.</p><h3>Consistent Practice and Patience</h3><p>Recovery from frozen shoulder is a gradual process that requires consistent effort and patience. Implementing a daily routine of <a href=\"https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/\" target=\"_blank\">recommended shoulder exercises</a> can accelerate healing and ensure that improvements are maintained. It&#039;s crucial to increase the intensity and frequency of exercises only under the guidance of a physiotherapy professional to avoid exacerbating the condition.</p><p>Understanding the stages of your condition and closely following a physiotherapist’s advice are essential steps in overcoming the challenges of a frozen shoulder. Regularly performing prescribed exercises and attending follow-up sessions with your physiotherapist can lead to a successful recovery, restoring both movement and strength to your shoulder.</p>",
+            "sectionNumber": 4,
+            "wordCount": 290
+          },
+          {
+            "title": "Conclusion: Incorporating NHS Guidelines into Daily Routine",
+            "content": {
+              "nodes": [
+                {
+                  "type": "heading",
+                  "level": 3,
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Conclusion: Incorporating NHS Guidelines into Daily Routine"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Successfully managing frozen shoulder involves a dedicated approach to incorporating therapeutic exercises into your daily routine. By aligning with "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "NHS-approved exercises for shoulder pain"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", patients can enhance their recovery process and improve shoulder mobility more effectively."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "The NHS offers a series of graduated exercises that are specifically designed to help alleviate pain and restore function in shoulders afflicted by conditions such as frozen shoulder. Starting with gentle stretching and gradually increasing to strengthening exercises, it's crucial to integrate these movements into your daily life. For instance, the "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "BESS guide on shoulder exercises"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " suggests simple yet effective stretches that can be done at home or in the workplace, which are ideal for easing into a physical routine without overwhelming the joint."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Moreover, consistency is key in the treatment of frozen shoulder. Regularly performing these exercises, as recommended by "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "Surrey Physio's top shoulder routines"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": ", ensures that the shoulder remains active and less prone to stiffness, which is a common symptom of this condition. It's important to remember that each individual's recovery journey is unique, and exercises should be tailored to suit personal comfort levels and capabilities."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "Additionally, incorporating feedback from a physiotherapist who can monitor progress and adjust exercises as needed is invaluable. This professional guidance ensures that you are not only performing the exercises correctly but are also making adjustments that align with your recovery needs. For athletes or those involved in physically demanding jobs, "
+                    },
+                    {
+                      "type": "link",
+                      "href": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer",
+                      "nodes": [
+                        {
+                          "type": "text",
+                          "data": "recommended exercises for athletes with shoulder issues"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "data": " can provide more specialised support, catering to the increased demands of their activities."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "nodes": [
+                    {
+                      "type": "text",
+                      "data": "In conclusion, integrating NHS guidelines into your daily routine is not just about following exercises; it's about adapting them to fit your lifestyle and recovery goals, ensuring a balanced and effective approach to overcoming frozen shoulder."
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentHtml": "<h3>Conclusion: Incorporating NHS Guidelines into Daily Routine</h3><p>Successfully managing frozen shoulder involves a dedicated approach to incorporating therapeutic exercises into your daily routine. By aligning with <a href=\"https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/\" target=\"_blank\">NHS-approved exercises for shoulder pain</a>, patients can enhance their recovery process and improve shoulder mobility more effectively.</p><p>The NHS offers a series of graduated exercises that are specifically designed to help alleviate pain and restore function in shoulders afflicted by conditions such as frozen shoulder. Starting with gentle stretching and gradually increasing to strengthening exercises, it&#039;s crucial to integrate these movements into your daily life. For instance, the <a href=\"https://bess.ac.uk/exercises-for-shoulder-pain/\" target=\"_blank\">BESS guide on shoulder exercises</a> suggests simple yet effective stretches that can be done at home or in the workplace, which are ideal for easing into a physical routine without overwhelming the joint.</p><p>Moreover, consistency is key in the treatment of frozen shoulder. Regularly performing these exercises, as recommended by <a href=\"https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/\" target=\"_blank\">Surrey Physio&#039;s top shoulder routines</a>, ensures that the shoulder remains active and less prone to stiffness, which is a common symptom of this condition. It&#039;s important to remember that each individual&#039;s recovery journey is unique, and exercises should be tailored to suit personal comfort levels and capabilities.</p><p>Additionally, incorporating feedback from a physiotherapist who can monitor progress and adjust exercises as needed is invaluable. This professional guidance ensures that you are not only performing the exercises correctly but are also making adjustments that align with your recovery needs. For athletes or those involved in physically demanding jobs, <a href=\"https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes\" target=\"_blank\">recommended exercises for athletes with shoulder issues</a> can provide more specialised support, catering to the increased demands of their activities.</p><p>In conclusion, integrating NHS guidelines into your daily routine is not just about following exercises; it&#039;s about adapting them to fit your lifestyle and recovery goals, ensuring a balanced and effective approach to overcoming frozen shoulder.</p>",
+            "sectionNumber": 5,
+            "wordCount": 297
+          }
+        ],
+        "metadata": {
+          "title": "NHS-Approved Frozen Shoulder Treatments and Care",
+          "slug": "nhs-approved-frozen-shoulder-treatments",
+          "excerpt": "Explore effective NHS-approved exercises and treatments for managing frozen shoulder pain and recovery.",
+          "seoTitle": "NHS-Approved Frozen Shoulder Treatments and Care",
+          "seoDescription": "Explore effective NHS-approved exercises and treatments for managing frozen shoulder pain and recovery.",
+          "seoKeywords": [
+            "frozen shoulder",
+            "NHS shoulder exercises",
+            "shoulder pain relief",
+            "UK shoulder care",
+            "shoulder rehabilitation",
+            "shoulder nhs approved frozen shoulder",
+            "shoulder nhs approved frozen shoulder physiotherapy",
+            "shoulder nhs approved frozen shoulder treatment",
+            "shoulder",
+            "bess.ac.uk",
+            "NHS AAA",
+            "British Elbow and Shoulder Society",
+            "www.cirencesterphysiotherapycentre.co.uk",
+            "Surrey Physiotherapy"
+          ],
+          "author": "JT Physiotherapy",
+          "publishDate": "2026-02-24",
+          "readTime": 8,
+          "category": "Health & Wellness",
+          "featured": false,
+          "faqs": [
+            {
+              "question": "What should I expect when treating shoulder nhs approved frozen shoulder?",
+              "answer": "Treatment depends on severity. Initially, expect assessment, personalized exercises, and advice. Most patients see improvement within 2-4 weeks of consistent treatment."
+            },
+            {
+              "question": "How long does recovery from shoulder nhs approved frozen shoulder typically take?",
+              "answer": "Recovery varies by individual and severity. Mild cases may resolve in weeks, while complex cases may require several months of targeted physiotherapy."
+            },
+            {
+              "question": "Can physiotherapy prevent shoulder nhs approved frozen shoulder from returning?",
+              "answer": "Yes. Strengthening exercises, proper posture, and ergonomic adjustments significantly reduce recurrence risk."
+            },
+            {
+              "question": "Is shoulder nhs approved frozen shoulder painful to treat?",
+              "answer": "Physiotherapy aims to reduce pain progressively. Some discomfort is normal during rehabilitation, but treatment should not cause sharp pain."
+            }
+          ],
+          "checklist": [
+            "✓ Schedule assessment with qualified physiotherapist",
+            "✓ Follow personalized exercise program daily",
+            "✓ Apply ice/heat as advised for pain management",
+            "✓ Maintain proper posture throughout the day",
+            "✓ Avoid activities that aggravate symptoms",
+            "✓ Attend all scheduled therapy sessions",
+            "✓ Track pain levels and progress in journal",
+            "✓ Strengthen supporting muscle groups",
+            "✓ Practice relaxation and stress management",
+            "✓ Return to activities gradually as cleared"
+          ],
+          "outboundLinks": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "source": "bess.ac.uk"
+            },
+            {
+              "title": "NHS - Shoulder Exercises for Weak and Painful Shoulders (Part 1/4)",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "source": "NHS AAA"
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "source": "www.cirencesterphysiotherapycentre.co.uk"
+            },
+            {
+              "title": "Surrey Physio - Top 5 Shoulder Exercises (Part 1/1)",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "source": "Surrey Physiotherapy"
+            }
+          ],
+          "featuredImageUrl": "https://storage.googleapis.com/image-gen-jt/blog-images/shoulder-nhs-approved-frozen-shoulder-1771894406787.png"
+        },
+        "researchData": {
+          "topic": "shoulder",
+          "keywords": [
+            "shoulder"
+          ],
+          "sources": [
+            {
+              "title": "Exercises for Shoulder Pain",
+              "content": "",
+              "source": "bess.ac.uk",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 1
+            },
+            {
+              "title": "NHS - Shoulder Exercises for Weak and Painful Shoulders (Part 1/4)",
+              "content": "",
+              "source": "NHS AAA",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.9
+            },
+            {
+              "title": "NHS - Shoulder Exercises for Weak and Painful Shoulders (Part 2/4)",
+              "content": "",
+              "source": "NHS AAA",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.8
+            },
+            {
+              "title": "NHS - Shoulder Exercises for Weak and Painful Shoulders (Part 3/4)",
+              "content": "",
+              "source": "NHS AAA",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.7
+            },
+            {
+              "title": "NHS - Shoulder Exercises for Weak and Painful Shoulders (Part 4/4)",
+              "content": "",
+              "source": "NHS AAA",
+              "url": "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+              "relevanceScore": 0.6
+            },
+            {
+              "title": "BESS - Exercises for Shoulder Pain (Part 1/1)",
+              "content": "",
+              "source": "British Elbow and Shoulder Society",
+              "url": "https://bess.ac.uk/exercises-for-shoulder-pain/",
+              "relevanceScore": 0.5
+            },
+            {
+              "title": "Good Shoulder Exercises for Athletes",
+              "content": "",
+              "source": "www.cirencesterphysiotherapycentre.co.uk",
+              "url": "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+              "relevanceScore": 0.3999999999999999
+            },
+            {
+              "title": "Surrey Physio - Top 5 Shoulder Exercises (Part 1/1)",
+              "content": "",
+              "source": "Surrey Physiotherapy",
+              "url": "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/",
+              "relevanceScore": 0.29999999999999993
+            }
+          ],
+          "locationInfo": {
+            "business_status": "OPERATIONAL",
+            "formatted_address": "5 Bunting Pl, Kilmarnock KA1 3LE, UK",
+            "name": "JT Football Physiotherapy",
+            "rating": 5,
+            "reviews": [
+              {
+                "author_name": "Jimmy Preston",
+                "author_url": "https://www.google.com/maps/contrib/113044460584370016064/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIYS-nJ-iuycT5NtzGfYZCVnN4NhNU8HPoGnBTqGk9aJnihqQ=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "a month ago",
+                "text": "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well supported. A great initial experience, and I would totally recommend him to anyone seeking expert physiotherapy care.",
+                "time": 1767897859,
+                "translated": false
+              },
+              {
+                "author_name": "Del Bonds",
+                "author_url": "https://www.google.com/maps/contrib/118323282810209483186/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLlTVcef6IuRlHvR-cQMJAMC_yd3-zV3RoSRvkjnJzG9eWkyg=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "After a long time away from playing football, I decided to get back into and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab programme. It didn’t take long to start seeing the benefits. With regular sessions we dealt with any new issues but continued work on the root cause. After great mix of hands on physio and pitch sessions I am now feeling in great condition. The nutritional advice along with pre and post game conditioning routines given, I feel will help me continue with the great progress and prolong my time in football. Been a top class experience with Jordan from start till now and the physical benefits and knowledge I am taking away is priceless.",
+                "time": 1748078382,
+                "translated": false
+              },
+              {
+                "author_name": "Craig Wilson",
+                "author_url": "https://www.google.com/maps/contrib/101825092402699447007/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJxf5LlqoeimJTl_HxOeWIZ6RTtQgy53TnEHSuVBRqAMJ7p6Q=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "9 months ago",
+                "text": "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+                "time": 1746780694,
+                "translated": false
+              },
+              {
+                "author_name": "Sharon Murray",
+                "author_url": "https://www.google.com/maps/contrib/102896503627848312574/reviews",
+                "language": "en",
+                "original_language": "en",
+                "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJo_5bmLFK6mS8RGa7rAifPERcPHfSffa3wPnTu_7vuw2C6=s128-c0x00000000-cc-rp-mo",
+                "rating": 5,
+                "relative_time_description": "3 weeks ago",
+                "text": "Excellent service and very clear on what the issue is and a plan going forward.  Thanks very much",
+                "time": 1769791641,
+                "translated": false
+              }
+            ]
+          },
+          "timestamp": "2026-02-24T00:45:25.548Z"
+        },
+        "selectedSourceIds": [
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://www.nhsaaa.net/musculoskeletal-msk-service-patient-portal/shoulder-msk-patient-portal/shoulder-exercises-weak-and-painful-msk-patient-portal/",
+          "https://bess.ac.uk/exercises-for-shoulder-pain/",
+          "https://www.cirencesterphysiotherapycentre.co.uk/component/k2/item/29-good-shoulder-exercises-for-athletes",
+          "https://www.surreyphysio.co.uk/top-5/top-5-jo-gibson-shoulder-exercises/"
+        ],
+        "includeChecklist": true,
+        "includeFaq": true,
+        "includeInternalCta": true,
+        "createdAt": "2026-02-24T00:43:37.294Z",
+        "updatedAt": "2026-02-24T00:55:27.359Z",
+        "wixPostId": "5bec955f-4241-4016-9996-dc82276ad39f",
+        "publishedAt": "2026-02-24T00:55:27.359Z"
+      }
     ]
   ],
-  "idCounter": 87
+  "idCounter": 93
 }
