@@ -55,8 +55,8 @@ export function TopContactBar() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12 text-sm">
-          <div className="flex items-center gap-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between py-2 text-xs sm:text-sm">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
             {/* Email */}
             <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
