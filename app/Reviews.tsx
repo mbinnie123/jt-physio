@@ -33,6 +33,7 @@ export function Reviews() {
   const [rating, setRating] = useState(5);
   const [totalRatings, setTotalRatings] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedReviewIndex, setSelectedReviewIndex] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -101,6 +102,15 @@ export function Reviews() {
               <p className="text-slate-600 text-sm leading-relaxed flex-grow line-clamp-4">
                 "{review.text}"
               </p>
+              {review.text && (
+                <button
+                  type="button"
+                  onClick={() => setSelectedReviewIndex(i)}
+                  className="mt-2 text-xs font-semibold text-[#1e3a8a] hover:underline self-start"
+                >
+                  Read full review
+                </button>
+              )}
               <div className="mt-4 pt-4 border-t border-slate-50 flex items-center gap-2">
                  <svg className="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
                  <span className="text-xs text-slate-400 font-medium">Google Review</span>
@@ -108,6 +118,60 @@ export function Reviews() {
             </FadeIn>
           ))}
         </div>
+
+        {selectedReviewIndex !== null && reviews[selectedReviewIndex] && (
+          <div
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4"
+            onClick={() => setSelectedReviewIndex(null)}
+          >
+            <div
+              className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl relative"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+            >
+              <button
+                type="button"
+                className="absolute right-4 top-4 text-slate-400 hover:text-slate-600"
+                onClick={() => setSelectedReviewIndex(null)}
+                aria-label="Close full review"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {(() => {
+                const review = reviews[selectedReviewIndex];
+                return (
+                  <>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-[#1e3a8a] font-bold text-lg">
+                        {review.author_name.split(" ").length > 1
+                          ? `${review.author_name.split(" ")[0][0]}${review.author_name.split(" ").slice(-1)[0][0]}`
+                          : review.author_name.charAt(0)}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 text-sm">{review.author_name}</h3>
+                        <p className="text-xs text-slate-500">{review.relative_time_description}</p>
+                      </div>
+                    </div>
+                    <div className="mb-4">
+                      <StarRating rating={review.rating} />
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-line mb-4">
+                      "{review.text}"
+                    </p>
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
+                      <span className="font-medium">Google Review</span>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        )}
 
         <FadeIn className="mt-16 text-center">
           <a
