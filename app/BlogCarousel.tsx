@@ -49,7 +49,7 @@ export function BlogCarousel({ posts }: { posts: CarouselPost[] }) {
   }
 
   return (
-    <div className="relative group">
+    <div className="relative">
       {/* Scroll Buttons - Only show if we have enough posts to scroll */}
       {posts.length > 3 && (
         <>
