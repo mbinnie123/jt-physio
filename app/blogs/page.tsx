@@ -181,13 +181,16 @@ export default async function BlogsPage() {
                         )}
                       </div>
 
-                      <h3 className="mb-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-[#1e3a8a]">
+                      <h3 className="mb-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-[#1e3a8a] line-clamp-1">
                         {post.title}
                       </h3>
-                      <p className="mb-4 line-clamp-3 flex-grow text-slate-600">{post.excerpt}</p>
-                      <span className="text-sm font-medium" style={{ color: "#1e3a8a" }}>
-                        Read more →
-                      </span>
+                      <p className="mb-4 line-clamp-2 flex-grow text-slate-600">{post.excerpt}</p>
+                      <div className="inline-flex items-center gap-1 text-sm font-semibold text-[#1e3a8a] group-hover:gap-2 transition-all">
+                        Read more
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </Link>
                 </FadeIn>
