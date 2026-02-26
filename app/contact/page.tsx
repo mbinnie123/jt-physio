@@ -98,9 +98,9 @@ export default function ContactPage() {
                   <div className="mt-8 pt-8 border-t border-slate-100">
                     <h4 className="font-semibold text-slate-900 mb-4">Opening Hours</h4>
                     <ul className="space-y-2 text-sm text-slate-600">
-                      <li className="flex justify-between"><span>Monday - Friday</span> <span className="font-medium">9:00 AM - 8:00 PM</span></li>
-                      <li className="flex justify-between"><span>Saturday</span> <span className="font-medium">9:00 AM - 1:00 PM</span></li>
-                      <li className="flex justify-between"><span>Sunday</span> <span className="font-medium">Closed</span></li>
+                      <li className="flex justify-between"><span>Monday</span> <span className="font-medium">5:00 PM - 9:00 PM</span></li>
+                      <li className="flex justify-between"><span>Tuesday</span> <span className="font-medium">5:00 PM - 9:00 PM</span></li>
+                      <li className="flex justify-between"><span>Thursday</span> <span className="font-medium">5:00 PM - 9:00 PM</span></li>
                     </ul>
                   </div>
                 </FadeIn>
