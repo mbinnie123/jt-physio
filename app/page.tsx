@@ -411,7 +411,7 @@ export default async function HomePage() {
             </FadeIn>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season in Ayrshire with our specialized physiotherapy." },
+                { title: "Reduce Injury Risk", desc: "Reduce your chances of getting an injury in-season in Ayrshire with our specialised physiotherapy." },
                 { title: "Faster Recovery", desc: "Targeted treatment accelerates healing and helps you return stronger to the pitch, with football physiotherapy in Kilmarnock. " },
                 { title: "Performance Boost", desc: "Enhance strength, agility, and resilience specific to the game in Ayrshire, improving your performance." },
                 { title: "Ongoing Support", desc: "Education and guidance from our Kilmarnock physiotherapy and health team to maintain fitness long-term." }

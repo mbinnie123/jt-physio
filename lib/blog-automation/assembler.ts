@@ -200,7 +200,7 @@ function generateFAQs(
   const commonFAQs = [
     {
       question: `What should I expect when treating ${conditionName}?`,
-      answer: `Treatment depends on severity. Initially, expect assessment, personalized exercises, and advice. Most patients see improvement within 2-4 weeks of consistent treatment.`,
+      answer: `Treatment depends on severity. Initially, expect assessment, personalised exercises, and advice. Most patients see improvement within 2-4 weeks of consistent treatment.`,
     },
     {
       question: `How long does recovery from ${conditionName} typically take?`,
@@ -228,7 +228,7 @@ function generateChecklist(
 ): string[] {
   return [
     "✓ Schedule assessment with qualified physiotherapist",
-    "✓ Follow personalized exercise program daily",
+    "✓ Follow personalised exercise program daily",
     "✓ Apply ice/heat as advised for pain management",
     "✓ Maintain proper posture throughout the day",
     "✓ Avoid activities that aggravate symptoms",

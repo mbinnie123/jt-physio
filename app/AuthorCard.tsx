@@ -17,7 +17,7 @@ export function AuthorCard() {
         <div className="lg:col-span-2">
           <h3 className="text-lg font-semibold text-slate-900">About the Author: Jordan Templeton, MSc Physiotherapy</h3>
           <p className="mt-3 text-slate-600 leading-relaxed">
-            <strong>Jordan Templeton</strong> is a highly experienced football physiotherapist with over 7 years of professional experience in elite professional football. As a qualified MSc Physiotherapist, Jordan specializes in football-specific injury assessment, rehabilitation, and return-to-play protocols.
+            <strong>Jordan Templeton</strong> is a highly experienced football physiotherapist with over 7 years of professional experience in elite professional football. As a qualified MSc Physiotherapist, Jordan specialises in football-specific injury assessment, rehabilitation, and return-to-play protocols.
           </p>
           
           <p className="mt-2.5 text-slate-600 leading-relaxed">
@@ -25,7 +25,7 @@ export function AuthorCard() {
           </p>
           
           <p className="mt-2.5 text-slate-600 leading-relaxed">
-            He holds an MSc in Physiotherapy (Pre-Registration) from Glasgow Caledonian University and graduated with First Class Honours in Sport and Exercise Science from the University of the West of Scotland. Jordan brings expert care, evidence-led rehabilitation, and personalized treatment plans built on practical assessment and real-world football knowledge to his Kilmarnock and Ayrshire physiotherapy clinic.
+            He holds an MSc in Physiotherapy (Pre-Registration) from Glasgow Caledonian University and graduated with First Class Honours in Sport and Exercise Science from the University of the West of Scotland. Jordan brings expert care, evidence-led rehabilitation, and personalised treatment plans built on practical assessment and real-world football knowledge to his Kilmarnock and Ayrshire physiotherapy clinic.
           </p>
           
           <div className="mt-4 flex gap-3">

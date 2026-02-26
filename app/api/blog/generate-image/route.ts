@@ -3,20 +3,26 @@ import { generateBlogImage } from "@/lib/blog-automation/image-generator";
 
 export async function POST(request: NextRequest) {
   try {
-    const { topic, keywords } = await request.json();
+    const { sectionTitle, keywords, sectionContent, topic } = await request.json();
 
-    if (!topic) {
+    if (!sectionTitle) {
       return NextResponse.json(
-        { error: "Topic is required" },
+        { error: "sectionTitle is required" },
         { status: 400 }
       );
     }
 
-    const imageUrl = await generateBlogImage(topic, keywords || []);
+    // Generate image with section-specific content for better context
+    const imageUrl = await generateBlogImage(
+      sectionTitle,
+      keywords || [],
+      sectionContent || "",
+      topic || sectionTitle
+    );
 
     if (!imageUrl) {
       return NextResponse.json(
-        { error: "Failed to generate image. Make sure Vertex AI is configured." },
+        { error: "Failed to generate image. Check OpenAI API configuration." },
         { status: 500 }
       );
     }

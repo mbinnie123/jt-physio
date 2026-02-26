@@ -1,300 +1,90 @@
 import "server-only";
-
-const PROJECT_ID = process.env.GCP_PROJECT_ID;
-// Imagen API requires a specific region, not "global"
-const LOCATION = process.env.GCP_IMAGE_LOCATION || "us-central1";
-const STORAGE_BUCKET = process.env.GCP_IMAGE_STORAGE_BUCKET || "gs://jt-physio-images";
+import OpenAI from "openai";
 
 /**
- * Extract bucket name from gs:// URL
+ * Build a detailed, context-aware prompt from section content
  */
-function getBucketName(storagePath: string): string {
-  if (storagePath.startsWith("gs://")) {
-    return storagePath.replace("gs://", "");
-  }
-  return storagePath;
-}
-
-/**
- * Generate an image for a blog post using Google Vertex AI Imagen and upload to GCS
- */
-export async function generateBlogImage(topic: string, keywords: string[]): Promise<string | null> {
-  if (!PROJECT_ID) {
-    console.error("GCP_PROJECT_ID not configured");
-    return null;
-  }
-
-  try {
-    // Construct a detailed prompt from topic and keywords
-    const prompt = buildImagePrompt(topic, keywords);
-
-    console.log(`[ImageGen] Generating image for: ${topic}`);
-    console.log(`[ImageGen] Prompt: ${prompt}`);
-    console.log(`[ImageGen] Project: ${PROJECT_ID}, Location: ${LOCATION}`);
-
-    // Get access token
-    const accessToken = await getAccessToken();
-    if (!accessToken) {
-      console.error("[ImageGen] Failed to get GCP access token");
-      return null;
-    }
-
-    // Call Vertex AI Imagen API directly via REST
-    const apiUrl = `https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/imagen-3.0-generate-002:predict`;
-    console.log(`[ImageGen] API URL: ${apiUrl}`);
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        instances: [
-          {
-            prompt: prompt,
-          },
-        ],
-        parameters: {
-          sampleCount: 1,
-          safetyFilterLevel: "block_some",
-          personGenerationConfig: {
-            denyAdult: true,
-          },
-        },
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error(`[ImageGen] API error: ${response.status} - ${error}`);
-      return null;
-    }
-
-    const data = await response.json() as { predictions?: unknown[] };
-    
-    if (data.predictions && data.predictions.length > 0) {
-      const prediction = data.predictions[0] as { bytesBase64Encoded?: string };
-      if (prediction.bytesBase64Encoded) {
-        console.log(`[ImageGen] ✓ Generated image successfully, uploading to GCS...`);
-        
-        // Upload to GCS and get public URL
-        const publicUrl = await uploadImageToGCS(
-          prediction.bytesBase64Encoded,
-          topic,
-          keywords
-        );
-        
-        if (publicUrl) {
-          console.log(`[ImageGen] ✓ Image uploaded: ${publicUrl}`);
-          return publicUrl;
-        }
-      }
-    }
-
-    console.warn("No predictions in Vertex AI Imagen response");
-    return null;
-  } catch (error) {
-    console.error("Image generation error:", error);
-    return null;
-  }
-}
-
-/**
- * Upload base64 image to GCS bucket and return signed public URL
- */
-async function uploadImageToGCS(
-  base64Image: string,
+function buildDetailedPrompt(
+  sectionTitle: string,
+  sectionContent: string,
   topic: string,
   keywords: string[]
-): Promise<string | null> {
-  const maxRetries = 3;
-  let lastError: unknown;
+): string {
+  // Extract key concepts from content (first 2-3 sentences)
+  const contentPreview = sectionContent
+    .split(".")
+    .slice(0, 2)
+    .join(".")
+    .substring(0, 300);
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const { Storage } = await import("@google-cloud/storage");
-      
-      const storage = new Storage({
-        projectId: PROJECT_ID,
-      });
+  // Build a rich, visual prompt
+  const prompt = `Create a professional, medical-illustration style image for a physiotherapy blog post section titled "${sectionTitle}" about "${topic}".
 
-      const bucketName = getBucketName(STORAGE_BUCKET);
-      const bucket = storage.bucket(bucketName);
+The section covers: ${contentPreview}
 
-      // Generate filename from topic and keywords
-      const sanitizedTopic = topic
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .slice(0, 50);
-      
-      const timestamp = Date.now();
-      const filename = `blog-images/${sanitizedTopic}-${timestamp}.png`;
+Key concepts to visualize: ${keywords.slice(0, 5).join(", ")}
 
-      // Convert base64 to buffer
-      const buffer = Buffer.from(base64Image, "base64");
+Requirements:
+- Clean, professional medical illustration style
+- Shows practical application or anatomical relevance
+- Includes people demonstrating exercises or movements when appropriate
+- Professional color palette suitable for healthcare content
+- High quality, suitable for web use
+- Focus on clarity and educational value
+- No text or watermarks on the image
 
-      const file = bucket.file(filename);
+Create an illustration that clearly represents the key concepts discussed in this section.`;
 
-      console.log(`[ImageGen] Uploading to GCS (attempt ${attempt}/${maxRetries})...`);
-
-      // Upload with optimized settings for macOS
-      // Use resumable: false to avoid SSL MAC error, and strict timeout handling
-      try {
-        await file.save(buffer, {
-          metadata: {
-            contentType: "image/png",
-          },
-          timeout: 30000,
-          resumable: false,
-        });
-      } catch (uploadError) {
-        // If resumable fails, try with different settings
-        const errorMsg = uploadError instanceof Error ? uploadError.message : String(uploadError);
-        if (errorMsg.includes("SSL") || errorMsg.includes("ssl3_read_bytes")) {
-          console.warn("[ImageGen] SSL error detected, trying alternative upload method...");
-          // Try the slower but more reliable createWriteStream approach
-          return await uploadImageToGCSViaStream(buffer, bucketName, filename);
-        }
-        throw uploadError;
-      }
-
-      console.log(`[ImageGen] ✓ Uploaded to GCS: gs://${bucketName}/${filename}`);
-
-      try {
-        // Prefer permanent public URL when IAM allows it
-        await file.makePublic();
-        const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
-        console.log(`[ImageGen] ✓ Generated public URL (permanent)`);
-        return publicUrl;
-      } catch (makePublicError) {
-        const errorMsg = makePublicError instanceof Error ? makePublicError.message : String(makePublicError);
-        console.warn(
-          "[ImageGen] ⚠️ makePublic failed; falling back to signed URL",
-          errorMsg
-        );
-
-        // Fallback: signed URL (7 days) to keep pipeline working until IAM is fixed
-        const [signedUrl] = await file.getSignedUrl({
-          version: "v4",
-          action: "read",
-          expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        });
-
-        console.log(`[ImageGen] ✓ Generated fallback signed URL (valid 7 days)`);
-        return signedUrl;
-      }
-    } catch (error) {
-      lastError = error;
-      const errorMsg = error instanceof Error ? error.message : String(error);
-      console.error(`[ImageGen] GCS upload attempt ${attempt} failed:`, errorMsg);
-      
-      if (attempt < maxRetries) {
-        // Wait before retrying (exponential backoff)
-        const delay = Math.pow(2, attempt - 1) * 1000;
-        console.log(`[ImageGen] Retrying in ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-    }
-  }
-
-  console.error("[ImageGen] GCS upload failed after all retries:", lastError);
-  return null;
+  return prompt;
 }
 
 /**
- * Alternative upload method using streams (slower but more reliable on macOS)
+ * Generate an image for a blog section using OpenAI DALL-E 3
  */
-async function uploadImageToGCSViaStream(
-  buffer: Buffer,
-  bucketName: string,
-  filename: string
+export async function generateBlogImage(
+  sectionTitle: string,
+  keywords: string[] = [],
+  sectionContent: string = "",
+  topic: string = sectionTitle
 ): Promise<string | null> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.error("[ImageGen] OPENAI_API_KEY not configured");
+    return null;
+  }
+
   try {
-    const { Storage } = await import("@google-cloud/storage");
-    const storage = new Storage({ projectId: PROJECT_ID });
-    const bucket = storage.bucket(bucketName);
-    const file = bucket.file(filename);
+    const client = new OpenAI({ apiKey });
 
-    // Use createWriteStream which is more reliable
-    return new Promise((resolve, reject) => {
-      const stream = file.createWriteStream({
-        metadata: {
-          contentType: "image/png",
-        },
-        timeout: 60000, // Longer timeout for stream
-      });
+    // Build detailed prompt from section content
+    const prompt = buildDetailedPrompt(sectionTitle, sectionContent, topic, keywords);
 
-      stream.on("error", (error) => {
-        console.error("[ImageGen] Stream upload error:", error);
-        reject(error);
-      });
+    console.log(`[ImageGen] Generating image for section: "${sectionTitle}"`);
+    console.log(`[ImageGen] Using DALL-E 3...`);
 
-      stream.on("finish", async () => {
-        console.log(`[ImageGen] ✓ Stream upload complete`);
-        try {
-          await file.makePublic();
-          const publicUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
-          console.log(`[ImageGen] ✓ Generated public URL`);
-          resolve(publicUrl);
-        } catch {
-          const [signedUrl] = await file.getSignedUrl({
-            version: "v4",
-            action: "read",
-            expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-          });
-          console.log(`[ImageGen] ✓ Generated signed URL (fallback)`);
-          resolve(signedUrl);
-        }
-      });
-
-      stream.end(buffer);
+    // Generate image using DALL-E 3
+    const response = await client.images.generate({
+      model: "dall-e-3",
+      prompt: prompt,
+      n: 1,
+      size: "1024x1024",
+      quality: "hd",
+      style: "natural",
     });
+
+    if (response.data && response.data.length > 0) {
+      const imageUrl = response.data[0].url;
+      if (imageUrl) {
+        console.log(`[ImageGen] ✓ Generated image successfully: ${imageUrl}`);
+        return imageUrl;
+      }
+    }
+
+    console.warn("[ImageGen] No image URL in DALL-E 3 response");
+    return null;
   } catch (error) {
-    console.error("[ImageGen] Stream upload failed:", error);
+    console.error("[ImageGen] Error generating image with DALL-E 3:", error);
     return null;
   }
 }
 
-/**
- * Get access token for Vertex AI API using Application Default Credentials
- */
-async function getAccessToken(): Promise<string> {
-  try {
-    // Use google-auth-library to get access token from Application Default Credentials
-    const { GoogleAuth } = await import("google-auth-library");
-    
-    const auth = new GoogleAuth({
-      scopes: ["https://www.googleapis.com/auth/cloud-platform"],
-    });
-
-    const client = await auth.getClient();
-    const accessToken = await client.getAccessToken();
-    
-    if (!accessToken.token) {
-      console.error("[ImageGen] No access token retrieved from credentials");
-      return "";
-    }
-    
-    console.log("[ImageGen] Access token obtained successfully");
-    return accessToken.token;
-  } catch (error) {
-    console.error("[ImageGen] Failed to get access token:", error);
-    return "";
-  }
-}
-
-/**
- * Build a detailed, professional prompt for image generation
- */
-function buildImagePrompt(topic: string, keywords: string[]): string {
-  const keywordStr = keywords.slice(0, 5).join(", ");
-
-  return `Professional, high-quality blog header image for a physiotherapy article about "${topic}". 
-Keywords: ${keywordStr}. 
-Style: Modern healthcare aesthetic, clean, professional, inspiring. 
-Include relevant medical/physiotherapy elements. Show people, movement, or healing. 
-High resolution, suitable for blog cover image. Medical/wellness themed. 
-Photography style, realistic, professional lighting.`;
-}

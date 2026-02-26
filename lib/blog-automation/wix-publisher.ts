@@ -322,6 +322,14 @@ function buildRichContent(post: BlogPost): {
       nodes.push(createHeadingNode(section.title, 2));
     }
 
+    // Add section image if it exists
+    if (section.imageUrl) {
+      const normalizedImageUrl = normalizeFeaturedImageUrl(section.imageUrl);
+      if (normalizedImageUrl) {
+        nodes.push(createImageNode(normalizedImageUrl, section.title || "Section image"));
+      }
+    }
+
     // Handle both Ricos format (object) and legacy string format
     if (section.content && typeof section.content === 'object' && section.content.nodes) {
       // Content is already in Ricos format - convert to Wix nodes

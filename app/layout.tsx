@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { BackToTop } from "./BackToTop";
+import { TopContactBar, TopContactBarProvider } from "./TopContactBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -81,9 +82,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
-        <WhatsAppButton />
-        <BackToTop />
+        <TopContactBarProvider>
+          <TopContactBar />
+          {children}
+          <WhatsAppButton />
+          <BackToTop />
+        </TopContactBarProvider>
       </body>
     </html>
   );

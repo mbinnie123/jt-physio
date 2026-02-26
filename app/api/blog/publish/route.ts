@@ -189,6 +189,20 @@ export async function POST(request: NextRequest) {
       }
     );
 
+    // If regenerated extras were provided, use them instead of generated ones
+    if (body.metadata?.faqs && Array.isArray(body.metadata.faqs)) {
+      assembledPost.faqs = body.metadata.faqs;
+      assembledPost.metadata.faqs = body.metadata.faqs;
+    }
+    if (body.metadata?.checklist && Array.isArray(body.metadata.checklist)) {
+      assembledPost.checklist = body.metadata.checklist;
+      assembledPost.metadata.checklist = body.metadata.checklist;
+    }
+    if (body.metadata?.outboundLinks && Array.isArray(body.metadata.outboundLinks)) {
+      assembledPost.outboundLinks = body.metadata.outboundLinks;
+      assembledPost.metadata.outboundLinks = body.metadata.outboundLinks;
+    }
+
     if (body.content && typeof body.content === "string") {
       assembledPost.content = body.content;
     }
@@ -209,7 +223,19 @@ export async function POST(request: NextRequest) {
           .slice(0, 5)
           .filter((k) => typeof k === "string" && k.length > 0);
         
-        const imageUrl = await generateBlogImage(draft.topic, keywords as string[]);
+        // Extract intro/first section for better context
+        const introContent = sanitizedSections.length > 0 
+          ? (typeof sanitizedSections[0].content === 'string' 
+              ? sanitizedSections[0].content 
+              : sanitizedSections[0].contentHtml || '')
+          : assembledPost.excerpt;
+        
+        const imageUrl = await generateBlogImage(
+          draft.topic,
+          keywords as string[],
+          introContent,
+          draft.topic
+        );
         
         if (imageUrl) {
           assembledPost.featuredImageUrl = imageUrl;

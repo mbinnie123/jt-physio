@@ -24,6 +24,7 @@ export interface BlogSection {
   title: string;
   content: any; // Ricos format object
   contentHtml?: string; // HTML version for reference
+  imageUrl?: string; // Optional section header image
   sectionNumber: number;
   wordCount: number;
 }
@@ -226,19 +227,33 @@ Target audience: ${options.targetAudience}
 
 IMPORTANT - CITATION REQUIREMENT:
 You MUST cite the research sources naturally throughout the content. When you reference information from a source, use this format to create a citation:
-[citation_text](source_url)
+[anchor_text](source_url)
 
-For example: According to [NHS guidance on physiotherapy](https://www.nhs.uk/conditions/physiotherapy/), treatment can help improve recovery.
+The anchor text MUST be natural and contextual - link the actual concept/keyword, not the source name.
+
+GOOD EXAMPLES OF NATURAL ANCHOR TEXT:
+✅ According to [shoulder exercises](url), stretches should be done slowly to avoid setbacks.
+✅ Research on [physiotherapy outcomes](url) shows that consistent treatment improves recovery.
+✅ The [Schroth method](url) has been proven effective in clinical studies.
+✅ Studies recommend [gentle movement progression](url) when starting rehabilitation.
+
+BAD EXAMPLES (DO NOT USE):
+❌ According to [NHS approved shoulder exercises](url)
+❌ According to [NHS](url) shoulder exercises
+❌ Research from [Mayo Clinic research on physiotherapy](url)
+❌ Data from [Cleveland Clinic experts](url)
+
+Guidelines for creating effective anchor text:
+- Link the actual concept, keyword, or topic - NOT the source/publication name
+- Anchor text should be 2-5 words describing the actual subject matter
+- Examples: "shoulder exercises", "scoliosis stretches", "recovery techniques", "physiotherapy protocols"
+- Keep it simple and topical
+- Avoid including source names like "NHS", "Mayo Clinic", "Research from", etc.
+- Each citation should reference a different source when possible
+- Always use the exact source URLs provided below
 
 Available sources to cite from:
 ${sources || "No specific sources available"}
-
-Guidelines:
-- Create 2-4 citations naturally integrated into your writing
-- Use meaningful anchor text (e.g., "Mayo Clinic research", "NHS guidelines", "expert recommendations") - NOT generic terms
-- The anchor text should be 2-5 words and make sense in context
-- Each citation should be attributed to a different source when possible
-- Always use the exact source URLs provided above
 
 Keywords to incorporate: ${keywordsList}
 

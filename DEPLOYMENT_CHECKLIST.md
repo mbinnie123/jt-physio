@@ -48,7 +48,7 @@
 - [ ] Admin dashboard loads quickly
 - [ ] API response times acceptable
 - [ ] No memory leaks in Node.js
-- [ ] Images optimized if using any
+- [ ] Images optimised if using any
 - [ ] CSS/JS minified
 - [ ] Caching implemented where appropriate
 
@@ -128,13 +128,13 @@ npm start
 - [ ] Get team feedback
 
 ### Week 1
-- [ ] Analyze performance metrics
+- [ ] Analyse performance metrics
 - [ ] Review user feedback
 - [ ] Check cost estimates
 - [ ] Make any necessary adjustments
 
 ### Month 1
-- [ ] Optimize slow endpoints
+- [ ] Optimise slow endpoints
 - [ ] Implement improvements
 - [ ] Plan additional features
 - [ ] Update documentation
@@ -177,7 +177,7 @@ psql < backup.sql
 ### When to Scale Up
 
 - **Traffic increases significantly**: Implement caching, CDN
-- **API response times slow**: Add database indexes, optimize queries
+- **API response times slow**: Add database indexes, optimise queries
 - **Cost becomes concern**: Switch to cheaper AI models, implement caching
 - **More features needed**: Upgrade to production database
 
@@ -215,9 +215,9 @@ psql < backup.sql
 - [ ] Test disaster recovery
 
 ### Monthly
-- [ ] Review costs and optimize
+- [ ] Review costs and optimise
 - [ ] Update dependencies
-- [ ] Analyze usage patterns
+- [ ] Analyse usage patterns
 - [ ] Plan improvements
 
 ### Quarterly
@@ -388,7 +388,7 @@ Solution:
 Solution:
 1. Check database performance
 2. Enable caching
-3. Optimize OpenAI prompts
+3. Optimise OpenAI prompts
 4. Scale infrastructure
 5. Monitor CPU/memory
 ```
@@ -399,7 +399,7 @@ Solution:
 1. Switch to GPT-3.5 Turbo
 2. Implement caching
 3. Batch requests
-4. Optimize API calls
+4. Optimise API calls
 5. Review and reduce usage
 ```
 

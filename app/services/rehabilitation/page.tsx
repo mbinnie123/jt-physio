@@ -55,7 +55,7 @@ export default function RehabilitationPage() {
               <div className="space-y-8">
                 {[
                   { title: "1. Comprehensive Assessment", desc: "We start with a thorough assessment to understand your injury, movement patterns, and any underlying issues contributing to your pain or dysfunction." },
-                  { title: "2. Personalized Treatment Plan", desc: "Based on our assessment, we develop a customized treatment plan that addresses your specific needs and goals. This may include manual therapy, exercise prescription, and education." },
+                  { title: "2. Personalised Treatment Plan", desc: "Based on our assessment, we develop a customised treatment plan that addresses your specific needs and goals. This may include manual therapy, exercise prescription, and education." },
                   { title: "3. Progressive Rehabilitation", desc: "We guide you through a progressive rehabilitation program, gradually increasing the intensity and complexity of exercises to restore strength, mobility, and function." },
                   { title: "4. Return-to-Play Planning", desc: "We work with you to develop a safe and effective return-to-play plan, ensuring you're fully prepared to return to your sport or activity without re-injury." }
                 ].map((step, i) => (

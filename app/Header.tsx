@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useTopContactBarVisibility } from "./TopContactBar";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const isContactBarVisible = useTopContactBarVisibility();
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
     if (window.location.pathname === "/") {
@@ -29,7 +31,9 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
+    <header className={`sticky z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md transition-all duration-300 ease-in-out ${
+      isContactBarVisible ? "top-12" : "top-0"
+    }`}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter text-slate-900" onClick={() => setIsServicesOpen(false)}>

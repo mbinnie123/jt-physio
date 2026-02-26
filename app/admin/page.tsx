@@ -35,6 +35,43 @@ async function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+function generateTargetWordCounts(sections: string[]): number[] {
+  return sections.map((title: string) => {
+    const lower = title.toLowerCase();
+    
+    // Introduction/opening sections - shorter
+    if (lower.includes("introduction") || lower.includes("overview") || lower.includes("what is")) {
+      return 300;
+    }
+    
+    // Conclusion/closing sections - medium
+    if (lower.includes("conclusion") || lower.includes("summary") || lower.includes("takeaway")) {
+      return 350;
+    }
+    
+    // How-to/Tips/Guide sections - longer
+    if (lower.includes("how to") || lower.includes("tips") || lower.includes("guide") || 
+        lower.includes("step") || lower.includes("treatment") || lower.includes("exercise")) {
+      return 500;
+    }
+    
+    // Benefits/Risks/Causes - medium-long
+    if (lower.includes("benefit") || lower.includes("risk") || lower.includes("cause") || 
+        lower.includes("symptom") || lower.includes("effect")) {
+      return 450;
+    }
+    
+    // Main content sections - longer
+    if (lower.includes("research") || lower.includes("finding") || lower.includes("details") ||
+        lower.includes("explanation")) {
+      return 400;
+    }
+    
+    // Default for other sections
+    return 400;
+  });
+}
+
 function extractLinksFromHtml(html: string): Array<{ url: string; text: string }> {
   const links: Array<{ url: string; text: string }> = [];
   const linkRegex = /<a\s+href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/gi;
@@ -128,6 +165,12 @@ export default function AdminDashboard() {
   const [editableDraftSport, setEditableDraftSport] = useState(""); // Editable sport
   const [assembledBlog, setAssembledBlog] = useState<any>(null); // Store assembled blog data
   const [expandedSectionIndex, setExpandedSectionIndex] = useState<number | null>(null); // For viewing full section content
+  const [viewingOutlineImageIndex, setViewingOutlineImageIndex] = useState<number | null>(null); // For viewing outline section images
+  const [viewingWrittenImageIndex, setViewingWrittenImageIndex] = useState<number | null>(null); // For viewing written section images
+  const [sectionImages, setSectionImages] = useState<Record<number, string>>({}); // Track generated section images
+  const [generatingSectionImage, setGeneratingSectionImage] = useState<number | null>(null); // Which section is generating image
+  const [regeneratingExtras, setRegeneratingExtras] = useState(false); // Track if regenerating all extras
+  const [regeneratingSection, setRegeneratingSection] = useState<string | null>(null); // Track which section is regenerating (faqs, checklist, links)
   
   // Editable metadata fields
   const [editableTitle, setEditableTitle] = useState("");
@@ -161,6 +204,22 @@ export default function AdminDashboard() {
     });
     
     setSections(sectionsWithHtml);
+    
+    // Reconstruct outline from existing sections
+    const reconstructedOutline = sectionsWithHtml
+      .filter((s: any) => s && s.title)
+      .map((s: any) => s.title);
+    setOutline(reconstructedOutline);
+    setEditableOutline(reconstructedOutline);
+    setSectionTargetWords(generateTargetWordCounts(reconstructedOutline));
+    
+    // Auto-detect next unwritten section
+    const nextUnwrittenIndex = sectionsWithHtml.findIndex((section: any) => 
+      !section || !section.content || 
+      (typeof section.content === 'object' && Object.keys(section.content).length === 0)
+    );
+    const nextIndex = nextUnwrittenIndex >= 0 ? nextUnwrittenIndex : 0;
+    setCurrentSectionIndex(nextIndex);
     setResearchData(draft.researchData || null);
     setSelectedSourceIds(draft.selectedSourceIds || []);
     setEditableDraftLocation(draft.location || "");
@@ -313,7 +372,7 @@ export default function AdminDashboard() {
         setResearchData(data.research || data.draft.researchData || null);
         setOutline(data.outline || []);
         setEditableOutline(data.outline || []);
-        setSectionTargetWords((data.outline || []).map(() => 300)); // Initialize all sections to 300 words
+        setSectionTargetWords(generateTargetWordCounts(data.outline || []));
         setCurrentSectionIndex(0);
 
         setNewTopic("");
@@ -351,7 +410,7 @@ export default function AdminDashboard() {
       if (response.ok && data.outline && data.outline.length > 0) {
         setOutline(data.outline);
         setEditableOutline(data.outline);
-        setSectionTargetWords(data.outline.map(() => 300)); // Initialize all sections to 300 words
+        setSectionTargetWords(generateTargetWordCounts(data.outline));
         setCurrentSectionIndex(0);
       } else {
         const errorMsg = data?.error || `HTTP ${response.status}: Failed to generate outline`;
@@ -392,8 +451,25 @@ export default function AdminDashboard() {
     generateOutline(selectedDraft.id, auth, numSections);
   };
 
-  const writeNextSection = async () => {
-    if (!selectedDraft || !editableOutline[currentSectionIndex]) return;
+  const writeNextSection = async (sectionIndex?: number) => {
+    // Ensure targetIndex is a number
+    const rawIndex = sectionIndex !== undefined ? sectionIndex : currentSectionIndex;
+    const targetIndex = typeof rawIndex === 'number' ? parseInt(String(rawIndex)) : 0;
+    
+    if (!selectedDraft) {
+      alert("No draft selected. Please create or select a draft first.");
+      return;
+    }
+    
+    if (!editableOutline || !Array.isArray(editableOutline) || editableOutline.length === 0) {
+      alert("No outline found. Please generate an outline first.");
+      return;
+    }
+    
+    if (targetIndex < 0 || targetIndex >= editableOutline.length) {
+      alert(`Section ${targetIndex + 1} does not exist. Outline has ${editableOutline.length} sections.`);
+      return;
+    }
 
     setWritingSection(true);
     const auth = localStorage.getItem("admin_auth") || "";
@@ -410,11 +486,11 @@ export default function AdminDashboard() {
           },
           body: JSON.stringify({
             draftId: selectedDraft.id,
-            sectionTitle: editableOutline[currentSectionIndex],
-            sectionNumber: currentSectionIndex + 1,
+            sectionTitle: editableOutline[targetIndex],
+            sectionNumber: targetIndex + 1,
             tone: "professional",
             targetAudience: "physiotherapy patients",
-            targetWords: sectionTargetWords[currentSectionIndex] || 300,
+            targetWords: sectionTargetWords[targetIndex] || 300,
           }),
         },
         1
@@ -428,12 +504,12 @@ export default function AdminDashboard() {
         if (!newSection.contentHtml && newSection.content && typeof newSection.content === 'object') {
           newSection.contentHtml = ricosToHtml(newSection.content);
         }
-        updatedSections[currentSectionIndex] = newSection;
+        updatedSections[targetIndex] = newSection;
         setSections(updatedSections);
         
         // Move to next section
-        if (currentSectionIndex < editableOutline.length - 1) {
-          setCurrentSectionIndex(currentSectionIndex + 1);
+        if (targetIndex < editableOutline.length - 1) {
+          setCurrentSectionIndex(targetIndex + 1);
         }
       } else {
         const errorMessage = data?.error || `HTTP ${response.status}: Failed to write section`;
@@ -537,6 +613,101 @@ export default function AdminDashboard() {
     } finally {
       setGeneratingImage(false);
     }
+  };
+
+  const generateSectionImage = async (sectionIndex: number) => {
+    if (!sections[sectionIndex]) {
+      alert("Section not found");
+      return;
+    }
+
+    const section = sections[sectionIndex];
+    setGeneratingSectionImage(sectionIndex);
+
+    try {
+      // Extract content for prompt (prefer text content, fallback to HTML)
+      const sectionContent = typeof section.content === 'string' 
+        ? section.content 
+        : (section.contentHtml || '').replace(/<[^>]*>/g, '');
+
+      const response = await fetch("/api/blog/generate-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sectionTitle: section.title,
+          sectionContent: sectionContent,
+          topic: editableDraftTopic,
+          keywords: [
+            ...((researchData?.keywords || []).slice(0, 2)),
+            section.title
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to generate image");
+      }
+
+      const data = await response.json();
+      if (data.imageUrl) {
+        // Update section with image
+        const updatedSections = [...sections];
+        updatedSections[sectionIndex] = {
+          ...updatedSections[sectionIndex],
+          imageUrl: data.imageUrl,
+        };
+        setSections(updatedSections);
+        
+        // Store in sectionImages state for quick reference
+        setSectionImages(prev => ({
+          ...prev,
+          [sectionIndex]: data.imageUrl
+        }));
+      } else {
+        throw new Error("No image URL returned");
+      }
+    } catch (error) {
+      console.error("Section image generation error:", error);
+      alert(`Error generating section image: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setGeneratingSectionImage(null);
+    }
+  };
+
+  const generateAllSectionImages = async () => {
+    if (!sections || sections.length === 0) {
+      alert("No sections to generate images for");
+      return;
+    }
+
+    // Show confirmation
+    const hasExisting = sections.some(s => s?.imageUrl);
+    if (hasExisting) {
+      const confirm = window.confirm(
+        "Some sections already have images. Generate for all sections anyway?"
+      );
+      if (!confirm) return;
+    }
+
+    // Generate images sequentially for all sections
+    let count = 0;
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i]) {
+        try {
+          await generateSectionImage(i);
+          count++;
+          // Small delay between requests to avoid rate limiting
+          await new Promise(r => setTimeout(r, 1000));
+        } catch (error) {
+          console.error(`Failed to generate image for section ${i}:`, error);
+        }
+      }
+    }
+    
+    alert(`Generated images for ${count} section(s)`);
   };
 
   const assembleBlog = async () => {
@@ -651,6 +822,98 @@ export default function AdminDashboard() {
     }
   };
 
+  const regenerateExtras = async (section?: "faqs" | "checklist" | "links") => {
+    if (!selectedDraft || !editableDraftTopic) {
+      alert("No draft or topic found");
+      return;
+    }
+
+    const isRegeneratingAll = !section;
+    if (isRegeneratingAll) {
+      setRegeneratingExtras(true);
+    } else {
+      setRegeneratingSection(section);
+    }
+
+    const auth = localStorage.getItem("admin_auth") || "";
+
+    try {
+      const { res: response, json: data } = await fetchJsonWithRetry(
+        "/api/blog/regenerate-extras",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth,
+            "X-Request-ID": "ba6adc02-0b45-4780-84ba-dc1fde492045",
+          },
+          body: JSON.stringify({
+            draftId: selectedDraft.id,
+            topic: editableDraftTopic,
+            section: section || "all",
+          }),
+        },
+        1
+      );
+
+      if (response.ok && assembledBlog) {
+        // Update the assembled blog with regenerated content
+        const updates: any = {};
+        if (!section || section === "faqs") {
+          // Only update if faqs were actually generated
+          if ("faqs" in data) {
+            updates.faqs = data.faqs;
+          }
+        }
+        if (!section || section === "checklist") {
+          // Only update if checklist was actually generated
+          if ("checklist" in data) {
+            updates.checklist = data.checklist;
+          }
+        }
+        if (!section || section === "links") {
+          // Only update if outboundLinks were actually generated
+          if ("outboundLinks" in data) {
+            updates.outboundLinks = data.outboundLinks;
+          }
+        }
+
+        const updatedBlog = {
+          ...assembledBlog,
+          metadata: {
+            ...assembledBlog.metadata,
+            ...updates,
+          },
+        };
+        setAssembledBlog(updatedBlog);
+
+        const sectionName = section
+          ? section === "faqs"
+            ? "FAQs"
+            : section === "checklist"
+            ? "Checklist"
+            : "Sources"
+          : "all sections";
+        alert(`${sectionName} regenerated successfully!`);
+      } else {
+        const errorMessage = data?.error || `HTTP ${response.status}: Failed to regenerate`;
+        console.error("Regenerate extras failed:", errorMessage);
+        alert(`Failed to regenerate: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Failed to regenerate extras:", error);
+      alert(
+        `Error regenerating: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
+    } finally {
+      if (isRegeneratingAll) {
+        setRegeneratingExtras(false);
+      } else {
+        setRegeneratingSection(null);
+      }
+    }
+  };
+
   const publishBlog = async () => {
     if (!selectedDraft) return;
 
@@ -676,6 +939,10 @@ export default function AdminDashboard() {
               seoTitle: editableSeoTitle,
               seoDescription: editableSeoDescription,
               featuredImageUrl: editableFeaturedImageUrl,
+              // Include regenerated extras so they get pushed to Wix
+              faqs: assembledBlog?.metadata?.faqs,
+              checklist: assembledBlog?.metadata?.checklist,
+              outboundLinks: assembledBlog?.metadata?.outboundLinks,
             },
             content: editableContent,
             selectedSourceIds: selectedSourceIds,
@@ -834,7 +1101,6 @@ export default function AdminDashboard() {
                       setEditableOutline([]);
                       setSectionTargetWords([]);
                     }
-                    setCurrentSectionIndex(0);
                     setActiveTab("edit");
                   }}
                   className="bg-white rounded-lg shadow hover:shadow-lg transition p-6 cursor-pointer"
@@ -1023,6 +1289,28 @@ export default function AdminDashboard() {
                     </span>
                   </div>
                 </div>
+
+                {/* Action Buttons - Reassemble & Reapply */}
+                {selectedDraft.status !== "draft" && (
+                  <div className="flex gap-3 flex-wrap">
+                    <button
+                      onClick={assembleBlog}
+                      disabled={loading}
+                      className="px-4 py-2 rounded-lg bg-cyan-600 text-white text-sm font-semibold hover:bg-cyan-700 disabled:bg-gray-400"
+                      title="Reassemble blog with current sections and metadata"
+                    >
+                      {loading ? "Reassembling..." : "⟳ Reassemble"}
+                    </button>
+                    <button
+                      onClick={reapplyMetadata}
+                      disabled={reapplyingMetadata}
+                      className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:bg-gray-400"
+                      title="Reapply metadata fresh from research data"
+                    >
+                      {reapplyingMetadata ? "Refreshing..." : "↻ Reapply Metadata"}
+                    </button>
+                  </div>
+                )}
 
                 {/* Location, Topic and Sport */}
                 <div className="grid md:grid-cols-3 gap-4">
@@ -1340,22 +1628,72 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
-                  <button
-                    onClick={handleGenerateOutline}
-                    disabled={generatingOutline}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:bg-gray-400"
-                  >
-                    {generatingOutline
-                      ? "Generating..."
-                      : outline.length > 0
-                      ? "Regenerate Outline"
-                      : "Generate Outline"}
-                  </button>
+                  <div className="flex gap-2 flex-wrap">
+                    {sections.length > 0 && (
+                      <button
+                        onClick={generateAllSectionImages}
+                        disabled={generatingSectionImage !== null}
+                        className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-semibold hover:bg-purple-700 disabled:bg-gray-400"
+                      >
+                        Generate All Images
+                      </button>
+                    )}
+                    {sections.length > 0 && (
+                      <button
+                        onClick={() => {
+                          setSectionImages({});
+                          const updatedSections = sections.map(s => ({...s, imageUrl: undefined}));
+                          setSections(updatedSections);
+                        }}
+                        className="px-4 py-2 rounded-lg bg-pink-600 text-white text-sm font-semibold hover:bg-pink-700"
+                      >
+                        Reset Images
+                      </button>
+                    )}
+                    {outline.length > 0 && (
+                      <button
+                        onClick={() => setSectionTargetWords(generateTargetWordCounts(editableOutline))}
+                        className="px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700"
+                      >
+                        Reset Word Counts
+                      </button>
+                    )}
+                    {outline.length > 0 && (
+                      <button
+                        onClick={() => {
+                          if (confirm("Reset entire blog? This will clear all written sections and images.")) {
+                            setSections([]);
+                            setSectionImages({});
+                            setCurrentSectionIndex(0);
+                          }
+                        }}
+                        className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700"
+                      >
+                        Reset Blog
+                      </button>
+                    )}
+                    <button
+                      onClick={handleGenerateOutline}
+                      disabled={generatingOutline}
+                      className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:bg-gray-400"
+                    >
+                      {generatingOutline
+                        ? "Generating..."
+                        : outline.length > 0
+                        ? "Regenerate Outline"
+                        : "Generate Outline"}
+                    </button>
+                  </div>
                 </div>
                 {outline.length > 0 ? (
-                  <ol className="space-y-3">
-                    {editableOutline.map((section, i) => (
-                      <li key={i} className="flex items-center gap-3">
+                  <div className="space-y-3">
+                    <p className="text-xs text-gray-500 mb-3">
+                      💡 Word counts are auto-generated based on section type. Edit or reset counts as needed.
+                    </p>
+                    {Array.isArray(editableOutline) ? (
+                    <ol className="space-y-3">
+                      {editableOutline.map((section, i) => (
+                      <li key={`section-${i}`} className="flex items-center gap-3">
                         <span className="font-semibold text-blue-600 min-w-6">
                           {i + 1}.
                         </span>
@@ -1385,12 +1723,50 @@ export default function AdminDashboard() {
                           />
                           <span className="text-xs text-gray-600 whitespace-nowrap">words</span>
                         </div>
+                        <button
+                          onClick={() => generateSectionImage(i)}
+                          disabled={generatingSectionImage === i}
+                          className="px-2 py-1 text-xs bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400 whitespace-nowrap"
+                        >
+                          {generatingSectionImage === i 
+                            ? "..." 
+                            : sections[i]?.imageUrl || sectionImages[i]
+                              ? "✓ Img"
+                              : "Img"}
+                        </button>
+                        {(sections[i]?.imageUrl || sectionImages[i]) && (
+                          <button
+                            onClick={() => setViewingOutlineImageIndex(i)}
+                            className="px-2 py-1 text-xs bg-indigo-600 text-white rounded hover:bg-indigo-700 whitespace-nowrap"
+                            title="View image"
+                          >
+                            👁️
+                          </button>
+                        )}
+                        {!sections[i] && (
+                          <button
+                            onClick={() => {
+                              setCurrentSectionIndex(i);
+                              writeNextSection(i);
+                            }}
+                            disabled={writingSection}
+                            className="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 whitespace-nowrap font-medium"
+                          >
+                            {writingSection ? "Writing..." : "Write"}
+                          </button>
+                        )}
                         {sections[i] && (
-                          <span className="ml-2 text-green-600 text-sm font-medium">✓</span>
+                          <span className="ml-2 text-green-600 text-sm font-medium">✓ Written</span>
                         )}
                       </li>
                     ))}
-                  </ol>
+                    </ol>
+                    ) : (
+                      <div className="p-4 bg-red-50 rounded-lg border border-red-300 text-sm text-red-700">
+                        ⚠️ Outline error: outline structure is invalid. Try regenerating the outline.
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <div className="p-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 text-sm text-gray-600">
                     No outline yet. Click "Generate Outline" to create one using the latest research data.
@@ -1432,12 +1808,31 @@ export default function AdminDashboard() {
                             View Full
                           </button>
                           <button
-                            onClick={() => regenerateSection(i)}
+                            onClick={() => {
+                              setCurrentSectionIndex(i);
+                              regenerateSection(i);
+                            }}
                             disabled={writingSection}
                             className="px-3 py-1 text-sm bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:bg-gray-400"
                           >
                             {writingSection ? "..." : "Regenerate"}
                           </button>
+                          <button
+                            onClick={() => generateSectionImage(i)}
+                            disabled={generatingSectionImage === i}
+                            className="px-3 py-1 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400"
+                          >
+                            {generatingSectionImage === i ? "Generating..." : section.imageUrl ? "✓ Image" : "Add Image"}
+                          </button>
+                          {section.imageUrl && (
+                            <button
+                              onClick={() => setViewingWrittenImageIndex(i)}
+                              className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                              title="View image"
+                            >
+                              👁️ View
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1548,6 +1943,15 @@ export default function AdminDashboard() {
                           <p className="text-sm text-gray-600 mb-4">
                             {sections[expandedSectionIndex].wordCount} words
                           </p>
+                          {sections[expandedSectionIndex].imageUrl && (
+                            <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
+                              <img 
+                                src={sections[expandedSectionIndex].imageUrl} 
+                                alt={sections[expandedSectionIndex].title}
+                                className="w-full h-auto"
+                              />
+                            </div>
+                          )}
                           {typeof sections[expandedSectionIndex].content === 'string'
                             ? (
                                 <div className="section-content text-gray-800 whitespace-pre-wrap leading-relaxed">
@@ -1583,6 +1987,7 @@ export default function AdminDashboard() {
                     </button>
                     <button
                       onClick={() => {
+                        setCurrentSectionIndex(expandedSectionIndex);
                         regenerateSection(expandedSectionIndex);
                         setExpandedSectionIndex(null);
                         setViewLinksMode(false);
@@ -1591,6 +1996,86 @@ export default function AdminDashboard() {
                       className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:bg-gray-400"
                     >
                       {writingSection ? "Regenerating..." : "Regenerate & Close"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Outline Section Image Preview Modal */}
+            {viewingOutlineImageIndex !== null && (
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-auto">
+                  <div className="p-6 border-b bg-gray-50 flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Section {viewingOutlineImageIndex + 1} - {editableOutline[viewingOutlineImageIndex]}
+                    </h3>
+                    <button
+                      onClick={() => setViewingOutlineImageIndex(null)}
+                      className="text-gray-500 hover:text-gray-700 text-2xl"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    {(sections[viewingOutlineImageIndex]?.imageUrl || sectionImages[viewingOutlineImageIndex]) ? (
+                      <img
+                        src={sections[viewingOutlineImageIndex]?.imageUrl || sectionImages[viewingOutlineImageIndex]}
+                        alt={editableOutline[viewingOutlineImageIndex]}
+                        className="w-full rounded-lg shadow-md"
+                      />
+                    ) : (
+                      <div className="bg-gray-100 rounded-lg p-8 text-center text-gray-500">
+                        No image generated yet for this section.
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 border-t bg-gray-50 flex gap-3 justify-end">
+                    <button
+                      onClick={() => setViewingOutlineImageIndex(null)}
+                      className="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-100"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Written Section Image Preview Modal */}
+            {viewingWrittenImageIndex !== null && sections[viewingWrittenImageIndex] && (
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-auto">
+                  <div className="p-6 border-b bg-gray-50 flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Section {viewingWrittenImageIndex + 1} - {sections[viewingWrittenImageIndex]?.title}
+                    </h3>
+                    <button
+                      onClick={() => setViewingWrittenImageIndex(null)}
+                      className="text-gray-500 hover:text-gray-700 text-2xl"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    {sections[viewingWrittenImageIndex]?.imageUrl ? (
+                      <img
+                        src={sections[viewingWrittenImageIndex].imageUrl}
+                        alt={sections[viewingWrittenImageIndex]?.title}
+                        className="w-full rounded-lg shadow-md"
+                      />
+                    ) : (
+                      <div className="bg-gray-100 rounded-lg p-8 text-center text-gray-500">
+                        No image generated for this section.
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 border-t bg-gray-50 flex gap-3 justify-end">
+                    <button
+                      onClick={() => setViewingWrittenImageIndex(null)}
+                      className="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-100"
+                    >
+                      Close
                     </button>
                   </div>
                 </div>
@@ -1751,14 +2236,43 @@ export default function AdminDashboard() {
             {/* Generated Extras */}
             {selectedDraft.status === "assembled" && assembledBlog && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Generated Extras
-                </h3>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Generated Extras
+                  </h3>
+                  <button
+                    onClick={() => {
+                      if (confirm("Regenerate FAQs and checklist specific to your content? This will replace the current extras.")) {
+                        regenerateExtras();
+                      }
+                    }}
+                    disabled={regeneratingExtras}
+                    className="px-4 py-2 rounded-lg bg-teal-600 text-white text-sm font-semibold hover:bg-teal-700 disabled:bg-gray-400"
+                  >
+                    {regeneratingExtras ? "Regenerating..." : "Regenerate"}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mb-4">
+                  ℹ️ These FAQs and checklist are generated specifically from your blog content. Click "Regenerate" to create new content-specific versions.
+                </p>
                 <div className="space-y-6">
                   {/* FAQs */}
                   {assembledBlog.metadata?.faqs && assembledBlog.metadata.faqs.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-700 mb-3">Frequently Asked Questions</h4>
+                      <div className="flex justify-between items-center mb-3">
+                        <h4 className="font-semibold text-gray-700">Frequently Asked Questions</h4>
+                        <button
+                          onClick={() => {
+                            if (confirm("Regenerate FAQs from your content?")) {
+                              regenerateExtras("faqs");
+                            }
+                          }}
+                          disabled={regeneratingSection === "faqs"}
+                          className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+                        >
+                          {regeneratingSection === "faqs" ? "..." : "🔄"}
+                        </button>
+                      </div>
                       <div className="space-y-3">
                         {assembledBlog.metadata.faqs.map((faq: any, i: number) => (
                           <div key={i} className="bg-gray-50 p-3 rounded">
@@ -1773,7 +2287,20 @@ export default function AdminDashboard() {
                   {/* Recovery Checklist */}
                   {assembledBlog.metadata?.checklist && assembledBlog.metadata.checklist.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-700 mb-3">Recovery Checklist</h4>
+                      <div className="flex justify-between items-center mb-3">
+                        <h4 className="font-semibold text-gray-700">Recovery Checklist</h4>
+                        <button
+                          onClick={() => {
+                            if (confirm("Regenerate checklist from your content?")) {
+                              regenerateExtras("checklist");
+                            }
+                          }}
+                          disabled={regeneratingSection === "checklist"}
+                          className="px-3 py-1 text-xs bg-orange-600 text-white rounded hover:bg-orange-700 disabled:bg-gray-400"
+                        >
+                          {regeneratingSection === "checklist" ? "..." : "🔄"}
+                        </button>
+                      </div>
                       <ul className="space-y-2 text-sm text-gray-700">
                         {assembledBlog.metadata.checklist.map((item: string, i: number) => (
                           <li key={i}>{item}</li>
@@ -1785,9 +2312,22 @@ export default function AdminDashboard() {
                   {/* Outbound Links */}
                   {assembledBlog.metadata?.outboundLinks && assembledBlog.metadata.outboundLinks.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-700 mb-3">
-                        Sources & Further Reading
-                      </h4>
+                      <div className="flex justify-between items-center mb-3">
+                        <h4 className="font-semibold text-gray-700">
+                          Sources & Further Reading
+                        </h4>
+                        <button
+                          onClick={() => {
+                            if (confirm("Regenerate sources from your content?")) {
+                              regenerateExtras("links");
+                            }
+                          }}
+                          disabled={regeneratingSection === "links"}
+                          className="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+                        >
+                          {regeneratingSection === "links" ? "..." : "🔄"}
+                        </button>
+                      </div>
                       <ul className="space-y-2 text-sm">
                         {assembledBlog.metadata.outboundLinks.map((link: any, i: number) => (
                           <li key={i} className="flex items-start">
@@ -1820,7 +2360,7 @@ export default function AdminDashboard() {
                     {sections.length < editableOutline.length && (
                       <div>
                         <button
-                          onClick={writeNextSection}
+                          onClick={() => writeNextSection()}
                           disabled={writingSection}
                           className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg transition font-semibold"
                         >
