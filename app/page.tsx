@@ -77,8 +77,8 @@ export const revalidate = 0;
 
 export default async function HomePage() {
   let blogPosts: BlogPost[] = [];
-  const hasWixEnv = !!process.env.WIX_API_KEY && 
-    !!process.env.WIX_SITE_ID && 
+  const hasWixEnv = !!process.env.WIX_API_KEY &&
+    !!process.env.WIX_SITE_ID &&
     !!process.env.WIX_ACCOUNT_ID;
 
   if (hasWixEnv) {
@@ -141,10 +141,10 @@ export default async function HomePage() {
     slug: post.slug || "",
     date: post.firstPublishedDate
       ? new Date(post.firstPublishedDate).toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        })
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
       : "",
     minutesToRead: post.minutesToRead || 0,
     imageUrl: getFeaturedImageUrl(post),
@@ -155,36 +155,36 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      
+
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/20 min-h-screen flex items-center">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 lg:py-0">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <FadeIn className="max-w-3xl">
-                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-6 shadow-sm transition-colors hover:bg-blue-100 cursor-default">
-                 <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/20 h-[calc(100vh-64px)] flex items-center">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-6 items-center justify-center mt-10 lg:mt-10">
+              <FadeIn className="max-w-3xl mx-auto lg:mx-0">
+                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-[#1e3a8a] mb-4 sm:mb-4 shadow-sm transition-colors hover:bg-blue-100 cursor-default">
+                  <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2"></span>
                   Face-to-Face in Kilmarnock, Ayrshire or Online
                 </div>
-                <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl mb-6 leading-tight">
-                  Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock</span> for Peak Performance
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold tracking-tight text-slate-900 mb-6 lg:mb-4 leading-tight">
+                  Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock, Ayrshire</span> for Peak Performance
                 </h1>
-                <p className="text-xl font-medium text-slate-800 mb-4">
+                <p className="text-base sm:text-lg md:text-xl lg:text-lg font-medium text-slate-800 mb-4">
                   Recover faster. Improve your physical health. Stay injury-free.
                 </p>
-                <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
+                <p className="text-base sm:text-base md:text-lg lg:text-base text-slate-600 mb-6 lg:mb-4 leading-relaxed max-w-3xl">
                   Whether you’re dealing with acute pain from a recent injury, or persistent discomfort that won’t go away, we provide expert physiotherapy in Kilmarnock and Ayrshire tailored to you.
                 </p>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-3 sm:gap-4">
                   <a
                     href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
-                    className="rounded-full bg-[#1e3a8a] px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                    className="rounded-full bg-[#1e3a8a] px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                   >
                     Book Your Appointment
                   </a>
                 </div>
-                <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
-               </p>
+                <p className="mt-3 sm:mt-4 text-xs text-slate-500 uppercase tracking-wider">Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
+                </p>
               </FadeIn>
               <FadeIn delay={200} className="relative hidden lg:block">
                 <Image
@@ -202,7 +202,7 @@ export default async function HomePage() {
 
           {/* Decorative background element */}
           <div className="absolute top-0 right-0 -z-10 translate-x-1/3 -translate-y-1/4 opacity-10">
-             <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" fetchPriority="high" />
+            <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" fetchPriority="high" />
           </div>
         </section>
 
@@ -325,27 +325,27 @@ export default async function HomePage() {
             </FadeIn>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {[
-                { 
-                  title: "Free Discovery Session", 
-                  desc: "Not sure where to start? Book a free discovery session in Kilmarnock to discuss your injury, goals, and the best next steps — with no pressure.", 
+                {
+                  title: "Free Discovery Session",
+                  desc: "Not sure where to start? Book a free discovery session in Kilmarnock to discuss your injury, goals, and the best next steps — with no pressure.",
                   href: "/services/free-discovery-session",
                   icon: "M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" // Chat Bubble
                 },
-                { 
-                  title: "Injury Assessment & Diagnosis", 
-                  desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment.", 
+                {
+                  title: "Injury Assessment & Diagnosis",
+                  desc: "We start with a comprehensive evaluation to understand your injury, movement patterns, and root causes to deliver effective treatment.",
                   href: "/services/injury-assessment",
                   icon: "M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" // Magnifying Glass
                 },
-                { 
-                  title: "Rehabilitation & Return to Play", 
-                  desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play.", 
+                {
+                  title: "Rehabilitation & Return to Play",
+                  desc: "We guide you through progressive rehabilitation, from pain relief and mobility to strength, conditioning, and safe return-to-play.",
                   href: "/services/rehabilitation",
                   icon: "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" // Lightning Bolt
                 },
-                { 
-                  title: "Prevention & Recovery Massage", 
-                  desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery.", 
+                {
+                  title: "Prevention & Recovery Massage",
+                  desc: "It's not just about fixing injuries — it's about preventing them and elevating performance through movement optimisation and recovery.",
                   href: "/services/sports-massage",
                   icon: "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" // Heart
                 }
@@ -382,7 +382,7 @@ export default async function HomePage() {
                   width={600}
                   height={750}
                   className="w-full h-auto rounded-3xl object-cover shadow-lg"
-                 />
+                />
               </FadeIn>
               <FadeIn delay={200}>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
@@ -390,11 +390,11 @@ export default async function HomePage() {
                 </h2>
                 <div className="space-y-4 text-base text-slate-600">
                   <p><strong>Jordan Templeton</strong> is a highly experienced football physiotherapist with over seven years of professional experience working within the elite football game. He is the founder and lead physiotherapist at JT Football Physiotherapy in Kilmarnock, Ayrshire — a specialist service dedicated to helping football players and active individuals overcome injury, optimise performance, and return to sport with confidence.</p>
-                  
+
                   <p><strong>Professional Experience:</strong> Jordan spent four years as a coach at Kilmarnock FC Academy, where he developed youth players across key stages of their athlete pathway. He then progressed into physiotherapy, working as an academy physiotherapist at Kilmarnock FC before moving to Hearts of Midlothian FC as the Professional Development Phase Physiotherapist, supporting the academy, B team, and first team with injury management, rehabilitation, and return-to-play planning in a high-performance environment. He currently works full-time as a physiotherapist for Kilmarnock FC.</p>
-                  
+
                   <p><strong>Education & Qualifications:</strong> Jordan holds an MSc in Physiotherapy (Pre-Registration) from Glasgow Caledonian University (2022) and graduated with First Class Honours in Sport and Exercise Science from the University of the West of Scotland (2018), combining strong academic achievement with extensive practical experience in elite professional football.</p>
-                  
+
                   <p>Frustrated by the limitations of traditional clinic-based treatment, Jordan launched JT Football Physiotherapy to bridge the gap between rehabilitation and real-world sport requirements. His vision is simple: provide tailored, football-specific, evidence-led care that moves beyond symptom relief to address the underlying physical demands of the sport.</p>
                 </div>
               </FadeIn>
@@ -433,7 +433,7 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">Our Blogs</h2>
-             </FadeIn>
+            </FadeIn>
             <div className="max-w-7xl mx-auto">
               <BlogCarousel posts={carouselPosts} />
             </div>

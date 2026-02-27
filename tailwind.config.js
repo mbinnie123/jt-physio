@@ -11,6 +11,9 @@ module.exports = {
         "brand-dark": "#001F3A",
         "brand-light": "#E5F2FF",
       },
+      screens: {
+        lg: "1026px",
+      },
     },
   },
   plugins: [],
