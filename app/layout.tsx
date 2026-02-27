@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { WhatsAppButton } from "./WhatsAppButton";
-import { BackToTop } from "./BackToTop";
-import { TopContactBar, TopContactBarProvider } from "./TopContactBar";
+import { LayoutShell } from "./LayoutShell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -82,12 +80,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <TopContactBarProvider>
-          <TopContactBar />
-          {children}
-          <WhatsAppButton />
-          <BackToTop />
-        </TopContactBarProvider>
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );
