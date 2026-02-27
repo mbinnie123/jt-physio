@@ -1,29 +1,9 @@
 # Robots.txt for JT Football Physiotherapy
-# This file helps search engines understand how to crawl the website
 
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
-Disallow: /*.json$
-Disallow: /*.js$
-Disallow: /*.css$
 Disallow: /private/
 
-# Allow specific patterns
-Allow: /public/
-
-# Crawl delay (in seconds) - adjust as needed
-Crawl-delay: 1
-
-# Sitemap location
 Sitemap: https://www.jtfootballphysiotherapy.co.uk/sitemap.xml
-
-# Specific rules for popular search engines
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
