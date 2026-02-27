@@ -277,6 +277,14 @@ export default function AboutPage() {
                   </details>
                 ))}
               </div>
+              <div className="mt-4 border-t border-slate-200 pt-3">
+                <Link
+                  href="/faq"
+                  className="inline-flex items-center text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+                >
+                  View the full physiotherapy FAQ page for more information
+                </Link>
+              </div>
             </section>
             </FadeIn>
           </aside>
