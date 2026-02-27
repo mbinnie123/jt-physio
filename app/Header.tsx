@@ -6,7 +6,9 @@ import { useTopContactBarVisibility } from "./TopContactBar";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const isContactBarVisible = useTopContactBarVisibility();
 
@@ -55,9 +57,69 @@ export function Header() {
           <Link href="/" className="text-slate-600 hover:text-[#1e3a8a] transition-colors" onClick={() => setIsServicesOpen(false)}>
             Home
           </Link>
-          <Link href="/about" className="text-slate-600 hover:text-[#1e3a8a] transition-colors" onClick={() => setIsServicesOpen(false)}>
-            About Us
-          </Link>
+          <div
+            className="relative"
+            onMouseEnter={() => setIsAboutOpen(true)}
+            onMouseLeave={() => setIsAboutOpen(false)}
+          >
+            <button
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={isAboutOpen}
+              className="flex items-center gap-1 text-slate-600 hover:text-[#1e3a8a] transition-colors outline-none py-2"
+              onClick={() => setIsAboutOpen((v) => !v)}
+              onFocus={() => setIsAboutOpen(true)}
+            >
+              About
+              <svg
+                className={`h-4 w-4 transition-transform duration-200 ${isAboutOpen ? "rotate-180" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <div
+              role="menu"
+              className={
+                `absolute left-1/2 -translate-x-1/2 top-full w-64 z-50 pt-2 ` +
+                `transition-all duration-200 ease-out transform ` +
+                (isAboutOpen
+                  ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                  : "opacity-0 invisible -translate-y-1 pointer-events-none")
+              }
+            >
+              <div className="rounded-2xl bg-white p-2 shadow-xl border border-slate-100 ring-1 ring-slate-900/5">
+                <Link
+                  role="menuitem"
+                  href="/about"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => {
+                    setIsAboutOpen(false);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="font-semibold block text-slate-900">About JT Football Physio</span>
+                  <span className="text-xs text-slate-500">Who we are & how we work</span>
+                </Link>
+                <Link
+                  role="menuitem"
+                  href="/faq"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => {
+                    setIsAboutOpen(false);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="font-semibold block text-slate-900">Physiotherapy FAQ</span>
+                  <span className="text-xs text-slate-500">Common questions answered</span>
+                </Link>
+              </div>
+            </div>
+          </div>
           <div
             className="relative"
             onMouseEnter={() => setIsServicesOpen(true)}
@@ -200,9 +262,50 @@ export function Header() {
             <Link href="/" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
-            <Link href="/about" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
-              About Us
-            </Link>
+            <div className="py-2">
+              <button
+                type="button"
+                className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+                onClick={() => setIsMobileAboutOpen((v) => !v)}
+                aria-expanded={isMobileAboutOpen}
+              >
+                <span>About</span>
+                <svg
+                  className={`h-5 w-5 transition-transform duration-200 ${isMobileAboutOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isMobileAboutOpen && (
+                <div className="mt-1">
+                  <Link
+                    href="/about"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => {
+                      setIsMobileAboutOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    About JT Football Physio
+                  </Link>
+                  <Link
+                    href="/faq"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => {
+                      setIsMobileAboutOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Physiotherapy FAQ
+                  </Link>
+                </div>
+              )}
+            </div>
             <div className="py-2">
               <button
                 type="button"

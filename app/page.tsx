@@ -312,6 +312,48 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* FAQ Section */}
+        <section className="bg-slate-50 py-24 border-t border-slate-100">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="mb-16 max-w-3xl">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                Frequently Asked <span className="text-[#1e3a8a]">Questions</span>
+              </h2>
+              <p className="text-lg text-slate-600">
+                Quick answers to common questions about physiotherapy, injury treatment, and recovery in Kilmarnock and Ayrshire.
+              </p>
+            </FadeIn>
+            <div className="grid gap-3 max-w-4xl">
+              {[
+                { q: "What should I do if my pain hasn't improved with rest?", a: "If pain hasn't settled after rest, it often means something is still irritating the area — whether that's load, movement patterns, strength deficits, or limited mobility. A physiotherapy assessment helps us identify the root driver and gives you a clear, evidence-led plan to progress without guesswork. Rest alone often isn't enough; we need to address what's keeping the problem going." },
+                { q: "How long does pain relief usually take with physiotherapy?", a: "Timelines vary based on several factors: your injury type, how long you've had symptoms, your training load, and how well you can follow the programme. Some people feel improvement within 1-2 weeks, while persistent pain typically improves over 4-8 weeks with consistent effort. The goal isn't just quick relief — it's steady progress you can maintain long-term." },
+                { q: "Can physiotherapy improve my long-term health and persistent pain?", a: "Absolutely. Physiotherapy helps you manage persistent pain by improving movement quality, building practical strength and tolerance, and restoring confidence in your body. We focus on changes you can maintain — better movement patterns, smarter training load, and self-management strategies — so you reduce flare-ups and improve both everyday function and sport performance." },
+                { q: "Is it normal to feel some discomfort during rehabilitation exercises?", a: "Mild, manageable discomfort can be normal as you challenge your body in new ways. However, rehab shouldn't significantly increase your pain or leave you feeling worse after a session. We carefully guide exercise selection and progression so the load is appropriate for your current state and your symptoms stay manageable." },
+                { q: "Should I stop training completely if I'm experiencing pain?", a: "Not necessarily. Often we can modify your training — adjust intensity, reduce volume, change specific movements — so you keep training safely while protecting the injured area. Complete rest can sometimes slow recovery and deconditioning. The key is smart load management: doing the right amount of the right activity at the right time." },
+                { q: "When should I see a physiotherapist about my health?", a: "Book an assessment if pain is limiting your movement or sport, affecting your sleep, recurring regularly, or hasn't improved with rest after a few days. Early guidance from a physiotherapist can prevent a small issue becoming a longer-term problem. Many players find a quick discovery session clarifies whether they need ongoing treatment or just guidance." },
+                { q: "Do you help with mobility and flexibility as well as pain relief?", a: "Yes, mobility is central to our work. Mobility restrictions are often part of why pain persists or injuries keep returning. We improve mobility where needed, but always connect it to strength, control, and sport-specific movement so you're not just more flexible — you're stronger and more resilient too." },
+                { q: "What happens during a first physiotherapy appointment?", a: "We start by understanding your injury story: how it happened, what makes it better or worse, how it's affecting your daily life and sport. Then we perform a thorough physical assessment to identify movement restrictions, strength imbalances, and the likely root cause. You'll leave with a clear plan and honest timeline for recovery." },
+                { q: "Do you only work with footballers or can others benefit?", a: "While we specialise in football, we work with people of all activity levels — runners, gym-goers, seasonal athletes, and active adults managing pain. Our approach is the same: identify the root cause, build a practical recovery plan, and support you back to doing what you love." },
+                { q: "Do you offer a free consultation?", a: "Yes! We offer a free discovery session in Kilmarnock where you can discuss your injury, goals, and treatment options without commitment. It's a great way to meet the team and understand our approach." }
+              ].map((item, i) => (
+                <details key={i} className="group rounded-xl border border-slate-200 bg-white p-4 open:bg-white">
+                  <summary className="flex cursor-pointer list-none items-center justify-between font-bold text-slate-900 outline-none">
+                    {item.q}
+                    <span className="ml-3 text-lg font-normal text-[#1e3a8a] group-open:hidden">+</span>
+                    <span className="ml-3 text-lg font-normal text-[#1e3a8a] hidden group-open:block">–</span>
+                  </summary>
+                  <div className="mt-2.5 border-t border-slate-100 pt-2.5 text-slate-600">
+                    <p className="m-0 text-sm">{item.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+            <FadeIn className="mt-8 text-center">
+              <p className="text-slate-600 mb-4">Have more questions? <Link href="/about" className="font-semibold text-[#1e3a8a] hover:underline">View our full FAQ on the About page</Link></p>
+            </FadeIn>
+          </div>
+        </section>
+
         {/* Services */}
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
