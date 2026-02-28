@@ -117,6 +117,18 @@ export function Header() {
                   <span className="font-semibold block text-slate-900">Physiotherapy FAQ</span>
                   <span className="text-xs text-slate-500">Common questions answered</span>
                 </Link>
+                <Link
+                  role="menuitem"
+                  href="/prices"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => {
+                    setIsAboutOpen(false);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="font-semibold block text-slate-900">Pricing</span>
+                  <span className="text-xs text-slate-500">Clear, transparent rates</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -302,6 +314,16 @@ export function Header() {
                     }}
                   >
                     Physiotherapy FAQ
+                  </Link>
+                  <Link
+                    href="/prices"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => {
+                      setIsMobileAboutOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Pricing
                   </Link>
                 </div>
               )}
