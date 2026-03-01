@@ -73,6 +73,17 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-gray-900/10 pt-8">
+          <div className="mb-8">
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">Professional Accreditations</h3>
+            <div className="flex flex-wrap gap-6 items-center">
+              <a href="https://www.csp.org.uk/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Chartered Society of Physiotherapy">
+                <img src="/chartered-society-of-physiotherapy.svg" alt="Chartered Society of Physiotherapy" className="h-12 w-auto" />
+              </a>
+              <a href="https://www.fmpa.co.uk/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Football Medicine and Performance Association">
+                <img src="/football-medicine-and-performance-association.webp" alt="Football Medicine and Performance Association" className="h-12 w-auto" />
+              </a>
+            </div>
+          </div>
           <p className="text-xs leading-5 text-slate-600">&copy; {new Date().getFullYear()} JT Football Physiotherapy. All rights reserved.</p>
         </div>
       </div>
