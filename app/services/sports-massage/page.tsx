@@ -7,6 +7,9 @@ import { FadeIn } from "../../FadeIn";
 export const metadata: Metadata = {
   title: "Sports Massage Kilmarnock | Prevention & Recovery | JT Physio",
   description: "Professional sports massage in Kilmarnock & Ayrshire. Speed up recovery, reduce muscle tension, and prevent injury with expert soft tissue therapy.",
+  alternates: {
+    canonical: "/services/sports-massage",
+  },
 };
 
 export default function SportsMassagePage() {

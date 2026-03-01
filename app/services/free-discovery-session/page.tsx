@@ -7,6 +7,9 @@ import { FadeIn } from "../../FadeIn";
 export const metadata: Metadata = {
   title: "Free Discovery Session | JT Football Physiotherapy Kilmarnock",
   description: "Book a free discovery session with our expert physiotherapists in Kilmarnock. Discuss your injury, get advice, and find out if we are the right fit for you.",
+  alternates: {
+    canonical: "/services/free-discovery-session",
+  },
 };
 
 export default function FreeDiscoverySessionPage() {

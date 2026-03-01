@@ -7,6 +7,9 @@ import { FadeIn } from "../../FadeIn";
 export const metadata: Metadata = {
   title: "Injury Assessment & Diagnosis | JT Football Physiotherapy",
   description: "Comprehensive injury assessment and diagnosis services in Kilmarnock, Ayrshire.",
+  alternates: {
+    canonical: "/services/injury-assessment",
+  },
 };
 
 export default function InjuryAssessmentPage() {

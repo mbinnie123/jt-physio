@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Private Physiotherapy in Kilmarnock | JT Football Physiotherapy",
   description:
     "Private physiotherapy in Kilmarnock and Ayrshire. One-to-one assessment, hands-on treatment and personalised rehab plans to help you move without pain.",
+  alternates: {
+    canonical: "/services/private-physiotherapy",
+  },
 };
 
 export default function PrivatePhysiotherapyPage() {

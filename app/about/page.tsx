@@ -205,6 +205,29 @@ export default function AboutPage() {
                   </ul>
                 </div>
               </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <Link href="/services/private-physiotherapy" className="group rounded-xl border border-slate-200 bg-white p-3 transition hover:shadow-md hover:border-blue-400">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Private Physiotherapy</h3>
+                  <p className="m-0 text-sm text-slate-600">One-to-one assessment and ongoing physiotherapy tailored to you.</p>
+                </Link>
+                <Link href="/services/injury-assessment" className="group rounded-xl border border-slate-200 bg-white p-3 transition hover:shadow-md hover:border-blue-400">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Injury Assessment</h3>
+                  <p className="m-0 text-sm text-slate-600">Comprehensive diagnosis to understand your injury and create an action plan.</p>
+                </Link>
+                <Link href="/services/rehabilitation" className="group rounded-xl border border-slate-200 bg-white p-3 transition hover:shadow-md hover:border-blue-400">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Rehabilitation</h3>
+                  <p className="m-0 text-sm text-slate-600">Structured recovery programs to restore strength and return to sport.</p>
+                </Link>
+                <Link href="/services/sports-massage" className="group rounded-xl border border-slate-200 bg-white p-3 transition hover:shadow-md hover:border-blue-400">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Sports Massage</h3>
+                  <p className="m-0 text-sm text-slate-600">Soft tissue treatment to accelerate recovery and prevent injury.</p>
+                </Link>
+                <Link href="/services/free-discovery-session" className="group rounded-xl border border-slate-200 bg-white p-3 transition hover:shadow-md hover:border-blue-400">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Free Discovery Session</h3>
+                  <p className="m-0 text-sm text-slate-600">20-minute consultation to decide if physiotherapy is right for you.</p>
+                </Link>
+              </div>
             </section>
             </FadeIn>
 

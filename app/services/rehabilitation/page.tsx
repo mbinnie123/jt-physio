@@ -7,6 +7,9 @@ import { FadeIn } from "../../FadeIn";
 export const metadata: Metadata = {
   title: "Rehabilitation & Return to Play | JT Football Physiotherapy",
   description: "Expert rehabilitation and return to play programs in Kilmarnock, Ayrshire.",
+  alternates: {
+    canonical: "/services/rehabilitation",
+  },
 };
 
 export default function RehabilitationPage() {
