@@ -13,8 +13,70 @@ export const metadata: Metadata = {
 };
 
 export default function FreeDiscoverySessionPage() {
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.jtfootballphysiotherapy.co.uk",
+        "name": "JT Football Physiotherapy",
+        "image": "https://www.jtfootballphysiotherapy.co.uk/logo.png",
+        "description": "Expert physiotherapy services in Kilmarnock specialising in injury assessment, rehabilitation, sports massage, and recovery.",
+        "telephone": "+441563544449",
+        "url": "https://www.jtfootballphysiotherapy.co.uk",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kilmarnock",
+          "addressRegion": "Ayrshire",
+          "postalCode": "KA1",
+          "addressCountry": "UK"
+        },
+        "areaServed": "Kilmarnock, Ayrshire, Scotland",
+        "priceRange": "£0"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.jtfootballphysiotherapy.co.uk/services/free-discovery-session",
+        "name": "Free Discovery Session",
+        "description": "Book a free initial consultation with our expert physiotherapists in Kilmarnock. Discuss your injury, get professional advice, and find out if we're the right fit for you.",
+        "provider": {
+          "@id": "https://www.jtfootballphysiotherapy.co.uk"
+        },
+        "areaServed": "Kilmarnock, Ayrshire",
+        "availableLanguage": "en"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.jtfootballphysiotherapy.co.uk"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://www.jtfootballphysiotherapy.co.uk/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Free Discovery Session",
+            "item": "https://www.jtfootballphysiotherapy.co.uk/services/free-discovery-session"
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
       <Header />
       
       <main className="flex-1">

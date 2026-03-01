@@ -13,8 +13,70 @@ export const metadata: Metadata = {
 };
 
 export default function InjuryAssessmentPage() {
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.jtfootballphysiotherapy.co.uk",
+        "name": "JT Football Physiotherapy",
+        "image": "https://www.jtfootballphysiotherapy.co.uk/logo.png",
+        "description": "Expert physiotherapy services in Kilmarnock specialising in injury assessment, rehabilitation, sports massage, and recovery.",
+        "telephone": "+441563544449",
+        "url": "https://www.jtfootballphysiotherapy.co.uk",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kilmarnock",
+          "addressRegion": "Ayrshire",
+          "postalCode": "KA1",
+          "addressCountry": "UK"
+        },
+        "areaServed": "Kilmarnock, Ayrshire, Scotland",
+        "priceRange": "£50-£150"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.jtfootballphysiotherapy.co.uk/services/injury-assessment",
+        "name": "Injury Assessment & Diagnosis",
+        "description": "Comprehensive injury assessment and diagnostic evaluation to identify the root cause of your pain and guide effective treatment in Kilmarnock and Ayrshire.",
+        "provider": {
+          "@id": "https://www.jtfootballphysiotherapy.co.uk"
+        },
+        "areaServed": "Kilmarnock, Ayrshire",
+        "availableLanguage": "en"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.jtfootballphysiotherapy.co.uk"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://www.jtfootballphysiotherapy.co.uk/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Injury Assessment",
+            "item": "https://www.jtfootballphysiotherapy.co.uk/services/injury-assessment"
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
