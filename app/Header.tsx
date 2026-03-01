@@ -216,6 +216,18 @@ export function Header() {
                   <span className="font-semibold block text-slate-900">Sports Massage</span>
                   <span className="text-xs text-slate-500">Recovery & Prevention</span>
                 </Link>
+                <Link
+                  role="menuitem"
+                  href="/services/private-physiotherapy"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => {
+                    setIsServicesOpen(false);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="font-semibold block text-slate-900">Private Physiotherapy</span>
+                  <span className="text-xs text-slate-500">Why choose private care</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -388,6 +400,16 @@ export function Header() {
                     }}
                   >
                     Sports Massage
+                  </Link>
+                  <Link
+                    href="/services/private-physiotherapy"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => {
+                      setIsMobileServicesOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Private Physiotherapy
                   </Link>
                 </div>
               )}
