@@ -46,6 +46,44 @@ export default function PrivatePhysiotherapyPage() {
           </div>
         </section>
 
+        {/* About your physiotherapist */}
+        <section className="py-16 bg-white border-b border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
+              <FadeIn>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                  Private physiotherapy led by an experienced football physiotherapist
+                </h2>
+                <p className="text-lg text-slate-600 mb-4">
+                  Your private physiotherapy sessions are delivered by <span className="font-semibold">Jordan
+                  Templeton, MSc Physiotherapist</span>, with over 7 years of experience working in professional
+                  football in Ayrshire and Scotland. That means your assessment and rehab plan are grounded in
+                  real match and training demands, not just theory.
+                </p>
+                <p className="text-lg text-slate-600">
+                  If you would like to learn more about Jordan&apos;s background, qualifications and experience in
+                  professional football, you can read the full story on our
+                  <Link href="/about" className="text-[#1e3a8a] font-semibold hover:underline ml-1">
+                    About page
+                  </Link>
+                  .
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={100}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700"
+              >
+                <h3 className="text-base font-semibold text-slate-900 mb-3">Who this service is for</h3>
+                <ul className="space-y-2 list-disc pl-5">
+                  <li>People in Kilmarnock and Ayrshire who want one-to-one, private assessment and treatment.</li>
+                  <li>Footballers and active adults who need a clear, structured plan instead of guesswork.</li>
+                  <li>Anyone who values having time to ask questions and understand what is really going on.</li>
+                </ul>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
         {/* What is private physiotherapy? */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -181,6 +219,47 @@ export default function PrivatePhysiotherapyPage() {
                 </FadeIn>
               ))}
             </div>
+            <FadeIn className="mt-10 max-w-3xl text-sm text-slate-600">
+              <p>
+                If you are unsure whether your pain or injury is suitable for private physiotherapy, you are
+                welcome to book a
+                <Link
+                  href="/services/free-discovery-session"
+                  className="text-[#1e3a8a] font-semibold hover:underline mx-1"
+                >
+                  free discovery session
+                </Link>
+                so we can discuss the best next step for you.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* When private physiotherapy might not be right for you */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="max-w-3xl mx-auto mb-10 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                When private physiotherapy might not be the first step
+              </h2>
+              <p className="text-lg text-slate-600">
+                Your safety comes first. In some situations, we may recommend that you speak to your GP, NHS
+                24 or emergency services before or alongside private physiotherapy.
+              </p>
+            </FadeIn>
+            <FadeIn className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Seek medical advice urgently if:</h3>
+              <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">
+                <li>You have severe, unexplained pain that is rapidly getting worse.</li>
+                <li>You notice changes in bladder or bowel control, or numbness around the groin area.</li>
+                <li>You have had a recent fall or accident and are concerned about a fracture.</li>
+                <li>You feel unwell with symptoms such as fever, unexplained weight loss or night sweats.</li>
+              </ul>
+              <p className="mt-4 text-sm text-slate-600">
+                If you are unsure whether private physiotherapy is appropriate, you can contact us and we will
+                help you decide whether an assessment here or a medical opinion is the best first step.
+              </p>
+            </FadeIn>
           </div>
         </section>
 
@@ -226,13 +305,147 @@ export default function PrivatePhysiotherapyPage() {
                   </FadeIn>
                 ))}
               </div>
-              <FadeIn delay={200} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 space-y-4">
+              <FadeIn
+                delay={200}
+                className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 space-y-4"
+              >
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Private physiotherapy that fits around you</h3>
                 <p className="text-slate-600 text-sm">
                   Appointments are one‑to‑one and unhurried, with time to ask questions and check you are happy with each step. Many people notice small changes even after the first session, while longer‑term issues often need a short block of treatment.
                 </p>
                 <p className="text-slate-600 text-sm">
                   If we feel another healthcare professional – such as your GP or a consultant – needs to be involved, we will always explain why and help you plan the next steps.
+                </p>
+                <div className="pt-3 border-t border-slate-100 mt-2">
+                  <h4 className="text-sm font-semibold text-slate-900 mb-2">Practical details</h4>
+                  <ul className="text-xs text-slate-600 space-y-1 list-disc pl-4">
+                    <li>Sessions typically last around 45–60 minutes for a full assessment and treatment.</li>
+                    <li>Wear comfortable clothing that allows you to move freely and for the area to be assessed.</li>
+                    <li>
+                      Bring any scan or imaging reports you have, plus a list of medications if relevant.
+                    </li>
+                    <li>
+                      We agree the likely number of sessions together after the first appointment, based on
+                      your goals and how long the problem has been present.
+                    </li>
+                  </ul>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Real case examples */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Real examples of private physiotherapy in Kilmarnock
+              </h2>
+              <p className="text-lg text-slate-600">
+                These anonymised examples give you a feel for how private physiotherapy can look in real life.
+              </p>
+            </FadeIn>
+            <div className="grid md:grid-cols-2 gap-8">
+              <FadeIn className="bg-slate-50 rounded-2xl border border-slate-200 p-6 text-sm text-slate-700">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: long-standing knee pain in a recreational footballer
+                </h3>
+                <p className="mb-2">
+                  A recreational player in their 30s came in with on–off knee pain that had been limiting their
+                  ability to play a full match.
+                </p>
+                <p className="mb-2">
+                  After assessing strength, movement control and training load, we identified weakness through
+                  the quads and hips plus a rapid jump in weekly game time.
+                </p>
+                <p>
+                  Over 6 sessions we used education, progressive strength work and load management to gradually
+                  build tolerance. By the end of the block they were playing 90 minutes without the familiar
+                  flare-up afterwards.
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={150}
+                className="bg-slate-50 rounded-2xl border border-slate-200 p-6 text-sm text-slate-700"
+              >
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: back pain in a desk-based worker who plays 5-a-side
+                </h3>
+                <p className="mb-2">
+                  A desk-based professional was struggling with lower back pain that worsened after 5-a-side and
+                  long days at work.
+                </p>
+                <p className="mb-2">
+                  We combined hands‑on treatment, simple movement breaks at work and a short home exercise
+                  programme to build strength and confidence in bending and twisting.
+                </p>
+                <p>
+                  Within a few weeks they reported less stiffness in the mornings and were able to play
+                  regularly again, with a clear plan for keeping symptoms under control.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Private physiotherapy FAQ */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-12 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Private physiotherapy: common questions
+              </h2>
+              <p className="text-lg text-slate-600">
+                These are some of the questions people in Kilmarnock and Ayrshire often ask before booking
+                private physiotherapy.
+              </p>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Is private physiotherapy worth it?</h3>
+                <p>
+                  For many people, the value is in having fast access, longer one‑to‑one time and a clear plan
+                  that fits around work, family and sport. We will always be honest if we do not think private
+                  physiotherapy is the right option for you.
+                </p>
+              </FadeIn>
+              <FadeIn delay={100} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Do I need to stop all activity?</h3>
+                <p>
+                  Not always. Often we can modify training load, intensity or specific movements so that you keep
+                  active safely while things settle and strengthen. We will agree this together at your
+                  appointment.
+                </p>
+              </FadeIn>
+              <FadeIn delay={200} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Can you help if I am not a footballer?</h3>
+                <p>
+                  Yes. While we have strong experience in football, we regularly work with people who simply
+                  want to walk, work, exercise and live with less pain and more confidence.
+                </p>
+              </FadeIn>
+              <FadeIn delay={300} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">How many sessions will I need?</h3>
+                <p>
+                  It depends on the type of problem, how long you have had it and what you want to get back to
+                  doing. Some people need only one or two sessions with a clear plan, while others benefit from
+                  a short block of treatment and rehab.
+                </p>
+              </FadeIn>
+              <FadeIn delay={400} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Can I use health insurance?</h3>
+                <p>
+                  If you have private health insurance, please contact us before booking so we can let you know
+                  whether your policy can be used for sessions at JT Football Physiotherapy.
+                </p>
+              </FadeIn>
+              <FadeIn delay={500} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">What if I am nervous about pain during treatment?</h3>
+                <p>
+                  We will always work within your comfort levels and explain what to expect before we do
+                  anything. You are in control throughout the session, and we can adapt or pause treatment at
+                  any time.
                 </p>
               </FadeIn>
             </div>
@@ -252,6 +465,21 @@ export default function PrivatePhysiotherapyPage() {
               <p className="text-lg text-slate-600">
                 Our Google reviews highlight clear explanations, friendly support and real results for people in Kilmarnock and across Ayrshire.
               </p>
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-slate-700">
+                <span className="inline-flex items-center rounded-full bg-white px-3 py-1 border border-slate-200 shadow-sm">
+                  <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#4285F4] text-white text-xs font-bold">
+                    G
+                  </span>
+                  <a
+                    href="https://www.google.com/search?q=JT+Football+Physiotherapy+Kilmarnock+reviews"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#1e3a8a] font-semibold hover:underline"
+                  >
+                    Read more reviews on Google
+                  </a>
+                </span>
+              </div>
             </FadeIn>
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -303,6 +531,33 @@ export default function PrivatePhysiotherapyPage() {
                 </FadeIn>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Clinic location and practical info */}
+        <section className="py-16 bg-white border-t border-slate-100">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="space-y-4 text-sm text-slate-700">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
+                Private physiotherapy clinic in Kilmarnock
+              </h2>
+              <p>
+                JT Football Physiotherapy is based in Kilmarnock, serving people from across Ayrshire and the
+                surrounding areas. When you book, your confirmation email will include full directions, parking
+                details and what to bring.
+              </p>
+              <p>
+                If you are unsure whether to book a full private physiotherapy session or start with a
+                shorter conversation, you can also choose our
+                <Link
+                  href="/services/free-discovery-session"
+                  className="text-[#1e3a8a] font-semibold hover:underline mx-1"
+                >
+                  free discovery session
+                </Link>
+                to talk through your goals and the options available.
+              </p>
+            </FadeIn>
           </div>
         </section>
 
