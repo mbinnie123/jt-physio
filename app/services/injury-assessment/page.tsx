@@ -37,6 +37,44 @@ export default function InjuryAssessmentPage() {
           </div>
         </section>
 
+        {/* About your physiotherapist */}
+        <section className="py-16 bg-white border-b border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
+              <FadeIn>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                  Injury assessment led by an experienced football physiotherapist
+                </h2>
+                <p className="text-lg text-slate-600 mb-4">
+                  Your assessment is carried out by <span className="font-semibold">Jordan Templeton, MSc
+                  Physiotherapist</span>, who has over 7 years of experience working in professional football in
+                  Ayrshire and Scotland. That experience means your diagnosis and plan are based on what works
+                  on the pitch as well as in the treatment room.
+                </p>
+                <p className="text-lg text-slate-600">
+                  You can learn more about Jordan&apos;s background, qualifications and approach to physiotherapy on
+                  our
+                  <Link href="/about" className="text-[#1e3a8a] font-semibold hover:underline ml-1">
+                    About page
+                  </Link>
+                  .
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={100}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700"
+              >
+                <h3 className="text-base font-semibold text-slate-900 mb-3">Who this assessment is for</h3>
+                <ul className="space-y-2 list-disc pl-5">
+                  <li>New injuries that need a clear diagnosis and plan.</li>
+                  <li>Long-standing niggles that have never fully settled.</li>
+                  <li>Players and active adults who need to know if and when they can return to sport.</li>
+                </ul>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
         {/* What to Expect */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -106,29 +144,203 @@ export default function InjuryAssessmentPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-24 bg-[#1e3a8a] text-white">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-            <FadeIn>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-                Ready to get answers?
+        {/* Real examples of injury assessment in Kilmarnock */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Real examples of injury assessment in Kilmarnock
               </h2>
-              <p className="text-xl text-blue-100 mb-8">
-                Don&apos;t let pain hold you back. Book your initial assessment at our Kilmarnock clinic today.
+              <p className="text-lg text-slate-600">
+                These anonymised examples show how an assessment can give you clear answers and a plan.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
+            </FadeIn>
+            <div className="grid md:grid-cols-2 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-slate-50 rounded-2xl border border-slate-200 p-6">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: ankle injury after a weekend match
+                </h3>
+                <p className="mb-2">
+                  A local footballer arrived unsure whether they had “just a sprain” or something more serious
+                  after rolling their ankle during a tackle.
+                </p>
+                <p className="mb-2">
+                  Through specific ligament tests, strength checks and balance assessment, we confirmed a
+                  moderate sprain without signs of fracture and outlined how long different phases of recovery
+                  were likely to take.
+                </p>
+                <p>
+                  They left with clear guidelines on walking, icing, loading, and when we expected them to be
+                  ready to start running again.
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={150}
+                className="bg-slate-50 rounded-2xl border border-slate-200 p-6"
+              >
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: long-standing back pain in a desk-based worker
+                </h3>
+                <p className="mb-2">
+                  Someone working full-time at a desk came in with months of low back pain and no clear
+                  diagnosis despite trying rest and painkillers.
+                </p>
+                <p className="mb-2">
+                  The assessment highlighted stiffness in the hips, reduced trunk strength and a big jump in
+                  weekend activity compared to weekday sitting.
+                </p>
+                <p>
+                  We explained the likely diagnosis, ruled out red flags and created a simple starting plan for
+                  movement breaks and graded strengthening, which then fed into a longer-term rehab programme.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* When an assessment might not be the first step */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="max-w-3xl mx-auto mb-10 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                When to seek urgent medical advice instead
+              </h2>
+              <p className="text-lg text-slate-600">
+                Most muscle, joint and tendon problems are suitable for physiotherapy assessment. However,
+                there are times when you should speak to your GP, NHS 24 or emergency services first.
+              </p>
+            </FadeIn>
+            <FadeIn className="max-w-3xl mx-auto bg-slate-50 rounded-2xl shadow-sm border border-slate-200 p-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Contact a doctor or NHS service urgently if:</h3>
+              <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">
+                <li>You have severe, sudden or unexplained pain that is rapidly getting worse.</li>
+                <li>You notice changes in bladder or bowel control, or numbness around the groin area.</li>
+                <li>You have had a significant fall or trauma and suspect a fracture or serious injury.</li>
+                <li>You feel generally unwell with symptoms such as fever, unexplained weight loss or night sweats.</li>
+              </ul>
+              <p className="mt-4 text-sm text-slate-600">
+                If you are unsure whether an injury assessment is appropriate, you can contact us and we will
+                help you decide whether a medical opinion or physio assessment is the best first step.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Injury assessment FAQ */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-12 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Injury assessment: common questions
+              </h2>
+              <p className="text-lg text-slate-600">
+                These are some of the questions people in Kilmarnock and Ayrshire often ask before booking an
+                initial assessment.
+              </p>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Do I need a GP referral?</h3>
+                <p>
+                  No. You can book directly with us for an injury assessment. If we feel you need further
+                  medical investigations or a scan, we will explain why and help you plan the next steps.
+                </p>
+              </FadeIn>
+              <FadeIn delay={100} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Will I get treatment at my first appointment?</h3>
+                <p>
+                  In most cases, yes. As long as it is safe to do so, we will start hands-on treatment and give
+                  you initial advice and exercises as part of the assessment session.
+                </p>
+              </FadeIn>
+              <FadeIn delay={200} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">What should I bring?</h3>
+                <p>
+                  Please wear or bring comfortable clothing, and if you have any scan reports or letters related
+                  to your injury, bring those too. A list of medications can also be helpful.
+                </p>
+              </FadeIn>
+              <FadeIn delay={300} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">How long does an assessment last?</h3>
+                <p>
+                  An initial injury assessment typically lasts around 45–60 minutes. This gives us time to hear
+                  your story, carry out the assessment and start your plan.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Google reviews CTA */}
+        <section className="py-12 bg-white border-y border-slate-100">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-700">
+              <p className="text-center sm:text-left">
+                Want to know what others think of our assessments and treatment?
+              </p>
+              <span className="inline-flex items-center rounded-full bg-slate-50 px-3 py-1.5 border border-slate-200 shadow-sm">
+                <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#4285F4] text-white text-xs font-bold">
+                  G
+                </span>
                 <a
-                  href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
-                  className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  href="https://www.google.com/search?q=JT+Football+Physiotherapy+Kilmarnock+reviews"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#1e3a8a] font-semibold hover:underline"
                 >
-                  Book Appointment
+                  Read our reviews on Google
                 </a>
+              </span>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Clinic location and CTA */}
+        <section className="py-16 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="space-y-4 text-sm text-slate-700 mb-10">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
+                Injury assessment at our Kilmarnock clinic
+              </h2>
+              <p>
+                JT Football Physiotherapy is based in Kilmarnock, serving people from across Ayrshire and the
+                surrounding areas. When you book, your confirmation email includes directions, parking details
+                and guidance on what to bring.
+              </p>
+              <p>
+                If you are unsure whether to book a full injury assessment or start with a shorter
+                conversation, you can also choose our
                 <Link
-                  href="/contact"
-                  className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  href="/services/free-discovery-session"
+                  className="text-[#1e3a8a] font-semibold hover:underline mx-1"
                 >
-                  Contact Us
+                  free discovery session
                 </Link>
+                to talk through your goals and the options available.
+              </p>
+            </FadeIn>
+            <FadeIn>
+              <div className="rounded-3xl bg-[#1e3a8a] text-white py-16 px-6 sm:px-10 text-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
+                  Ready to get answers?
+                </h2>
+                <p className="text-xl text-blue-100 mb-8">
+                  Do not let pain hold you back. Book your initial assessment at our Kilmarnock clinic today.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a
+                    href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
+                    className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  >
+                    Book Assessment
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </FadeIn>
           </div>

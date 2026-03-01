@@ -37,6 +37,43 @@ export default function RehabilitationPage() {
           </div>
         </section>
 
+        {/* About your physiotherapist */}
+        <section className="py-16 bg-white border-b border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
+              <FadeIn>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                  Rehabilitation guided by professional football physiotherapy experience
+                </h2>
+                <p className="text-lg text-slate-600 mb-4">
+                  Your rehabilitation is led by <span className="font-semibold">Jordan Templeton, MSc
+                  Physiotherapist</span>, with extensive experience supporting players at Kilmarnock FC and
+                  Hearts of Midlothian FC. That background helps us design realistic, step-by-step rehab plans
+                  that bridge the gap between the treatment room and the demands of your sport or daily life.
+                </p>
+                <p className="text-lg text-slate-600">
+                  To read more about Jordan&apos;s pathway in football and physiotherapy, visit our
+                  <Link href="/about" className="text-[#1e3a8a] font-semibold hover:underline ml-1">
+                    About page
+                  </Link>
+                  .
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={100}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700"
+              >
+                <h3 className="text-base font-semibold text-slate-900 mb-3">Who our rehab programs are for</h3>
+                <ul className="space-y-2 list-disc pl-5">
+                  <li>People recovering from recent injuries who want a clear, progressive plan.</li>
+                  <li>Those returning to football or sport after time out through injury.</li>
+                  <li>Anyone who has finished NHS treatment but still does not feel “match ready”.</li>
+                </ul>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
         {/* What to Expect */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -104,29 +141,204 @@ export default function RehabilitationPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-24 bg-[#1e3a8a] text-white">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-            <FadeIn>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-                Ready to get back in the game?
+        {/* Real examples of rehabilitation and return to play */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Real examples of rehabilitation and return to play
               </h2>
-              <p className="text-xl text-blue-100 mb-8">
-                Don&apos;t let an injury keep you sidelined. Book your rehabilitation program at our Kilmarnock clinic today.
+              <p className="text-lg text-slate-600">
+                These anonymised examples show how structured rehab helped people move from injury back to the
+                activities they care about.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
+            </FadeIn>
+            <div className="grid md:grid-cols-2 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-slate-50 rounded-2xl border border-slate-200 p-6">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: hamstring strain in an amateur footballer
+                </h3>
+                <p className="mb-2">
+                  A player came to us two weeks after a sprint-related hamstring strain, worried about rushing
+                  back too soon and “doing it again”.
+                </p>
+                <p className="mb-2">
+                  We built a phased plan that started with pain-free strength work, then added running
+                  progressions, change-of-direction drills and football-specific conditioning.
+                </p>
+                <p>
+                  Over several weeks they progressed from light jogging to full training and eventually 90
+                  minutes, following clear criteria at each stage rather than guesswork.
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={150}
+                className="bg-slate-50 rounded-2xl border border-slate-200 p-6"
+              >
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: post-surgical knee rehab for an active parent
+                </h3>
+                <p className="mb-2">
+                  An active parent recovering from knee surgery wanted to get back to walking longer distances
+                  and playing with their children.
+                </p>
+                <p className="mb-2">
+                  Working alongside the surgeon&apos;s guidance, we focused on restoring range of motion,
+                  rebuilding strength and confidence in stairs, uneven ground and gentle running.
+                </p>
+                <p>
+                  By the end of the programme they were walking comfortably, managing day-to-day tasks and had
+                  a clear plan for future gym work to keep progress going.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* When rehab might not be the first step */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="max-w-3xl mx-auto mb-10 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                When you may need medical input before rehab
+              </h2>
+              <p className="text-lg text-slate-600">
+                Physiotherapy-led rehabilitation is suitable for most muscle, joint and tendon problems, but
+                some situations are better assessed first by your GP, NHS 24 or emergency services.
+              </p>
+            </FadeIn>
+            <FadeIn className="max-w-3xl mx-auto bg-slate-50 rounded-2xl shadow-sm border border-slate-200 p-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Seek urgent medical advice if:</h3>
+              <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">
+                <li>You have severe, unexplained pain that is worsening quickly.</li>
+                <li>You notice changes in bladder or bowel control, or numbness around the groin area.</li>
+                <li>You have had a recent significant injury and have not yet ruled out a fracture.</li>
+                <li>You feel systemically unwell with symptoms such as fever, unexplained weight loss or night sweats.</li>
+              </ul>
+              <p className="mt-4 text-sm text-slate-600">
+                If you are unsure whether to start rehab now or seek medical advice first, you can contact us
+                and we will help you choose the safest and most appropriate next step.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Rehabilitation FAQ */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-12 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Rehabilitation and return to play: common questions
+              </h2>
+              <p className="text-lg text-slate-600">
+                Here are some of the questions people in Kilmarnock and Ayrshire often ask about rehab and
+                returning to sport.
+              </p>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Do I need to be pain-free to start rehab?</h3>
+                <p>
+                  Not necessarily. Many people start rehab while they still have some symptoms. We will guide
+                  what level of discomfort is acceptable and how to adjust exercises if things flare.
+                </p>
+              </FadeIn>
+              <FadeIn delay={100} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Can I do rehab if I am also under NHS or consultant care?</h3>
+                <p>
+                  Yes. We are happy to complement existing care. Where appropriate, we can align our rehab plan
+                  with any surgical or consultant recommendations you have been given.
+                </p>
+              </FadeIn>
+              <FadeIn delay={200} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">How will I know when it is safe to return to play?</h3>
+                <p>
+                  We use simple, practical tests and clear criteria to guide your return to training and
+                  matches, so the decision is based on more than just “how it feels on the day”.
+                </p>
+              </FadeIn>
+              <FadeIn delay={300} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">How often will I need sessions?</h3>
+                <p>
+                  Frequency depends on your injury, stage of recovery and goals. We will agree a realistic plan
+                  together after your assessment, so you know what to expect.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Google reviews CTA */}
+        <section className="py-12 bg-white border-y border-slate-100">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-700">
+              <p className="text-center sm:text-left">
+                Want to hear how others have found their rehab and return-to-play journey with us?
+              </p>
+              <span className="inline-flex items-center rounded-full bg-slate-50 px-3 py-1.5 border border-slate-200 shadow-sm">
+                <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#4285F4] text-white text-xs font-bold">
+                  G
+                </span>
                 <a
-                  href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
-                  className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  href="https://www.google.com/search?q=JT+Football+Physiotherapy+Kilmarnock+reviews"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#1e3a8a] font-semibold hover:underline"
                 >
-                  Book Appointment
+                  Read our reviews on Google
                 </a>
+              </span>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Clinic location and CTA */}
+        <section className="py-16 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="space-y-4 text-sm text-slate-700 mb-10">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
+                Rehabilitation at our Kilmarnock clinic
+              </h2>
+              <p>
+                JT Football Physiotherapy is based in Kilmarnock and supports people from across Ayrshire and
+                the surrounding areas. Your booking confirmation includes directions, parking information and
+                what to expect from your first rehab session.
+              </p>
+              <p>
+                Not sure whether to book rehab, an injury assessment or a shorter chat first? You can also
+                start with our
                 <Link
-                  href="/contact"
-                  className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  href="/services/free-discovery-session"
+                  className="text-[#1e3a8a] font-semibold hover:underline mx-1"
                 >
-                  Contact Us
+                  free discovery session
                 </Link>
+                to talk through your situation and goals.
+              </p>
+            </FadeIn>
+            <FadeIn>
+              <div className="rounded-3xl bg-[#1e3a8a] text-white py-16 px-6 sm:px-10 text-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
+                  Ready to get back in the game?
+                </h2>
+                <p className="text-xl text-blue-100 mb-8">
+                  Do not let an injury keep you sidelined. Book your rehabilitation program at our Kilmarnock
+                  clinic today.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a
+                    href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
+                    className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  >
+                    Book Rehab
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </FadeIn>
           </div>

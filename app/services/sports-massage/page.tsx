@@ -37,6 +37,44 @@ export default function SportsMassagePage() {
           </div>
         </section>
 
+        {/* About your therapist */}
+        <section className="py-16 bg-white border-b border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
+              <FadeIn>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                  Sports massage delivered by an experienced physiotherapist
+                </h2>
+                <p className="text-lg text-slate-600 mb-4">
+                  Sports massage at JT Football Physiotherapy is carried out by <span className="font-semibold">
+                    Jordan Templeton, MSc Physiotherapist
+                  </span>
+                  . With a background in professional football, your session is informed by a deep
+                  understanding of how training load, recovery and tissue health fit together.
+                </p>
+                <p className="text-lg text-slate-600">
+                  You can read more about Jordan&apos;s experience and qualifications on our
+                  <Link href="/about" className="text-[#1e3a8a] font-semibold hover:underline ml-1">
+                    About page
+                  </Link>
+                  .
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={100}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700"
+              >
+                <h3 className="text-base font-semibold text-slate-900 mb-3">Who sports massage is ideal for</h3>
+                <ul className="space-y-2 list-disc pl-5">
+                  <li>Footballers and athletes wanting to support recovery between games or training.</li>
+                  <li>Gym-goers and runners managing muscle tightness or recurrent niggles.</li>
+                  <li>People with desk-based or manual jobs who feel tense, stiff or sore.</li>
+                </ul>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
         {/* Benefits Section */}
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -105,29 +143,202 @@ export default function SportsMassagePage() {
            </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-24 bg-[#1e3a8a] text-white">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-            <FadeIn>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-                Treat your body right
+        {/* Real examples of sports massage in Kilmarnock */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Real examples of sports massage in Kilmarnock
               </h2>
-              <p className="text-xl text-blue-100 mb-8">
-                Experience the benefits of professional sports massage in Kilmarnock.
+              <p className="text-lg text-slate-600">
+                These anonymised examples give a feel for how sports massage can support recovery and everyday
+                comfort.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
+            </FadeIn>
+            <div className="grid md:grid-cols-2 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-slate-50 rounded-2xl border border-slate-200 p-6">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: tight calves and soreness after matches
+                </h3>
+                <p className="mb-2">
+                  A regular 5-a-side player was struggling with heavy, tight calves for days after games,
+                  making it harder to train consistently.
+                </p>
+                <p className="mb-2">
+                  We combined targeted soft tissue work with simple calf-strengthening and recovery strategies
+                  between matches.
+                </p>
+                <p>
+                  After a block of sessions they reported less post-match soreness and were able to increase
+                  weekly training without the same tightness.
+                </p>
+              </FadeIn>
+              <FadeIn
+                delay={150}
+                className="bg-slate-50 rounded-2xl border border-slate-200 p-6"
+              >
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Case example: desk-based neck and shoulder tension
+                </h3>
+                <p className="mb-2">
+                  Someone working long hours at a computer came in with recurring neck and shoulder tightness
+                  and headaches.
+                </p>
+                <p className="mb-2">
+                  Sports massage sessions focused on key muscle groups around the neck and upper back, combined
+                  with brief posture and movement advice.
+                </p>
+                <p>
+                  With a mix of regular treatment and small changes to their workday routine, their symptoms
+                  reduced and they felt looser and more comfortable by the end of the day.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* When sports massage might not be appropriate */}
+        <section className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="max-w-3xl mx-auto mb-10 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                When to check with a doctor first
+              </h2>
+              <p className="text-lg text-slate-600">
+                Sports massage is suitable for most people, but there are times when it is better to speak with
+                your GP or another healthcare professional before booking.
+              </p>
+            </FadeIn>
+            <FadeIn className="max-w-3xl mx-auto bg-slate-50 rounded-2xl shadow-sm border border-slate-200 p-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Speak to a doctor urgently if:</h3>
+              <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">
+                <li>You have severe, unexplained pain or swelling that is getting worse quickly.</li>
+                <li>You have a suspected fracture, infection or blood clot.</li>
+                <li>You feel generally unwell with fever, unexplained weight loss or night sweats.</li>
+                <li>You have had recent surgery and are unsure when hands-on treatment is safe.</li>
+              </ul>
+              <p className="mt-4 text-sm text-slate-600">
+                If you are unsure whether to book sports massage or a physiotherapy assessment, you can contact
+                us and we will help you decide on the most appropriate option.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Sports massage FAQ */}
+        <section className="py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-12 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">
+                Sports massage: common questions
+              </h2>
+              <p className="text-lg text-slate-600">
+                A few quick answers to help you decide whether sports massage is right for you.
+              </p>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-8 text-sm text-slate-700">
+              <FadeIn className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Is sports massage painful?</h3>
+                <p>
+                  Some techniques can feel strong, but it should always be within a tolerable range. We will
+                  check in with you throughout and adapt the pressure to suit you.
+                </p>
+              </FadeIn>
+              <FadeIn delay={100} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">What should I wear?</h3>
+                <p>
+                  Wear or bring clothing that allows easy access to the area being treated (for example shorts
+                  for legs, a vest top for shoulders). You will always be appropriately covered and respected.
+                </p>
+              </FadeIn>
+              <FadeIn delay={200} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">How often should I book a massage?</h3>
+                <p>
+                  This depends on your training load, goals and how your body responds. Some people benefit
+                  from monthly maintenance, others from more frequent sessions around busy periods.
+                </p>
+              </FadeIn>
+              <FadeIn delay={300} className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-900 mb-2">Is sports massage only for athletes?</h3>
+                <p>
+                  No. Many people who come for sports massage simply want to feel less tight, stiff or sore in
+                  day-to-day life.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Google reviews CTA */}
+        <section className="py-12 bg-white border-y border-slate-100">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-700">
+              <p className="text-center sm:text-left">
+                Curious what others think about sports massage at JT Football Physiotherapy?
+              </p>
+              <span className="inline-flex items-center rounded-full bg-slate-50 px-3 py-1.5 border border-slate-200 shadow-sm">
+                <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#4285F4] text-white text-xs font-bold">
+                  G
+                </span>
                 <a
-                  href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
-                  className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  href="https://www.google.com/search?q=JT+Football+Physiotherapy+Kilmarnock+reviews"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#1e3a8a] font-semibold hover:underline"
                 >
-                  Book Massage
+                  Read our reviews on Google
                 </a>
+              </span>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Clinic location and CTA */}
+        <section className="py-16 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="space-y-4 text-sm text-slate-700 mb-10">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
+                Sports massage at our Kilmarnock clinic
+              </h2>
+              <p>
+                JT Football Physiotherapy is based in Kilmarnock and welcomes people from across Ayrshire and
+                beyond. Your confirmation email includes directions, parking details and what to expect from
+                your massage session.
+              </p>
+              <p>
+                If you are not sure whether to book sports massage or a full physiotherapy appointment, you can
+                also start with our
                 <Link
-                  href="/contact"
-                  className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  href="/services/free-discovery-session"
+                  className="text-[#1e3a8a] font-semibold hover:underline mx-1"
                 >
-                  Contact Us
+                  free discovery session
                 </Link>
+                to talk through your goals.
+              </p>
+            </FadeIn>
+            <FadeIn>
+              <div className="rounded-3xl bg-[#1e3a8a] text-white py-16 px-6 sm:px-10 text-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
+                  Treat your body right
+                </h2>
+                <p className="text-xl text-blue-100 mb-8">
+                  Experience the benefits of professional sports massage in Kilmarnock.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a
+                    href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
+                    className="rounded-full bg-white px-8 py-4 text-lg font-bold text-[#1e3a8a] shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                  >
+                    Book Massage
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </FadeIn>
           </div>
