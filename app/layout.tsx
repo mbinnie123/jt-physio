@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { LayoutShell } from "./LayoutShell";
 
 const inter = Inter({
@@ -76,6 +77,18 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/5 text-slate-900 min-h-screen`}>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3FPHZBWRZL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3FPHZBWRZL');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
