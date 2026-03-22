@@ -28,12 +28,76 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function formatRelativeTime(value: string) {
+  return value.replace(/^a\s/i, "1 ").replace(/^an\s/i, "1 ");
+}
+
 export function Reviews() {
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [rating, setRating] = useState(5);
   const [totalRatings, setTotalRatings] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedReviewIndex, setSelectedReviewIndex] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const manualReviews: GoogleReview[] = [
+    {
+      author_name: "Jimmy Preston",
+      rating: 5,
+      text: "Jordan is an outstanding physio. From my initial appointment to my assessment, he was professional, knowledgeable, and reassuring. He clearly explained my hand injury and the proposed treatment approach. I left feeling confident and well informed.",
+      relative_time_description: "2 months ago",
+      profile_photo_url: "",
+    },
+    {
+      author_name: "Del Bonds",
+      rating: 5,
+      text: "After a long time away from playing football, I decided to get back into it and had some frustrating injuries getting in the way. After my first assessment from Jordan, he identified my underlying issues and set out a recovery and rehab plan.",
+      relative_time_description: "9 months ago",
+      profile_photo_url: "",
+    },
+    {
+      author_name: "Craig Wilson",
+      rating: 5,
+      text: "I have been struggling with knee pain for 2 years and after a block of treatment with Jordan my pain is all but gone. Would absolutely recommend him to anyone.",
+      relative_time_description: "Edited 10 months ago",
+      profile_photo_url: "",
+    },
+    {
+      author_name: "Sharon Murray",
+      rating: 5,
+      text: "Excellent service and very clear on what the issue is and a plan going forward. Thanks very much.",
+      relative_time_description: "a month ago",
+      profile_photo_url: "",
+    },
+    {
+      author_name: "Erin Hanlon",
+      rating: 5,
+      text: "I had a great experience with Jordan, who was honest, professional, and quickly diagnosed my full ACL tear just one day after the injury. I then saw Jordan for pre-op physio, where I seen massive improvements in my knee extension.",
+      relative_time_description: "5 days ago",
+      profile_photo_url: "",
+    },
+    {
+      author_name: "Robert Robertson",
+      rating: 5,
+      text: "Really good experience when attending Jordan, very knowledgeable and put our minds at ease.",
+      relative_time_description: "a week ago",
+      profile_photo_url: "",
+    },
+  ];
+
+  const mergedReviews = [
+    ...reviews,
+    ...manualReviews.filter(
+      (manual) =>
+        !reviews.some((review) => review.author_name === manual.author_name)
+    ),
+  ];
+
+  const INITIAL_DISPLAY_COUNT = 6;
+  const displayedReviews = showAll
+    ? mergedReviews
+    : mergedReviews.slice(0, INITIAL_DISPLAY_COUNT);
+  const hasMoreReviews = mergedReviews.length > INITIAL_DISPLAY_COUNT;
 
   useEffect(() => {
     async function fetchReviews() {
@@ -83,7 +147,7 @@ export function Reviews() {
             [...Array(3)].map((_, i) => (
               <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-64 animate-pulse"></div>
             ))
-          ) : reviews.map((review, i) => (
+          ) : displayedReviews.map((review, i) => (
             <FadeIn
               key={i}
               delay={i * 100} className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
@@ -93,7 +157,7 @@ export function Reviews() {
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">{review.author_name}</h3>
-                  <p className="text-xs text-slate-500">{review.relative_time_description}</p>
+                  <p className="text-xs text-slate-500">{formatRelativeTime(review.relative_time_description)}</p>
                 </div>
               </div>
               <div className="mb-4">
@@ -119,7 +183,29 @@ export function Reviews() {
           ))}
         </div>
 
-        {selectedReviewIndex !== null && reviews[selectedReviewIndex] && (
+        {hasMoreReviews && (
+          <div className="mt-12 text-center">
+            <button
+              type="button"
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-2 rounded-full bg-[#1e3a8a] px-8 py-3 text-sm font-semibold text-white shadow-md hover:bg-[#1e3a8a]/90 transition-all duration-200"
+            >
+              {showAll
+                ? "Show Less"
+                : `Show More Reviews (${mergedReviews.length - INITIAL_DISPLAY_COUNT} more)`}
+              <svg 
+                className={`h-4 w-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        {selectedReviewIndex !== null && mergedReviews[selectedReviewIndex] && (
           <div
             className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4"
             onClick={() => setSelectedReviewIndex(null)}
@@ -142,7 +228,7 @@ export function Reviews() {
               </button>
 
               {(() => {
-                const review = reviews[selectedReviewIndex];
+                const review = mergedReviews[selectedReviewIndex];
                 return (
                   <>
                     <div className="flex items-center gap-4 mb-4">
@@ -153,7 +239,7 @@ export function Reviews() {
                       </div>
                       <div>
                         <h3 className="font-bold text-slate-900 text-sm">{review.author_name}</h3>
-                        <p className="text-xs text-slate-500">{review.relative_time_description}</p>
+                        <p className="text-xs text-slate-500">{formatRelativeTime(review.relative_time_description)}</p>
                       </div>
                     </div>
                     <div className="mb-4">
