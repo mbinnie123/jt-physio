@@ -193,6 +193,97 @@ export default function PricesPage() {
                 </div>
               </div>
 
+              <div className="mb-12 rounded-3xl border border-[#1e3a8a]/15 bg-gradient-to-br from-[#0b2d6b] via-[#0a2a60] to-[#0b2550] p-6 text-white shadow-xl sm:p-8">
+                <div className="mb-8">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-blue-200">
+                    Post-op recovery
+                  </p>
+                  <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
+                    Accelerated Recovery Package
+                  </h2>
+                  <p className="max-w-3xl text-blue-100/95">
+                    Structured post-op physiotherapy packages designed for faster pain reduction, swelling control, and confident return to movement.
+                  </p>
+                </div>
+
+                <div className="mb-8 grid gap-4 lg:grid-cols-3">
+                  {[
+                    {
+                      tier: "Bronze",
+                      tone: "from-amber-700/90 to-amber-600/90",
+                      sessions: [
+                        "1 x initial assessment (60 minutes)",
+                        "4 x cryotherapy / Compex / hands-on treatment (60 minutes per session)",
+                      ],
+                      price: "£250",
+                    },
+                    {
+                      tier: "Gold",
+                      tone: "from-yellow-600/95 to-amber-500/95",
+                      sessions: [
+                        "1 x initial assessment and treatment (90 minutes)",
+                        "8 x cryotherapy / Compex / hands-on treatment (60 minutes per session)",
+                      ],
+                      price: "£400",
+                    },
+                    {
+                      tier: "Silver",
+                      tone: "from-slate-300/90 to-slate-200/90",
+                      sessions: [
+                        "1 x initial assessment and treatment (90 minutes)",
+                        "6 x cryotherapy / Compex / hands-on treatment (60 minutes per session)",
+                      ],
+                      price: "£350",
+                    },
+                  ].map((pkg) => (
+                    <article
+                      key={pkg.tier}
+                      className="overflow-hidden rounded-2xl border border-white/20 bg-white/95 text-slate-900 shadow-lg"
+                    >
+                      <div className={`bg-gradient-to-r ${pkg.tone} px-5 py-3`}>
+                        <h3 className="text-center text-sm font-extrabold uppercase tracking-[0.28em] text-white">
+                          {pkg.tier}
+                        </h3>
+                      </div>
+                      <div className="p-5">
+                        <ul className="space-y-2 text-sm leading-relaxed text-slate-700">
+                          {pkg.sessions.map((session) => (
+                            <li key={session} className="flex items-start gap-2">
+                              <span className="mt-1 text-blue-600">•</span>
+                              <span>{session}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="mt-5 border-t border-slate-200 pt-4 text-center text-4xl font-extrabold tracking-tight text-slate-900">
+                          {pkg.price}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
+                    <h3 className="mb-3 text-2xl font-bold tracking-tight text-white">Who is this for?</h3>
+                    <ul className="space-y-2 text-sm leading-relaxed text-blue-50">
+                      <li>• Recently injured knee or ankle (typically within the last 7-14 days)</li>
+                      <li>• Post-op ACL, meniscus, or related knee surgery</li>
+                      <li>• Post-op ankle surgery, including ligament reconstruction or fracture management</li>
+                    </ul>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
+                    <h3 className="mb-3 text-2xl font-bold tracking-tight text-white">What are the benefits?</h3>
+                    <ul className="space-y-2 text-sm leading-relaxed text-blue-50">
+                      <li>• Quicker reduction in pain</li>
+                      <li>• Reduced swelling</li>
+                      <li>• Enhanced recovery speed</li>
+                      <li>• Improved movement confidence</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
               {/* Home Appointments Section */}
               <div className="rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-white p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-slate-900 mb-3">Home appointments</h3>
