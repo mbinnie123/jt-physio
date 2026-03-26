@@ -237,25 +237,23 @@ export default async function HomePage() {
                   <p>JT Football Physiotherapy provides specialist physiotherapy and health services for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
                   <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
                   <div className="flex gap-4 my-6">
-                    <div className="flex-1">
+                    <div className="flex-1 h-[400px] relative">
                       <Image
-                        src="/physiotherapy-kilmarnock-ayrshire-clinic-football.webp"
+                        src="/physiotherapy-clinic-kilmarnock-1.jpeg"
                         alt="Football injury physiotherapy assessment in Kilmarnock Ayrshire"
-                        width={765}
-                        height={1020}
+                        fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-                        className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                        className="rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02] border-4 border-[#1e3a8a]"
                         priority={false}
                       />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 h-[400px] relative">
                       <Image
-                        src="/physiotherapy-kilmarnock-ayrshire-clinic-table.webp"
+                        src="/physiotherapy-clinic-kilmarnock-2.jpeg"
                         alt="Modern physiotherapy clinic treatment room in Kilmarnock"
-                        width={765}
-                        height={1020}
+                        fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-                        className="w-full h-auto rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                        className="rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02] border-4 border-[#1e3a8a]"
                         priority={false}
                       />
                     </div>
