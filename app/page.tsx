@@ -239,7 +239,7 @@ export default async function HomePage() {
                   <div className="flex gap-4 my-6">
                     <div className="flex-1 h-[400px] relative">
                       <Image
-                        src="/physiotherapy-clinic-kilmarnock-1.jpeg"
+                        src="/physiotherapy-clinic-kilmarnock-1.webp"
                         alt="Football injury physiotherapy assessment in Kilmarnock Ayrshire"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
@@ -249,7 +249,7 @@ export default async function HomePage() {
                     </div>
                     <div className="flex-1 h-[400px] relative">
                       <Image
-                        src="/physiotherapy-clinic-kilmarnock-2.jpeg"
+                        src="/physiotherapy-clinic-kilmarnock-2.webp"
                         alt="Modern physiotherapy clinic treatment room in Kilmarnock"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
