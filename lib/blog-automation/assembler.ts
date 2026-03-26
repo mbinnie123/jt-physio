@@ -12,6 +12,13 @@ export interface BlogPost {
   featuredImageUrl?: string;
   content: string;
   sections: BlogSection[];
+  internalCta?: {
+    heading: string;
+    body: string;
+    ctaLabel: string;
+    ctaUrl: string;
+  };
+  authorTakeaway?: string;
   faqs: Array<{ question: string; answer: string }>;
   checklist: string[];
   outboundLinks: Array<{ title: string; url: string; source: string }>;
@@ -30,12 +37,44 @@ export function assembleBlogPost(
   metadata: BlogMetadata,
   researchData: ResearchData,
   selectedSourceIds?: string[],
-  options?: { location?: string; sport?: string }
+  options?: {
+    location?: string;
+    sport?: string;
+    includeOverview?: boolean;
+    includeFaq?: boolean;
+    includeChecklist?: boolean;
+    includeInternalCta?: boolean;
+    includeAuthorTakeaway?: boolean;
+    authorTakeawayText?: string;
+  }
 ): BlogPost {
-  const content = assembleBlogContent(sections);
-  const readTime = calculateReadTime(content);
+  const includeOverview = options?.includeOverview !== false;
+  const includeFaq = options?.includeFaq !== false;
+  const includeChecklist = options?.includeChecklist !== false;
+  const includeInternalCta = options?.includeInternalCta !== false;
+  const includeAuthorTakeaway = options?.includeAuthorTakeaway === true;
+  const authorTakeawayText = (options?.authorTakeawayText || "").trim();
   const location = options?.location?.trim() || undefined;
   const sport = options?.sport?.trim() || undefined;
+
+  const tableOfContents = buildTableOfContents(sections);
+  const overview = includeOverview
+    ? generateOverview(topic, sections)
+    : undefined;
+  const authorTakeaway =
+    includeAuthorTakeaway && authorTakeawayText ? authorTakeawayText : undefined;
+  const internalCta = includeInternalCta
+    ? generateInternalCta(location || sport)
+    : undefined;
+
+  const content = assembleBlogContent(sections, {
+    includeOverview,
+    overview,
+    tableOfContents,
+    authorTakeaway,
+    internalCta,
+  });
+  const readTime = calculateReadTime(content);
   
   // Filter research sources if selectedSourceIds provided
   let filteredResearchData = researchData;
@@ -58,8 +97,8 @@ export function assembleBlogPost(
   });
 
   const outboundLinks = extractOutboundLinks(sections, filteredResearchData);
-  const faqs = generateFAQs(topic, sections, filteredResearchData);
-  const checklist = generateChecklist(topic, sections);
+  const faqs = includeFaq ? generateFAQs(topic, sections, filteredResearchData) : [];
+  const checklist = includeChecklist ? generateChecklist(topic, sections) : [];
 
   const basePublishDate = metadataWithContext.publishDate || new Date().toISOString().split("T")[0];
   const updatedMetadata: BlogMetadata = {
@@ -69,6 +108,10 @@ export function assembleBlogPost(
     readTime,
     category: metadataWithContext.category || "Health & Wellness",
     featured: metadataWithContext.featured ?? false,
+    overview,
+    tableOfContents,
+    internalCta,
+    authorTakeaway,
     faqs,
     checklist,
     outboundLinks,
@@ -84,6 +127,8 @@ export function assembleBlogPost(
     featuredImageUrl: updatedMetadata.featuredImageUrl,
     content,
     sections,
+    internalCta,
+    authorTakeaway,
     faqs,
     checklist,
     outboundLinks,
@@ -97,7 +142,43 @@ export function assembleBlogPost(
 /**
  * Combine sections into Markdown content
  */
-function assembleBlogContent(sections: BlogSection[]): string {
+function assembleBlogContent(
+  sections: BlogSection[],
+  options?: {
+    includeOverview?: boolean;
+    overview?: string;
+    tableOfContents?: Array<{ title: string; anchor: string }>;
+    authorTakeaway?: string;
+    internalCta?: {
+      heading: string;
+      body: string;
+      ctaLabel: string;
+      ctaUrl: string;
+    };
+  }
+): string {
+  const includeOverview = options?.includeOverview !== false;
+  const overviewSection =
+    includeOverview && options?.overview
+      ? `## Overview\n\n${options.overview}\n\n`
+      : "";
+
+  const tocItems = options?.tableOfContents || [];
+  const tocSection =
+    includeOverview && tocItems.length > 0
+      ? `## Table of Contents\n\n${tocItems
+          .map((item, index) => `${index + 1}. [${item.title}](#${item.anchor})`)
+          .join("\n")}\n\n`
+      : "";
+
+  const authorTakeawaySection = options?.authorTakeaway
+    ? `## Author's Professional Takeaway\n\n${options.authorTakeaway}\n\n`
+    : "";
+
+  const internalCtaSection = options?.internalCta
+    ? `## ${options.internalCta.heading}\n\n${options.internalCta.body}\n\n[${options.internalCta.ctaLabel}](${options.internalCta.ctaUrl})\n\n`
+    : "";
+
   return sections
     .map((section) => {
       // Handle both Ricos objects and string content
@@ -112,7 +193,88 @@ function assembleBlogContent(sections: BlogSection[]): string {
       }
       return `## ${section.title}\n\n${content}\n\n`;
     })
-    .join("");
+    .join("")
+    .replace(/^/, `${overviewSection}${tocSection}`)
+    .concat(`${authorTakeawaySection}${internalCtaSection}`);
+}
+
+function generateInternalCta(context?: string): {
+  heading: string;
+  body: string;
+  ctaLabel: string;
+  ctaUrl: string;
+} {
+  const suffix = context ? ` in ${context}` : "";
+  return {
+    heading: "Need help with recovery?",
+    body: `Book a physiotherapy appointment${suffix} for a tailored plan and hands-on support from JT Football Physiotherapy.`,
+    ctaLabel: "Book an appointment",
+    ctaUrl: "https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service",
+  };
+}
+
+function buildTableOfContents(
+  sections: BlogSection[]
+): Array<{ title: string; anchor: string }> {
+  const usedAnchors = new Set<string>();
+
+  return sections
+    .filter((section) => section?.title)
+    .map((section) => {
+      const title = section.title.trim();
+      const baseAnchor = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
+      let anchor = baseAnchor || "section";
+      let suffix = 2;
+      while (usedAnchors.has(anchor)) {
+        anchor = `${baseAnchor || "section"}-${suffix++}`;
+      }
+      usedAnchors.add(anchor);
+
+      return { title, anchor };
+    });
+}
+
+function generateOverview(topic: string, sections: BlogSection[]): string {
+  const keyHeadings = sections
+    .filter((section) => section?.title)
+    .slice(0, 4)
+    .map((section) => section.title.trim())
+    .join(", ");
+
+  const keyInsights = sections
+    .map((section) => extractSectionInsight(section))
+    .filter(Boolean)
+    .slice(0, 3)
+    .map((insight) => `- ${insight}`)
+    .join("\n");
+
+  const headline = `This guide on ${topic.trim()} highlights the most important recovery details, treatment priorities, and practical next steps.`;
+  const headingsSentence = keyHeadings
+    ? `Key areas covered include ${keyHeadings}.`
+    : "";
+  const insightsBlock = keyInsights
+    ? `\n\nKey insights:\n${keyInsights}`
+    : "";
+
+  return `${headline} ${headingsSentence}`.trim() + insightsBlock;
+}
+
+function extractSectionInsight(section: BlogSection): string {
+  if (!section) return "";
+  const raw =
+    typeof section.content === "string"
+      ? section.content
+      : section.contentHtml || "";
+  const text = raw.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  if (!text) return section.title || "";
+
+  const sentence = text.split(/[.!?]\s+/)[0] || text;
+  return sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence;
 }
 
 /**

@@ -27,6 +27,15 @@ export interface BlogMetadata {
   featured: boolean;
   
   // Generated content
+  overview?: string;
+  tableOfContents?: Array<{ title: string; anchor: string }>;
+  internalCta?: {
+    heading: string;
+    body: string;
+    ctaLabel: string;
+    ctaUrl: string;
+  };
+  authorTakeaway?: string;
   faqs: Array<{ question: string; answer: string }>;
   checklist: string[];
   outboundLinks: Array<{ title: string; url: string; source: string }>;
@@ -42,9 +51,14 @@ export interface BlogDraft {
   metadata: BlogMetadata;
   researchData: any;
   selectedSourceIds: string[]; // Track which sources are selected for use
+  sourceUsageIndex: number; // Next source index to use (cycles through selected sources)
+  sourceUsageCount: Record<string, number>; // Count how many times each source has been used
   includeChecklist?: boolean;
   includeFaq?: boolean;
   includeInternalCta?: boolean;
+  includeOverview?: boolean;
+  includeAuthorTakeaway?: boolean;
+  authorTakeawayText?: string;
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
@@ -65,7 +79,20 @@ class BlogDatabase {
       if (fs.existsSync(DB_FILE)) {
         const data = fs.readFileSync(DB_FILE, "utf-8");
         const parsed = JSON.parse(data);
-        this.drafts = new Map(parsed.drafts || []);
+        const draftsArray = parsed.drafts || [];
+        
+        // Ensure backward compatibility: add missing fields to old drafts
+        const fixedDrafts = draftsArray.map(([id, draft]: [string, any]) => [
+          id,
+          {
+            ...draft,
+            sourceUsageIndex: draft.sourceUsageIndex ?? 0,
+            sourceUsageCount: draft.sourceUsageCount ?? {},
+            includeOverview: draft.includeOverview ?? true,
+          }
+        ]);
+        
+        this.drafts = new Map(fixedDrafts);
         this.idCounter = parsed.idCounter || 1;
         this.initialized = true;
         console.log(`[DB] Loaded ${this.drafts.size} drafts from file`);
@@ -119,14 +146,26 @@ class BlogDatabase {
       },
       researchData: null,
       selectedSourceIds: [], // Initialize empty source selection
+      sourceUsageIndex: 0, // Start from first source
+      sourceUsageCount: {}, // Track usage count per source
       includeChecklist: true,
       includeFaq: true,
       includeInternalCta: true,
+      includeOverview: true,
+      includeAuthorTakeaway: false,
+      authorTakeawayText: "",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
     this.drafts.set(id, draft);
+    this.saveToFile();
+    return draft;
+  }
+
+  createDraftFromObject(draft: BlogDraft): BlogDraft {
+    // Save a draft object directly (used for recovering Wix posts)
+    this.drafts.set(draft.id, draft);
     this.saveToFile();
     return draft;
   }

@@ -21,6 +21,12 @@ interface PublishRequestBody {
   topic?: string;
   location?: string;
   sport?: string;
+  includeChecklist?: boolean;
+  includeFaq?: boolean;
+  includeInternalCta?: boolean;
+  includeOverview?: boolean;
+  includeAuthorTakeaway?: boolean;
+  authorTakeawayText?: string;
   refreshMetadata?: boolean;
   preserveStatus?: boolean;
 }
@@ -60,6 +66,12 @@ export async function POST(request: NextRequest) {
       typeof body.topic === "string" ? body.topic.trim() : undefined;
     const hasLocation = Object.prototype.hasOwnProperty.call(body, "location");
     const hasSport = Object.prototype.hasOwnProperty.call(body, "sport");
+    const hasIncludeChecklist = Object.prototype.hasOwnProperty.call(body, "includeChecklist");
+    const hasIncludeFaq = Object.prototype.hasOwnProperty.call(body, "includeFaq");
+    const hasIncludeInternalCta = Object.prototype.hasOwnProperty.call(body, "includeInternalCta");
+    const hasIncludeOverview = Object.prototype.hasOwnProperty.call(body, "includeOverview");
+    const hasIncludeAuthorTakeaway = Object.prototype.hasOwnProperty.call(body, "includeAuthorTakeaway");
+    const hasAuthorTakeawayText = Object.prototype.hasOwnProperty.call(body, "authorTakeawayText");
 
     if (trimmedTopic && trimmedTopic !== existingDraft.topic) {
       contextUpdates.topic = trimmedTopic;
@@ -73,6 +85,30 @@ export async function POST(request: NextRequest) {
     if (hasSport) {
       const trimmedSport = (body.sport || "").trim();
       contextUpdates.sport = trimmedSport || undefined;
+    }
+
+    if (hasIncludeChecklist && typeof body.includeChecklist === "boolean") {
+      contextUpdates.includeChecklist = body.includeChecklist;
+    }
+
+    if (hasIncludeFaq && typeof body.includeFaq === "boolean") {
+      contextUpdates.includeFaq = body.includeFaq;
+    }
+
+    if (hasIncludeInternalCta && typeof body.includeInternalCta === "boolean") {
+      contextUpdates.includeInternalCta = body.includeInternalCta;
+    }
+
+    if (hasIncludeOverview && typeof body.includeOverview === "boolean") {
+      contextUpdates.includeOverview = body.includeOverview;
+    }
+
+    if (hasIncludeAuthorTakeaway && typeof body.includeAuthorTakeaway === "boolean") {
+      contextUpdates.includeAuthorTakeaway = body.includeAuthorTakeaway;
+    }
+
+    if (hasAuthorTakeawayText && typeof body.authorTakeawayText === "string") {
+      contextUpdates.authorTakeawayText = body.authorTakeawayText;
     }
 
     let draft = existingDraft;
@@ -186,6 +222,12 @@ export async function POST(request: NextRequest) {
       {
         location: draft.location,
         sport: draft.sport,
+        includeChecklist: draft.includeChecklist !== false,
+        includeFaq: draft.includeFaq !== false,
+        includeInternalCta: draft.includeInternalCta !== false,
+        includeOverview: draft.includeOverview !== false,
+        includeAuthorTakeaway: draft.includeAuthorTakeaway === true,
+        authorTakeawayText: draft.authorTakeawayText || "",
       }
     );
 

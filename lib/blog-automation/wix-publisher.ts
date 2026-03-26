@@ -313,6 +313,18 @@ function buildRichContent(post: BlogPost): {
     }
   }
 
+  if (post.metadata?.overview) {
+    nodes.push(createHeadingNode("Overview", 2));
+    nodes.push(createParagraphNode(post.metadata.overview));
+  }
+
+  if (post.metadata?.tableOfContents?.length) {
+    nodes.push(createHeadingNode("Table of Contents", 2));
+    const tocItems = post.metadata.tableOfContents
+      .map((item) => createListItemNode([createTextNode(item.title)]));
+    nodes.push(createBulletedListNode(tocItems));
+  }
+
   post.sections.forEach((section, index) => {
     // Skip heading for first section if it matches the post title (to avoid duplication)
     const isFirstSection = index === 0;
@@ -356,6 +368,24 @@ function buildRichContent(post: BlogPost): {
     post.checklist.forEach((item) => {
       nodes.push(createParagraphNode(item));
     });
+  }
+
+  if (post.metadata?.authorTakeaway) {
+    nodes.push(createHeadingNode("Author's Professional Takeaway", 2));
+    nodes.push(createParagraphNode(post.metadata.authorTakeaway));
+  }
+
+  if (post.metadata?.internalCta) {
+    nodes.push(createHeadingNode(post.metadata.internalCta.heading, 2));
+    nodes.push(createParagraphNode(post.metadata.internalCta.body));
+    nodes.push(
+      createParagraphNodeFromNodes([
+        createLinkNode(
+          post.metadata.internalCta.ctaLabel,
+          post.metadata.internalCta.ctaUrl
+        ),
+      ])
+    );
   }
 
   if (post.outboundLinks?.length) {

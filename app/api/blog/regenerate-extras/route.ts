@@ -61,7 +61,7 @@ function extractOutboundLinks(
 interface RegenerateExtrasBody {
   draftId: string;
   topic: string;
-  section?: "faqs" | "checklist" | "links" | "all";
+  section?: "faqs" | "checklist" | "internalLinks" | "links" | "all";
 }
 
 export async function POST(request: NextRequest) {
@@ -109,6 +109,7 @@ export async function POST(request: NextRequest) {
     const requestedSection = body.section || "all";
     const shouldGenerateFaqs = requestedSection === "all" || requestedSection === "faqs";
     const shouldGenerateChecklist = requestedSection === "all" || requestedSection === "checklist";
+    const shouldGenerateInternalLinks = requestedSection === "all" || requestedSection === "internalLinks";
     const shouldGenerateLinks = requestedSection === "all" || requestedSection === "links";
 
     // Extract key information from sections (reuse for all prompts)
@@ -118,6 +119,7 @@ export async function POST(request: NextRequest) {
 
     let faqs: Array<{ question: string; answer: string }> = [];
     let checklist: string[] = [];
+    let internalLinks: Array<{ title: string; url: string; relevance: string }> = [];
     let outboundLinks: any[] = [];
 
     // Generate content-specific FAQs only if requested
@@ -210,6 +212,61 @@ Create checklist items that:
       }
     }
 
+    // Generate internal links (cross-linking suggestions) only if requested
+    if (shouldGenerateInternalLinks) {
+      const internalLinksPrompt = `Based on this blog post about "${body.topic}", suggest 3-5 internal links to other related blog posts that would be helpful for readers.
+
+Blog Content Summary:
+${sectionSummaries}
+
+Consider these related physiotherapy topics for internal linking:
+- ACL recovery
+- Rehabilitation exercises
+- Injury prevention
+- Postoperative care
+- Pain management
+- Mobility restoration
+- Preventative physiotherapy
+
+Format your response as a JSON array with this structure:
+[
+  { "title": "blog post title", "url": "/blog/topic-slug", "relevance": "brief explanation of why this link is relevant" },
+  ...
+]
+
+Generate internal links that:
+- Are topically related to the main content
+- Would provide additional value to readers
+- Use logical URL slugs based on standard blog naming conventions
+- Explain the relevance clearly`;
+
+      try {
+        const internalLinksResponse = await getOpenAIClient().chat.completions.create({
+          model: "gpt-4-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are an expert SEO and content strategist. Suggest internal links for blog posts.",
+            },
+            {
+              role: "user",
+              content: internalLinksPrompt,
+            },
+          ],
+          temperature: 0.7,
+          max_tokens: 800,
+        });
+
+        const internalLinksText = internalLinksResponse.choices[0]?.message?.content || "[]";
+        const internalLinksMatch = internalLinksText.match(/\[[\s\S]*\]/);
+        if (internalLinksMatch) {
+          internalLinks = JSON.parse(internalLinksMatch[0]);
+        }
+      } catch (error) {
+        console.error("Failed to generate internal links:", error);
+      }
+    }
+
     // Extract outbound links only if requested
     if (shouldGenerateLinks) {
       outboundLinks = extractOutboundLinks(sections, filteredResearchData);
@@ -221,6 +278,7 @@ Create checklist items that:
     };
     if (shouldGenerateFaqs) responseData.faqs = faqs;
     if (shouldGenerateChecklist) responseData.checklist = checklist;
+    if (shouldGenerateInternalLinks) responseData.internalLinks = internalLinks;
     if (shouldGenerateLinks) responseData.outboundLinks = outboundLinks;
 
     return NextResponse.json(responseData);

@@ -34,6 +34,10 @@ export interface WriterOptions {
   targetAudience?: string;
   wordCountPerSection?: number;
   includeHeaders?: boolean;
+  externalLinksPerSection?: number;
+  internalLinksPerSection?: number;
+  location?: string;
+  sport?: string;
 }
 
 const defaultOptions: WriterOptions = {
@@ -41,6 +45,10 @@ const defaultOptions: WriterOptions = {
   targetAudience: "physiotherapy patients",
   wordCountPerSection: 300,
   includeHeaders: true,
+  externalLinksPerSection: 3,
+  internalLinksPerSection: 2,
+  location: "",
+  sport: "",
 };
 
 /**
@@ -60,7 +68,8 @@ export async function writeSection(
     topic,
     sectionTitle,
     researchData,
-    opts
+    opts,
+    sectionNumber
   );
 
   try {
@@ -206,12 +215,22 @@ function buildWritingPrompt(
   topic: string,
   sectionTitle: string,
   researchData: ResearchData,
-  options: Required<WriterOptions>
+  options: Required<WriterOptions>,
+  sectionNumber: number = 1
 ): string {
   const sources = researchData.sources
     .filter(s => s && (s.title || s.content))
     .map((s, index) => {
-      const snippet = (s.content || "").substring(0, 120);
+      // Ensure content is a string, fallback to excerpt or bodyContent if needed
+      let contentText = '';
+      if (typeof s.content === 'string') {
+        contentText = s.content;
+      } else if (typeof s.excerpt === 'string') {
+        contentText = s.excerpt;
+      } else if (typeof s.bodyContent === 'string') {
+        contentText = s.bodyContent;
+      }
+      const snippet = contentText.substring(0, 120);
       return `${index + 1}. "${s.title || "Source"}" (${s.url || "no url"}): ${snippet}${snippet ? "..." : ""}`;
     })
     .join("\n");
@@ -220,10 +239,43 @@ function buildWritingPrompt(
     ? researchData.keywords.join(", ")
     : topic;
 
+  const locationContext = options.location?.trim()
+    ? `Primary location context: ${options.location.trim()}`
+    : "Primary location context: none specified";
+  const sportContext = options.sport?.trim()
+    ? `Primary sport context: ${options.sport.trim()}`
+    : "Primary sport context: general audience";
+  const contextInstructions = [
+    options.location?.trim()
+      ? `- Use the location context naturally where relevant (e.g., local references, service accessibility, practical relevance for ${options.location.trim()}).`
+      : "",
+    options.sport?.trim()
+      ? `- Tailor practical examples and rehab advice to ${options.sport.trim()} when appropriate.`
+      : "",
+    "- Keep recommendations specific, actionable, and clinically sensible.",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const sectionStructureInstructions = sectionNumber > 1 
+    ? `
+IMPORTANT - SECTION PLACEMENT:
+This is section ${sectionNumber} of a multi-section blog post. Do NOT include a general introduction or overview paragraph that repeats the basic topic explanation. The first section already covered that.
+
+Instead, jump directly into the specific content for this section. If the section title implies action steps or detailed guidance, start with that immediately. For example:
+- If the section is about "Immediate Post-Injury Actions", start directly with those actions
+- If the section is about "Recovery Exercises", begin with the exercise instructions
+- Do not write an introductory paragraph like "Understanding [topic]" or "An important aspect of [topic]"
+
+Focus on delivering concrete, actionable content specific to this section's topic.`
+    : "";
+
   return `Write a ${options.wordCountPerSection}-word blog section titled "${sectionTitle}" for a post about "${topic}".
 
 Tone: ${options.tone}
 Target audience: ${options.targetAudience}
+${locationContext}
+${sportContext}${sectionStructureInstructions}
 
 IMPORTANT - CITATION REQUIREMENT:
 You MUST cite the research sources naturally throughout the content. When you reference information from a source, use this format to create a citation:
@@ -256,6 +308,9 @@ Available sources to cite from:
 ${sources || "No specific sources available"}
 
 Keywords to incorporate: ${keywordsList}
+
+Context tailoring requirements:
+${contextInstructions}
 
 ${options.includeHeaders ? `Include relevant subheadings for better readability. Format subheadings with [H3] prefix like this:
 [H3]Subheading Title[/H3]

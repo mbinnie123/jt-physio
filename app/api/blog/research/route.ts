@@ -6,6 +6,25 @@ import {
 import { generateOutline } from "@/lib/blog-automation/writer";
 import { blogDatabase } from "@/lib/blog-automation/db";
 
+function buildSourceId(source: any, index: number): string {
+  if (source?.url && typeof source.url === "string") {
+    return source.url;
+  }
+
+  const title = typeof source?.title === "string" ? source.title.trim() : "source";
+  const provider = typeof source?.source === "string" ? source.source.trim() : "unknown";
+  return `${title}::${provider}::${index}`;
+}
+
+function buildLegacySourceId(source: any, index: number): string {
+  if (source?.url && typeof source.url === "string") {
+    return source.url;
+  }
+
+  const title = typeof source?.title === "string" ? source.title : "source";
+  return `${title}-${index}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Verify admin access
@@ -29,10 +48,14 @@ export async function POST(request: NextRequest) {
       sport,
       draftId,
       numSections = 5,
+      maxResults,
       researchMore = false,
       includeChecklist = true,
       includeFaq = true,
       includeInternalCta = true,
+      includeOverview = true,
+      includeAuthorTakeaway = false,
+      authorTakeawayText = "",
     } = await request.json();
 
     if (!topic) {
@@ -65,6 +88,10 @@ export async function POST(request: NextRequest) {
       draftUpdates.includeChecklist = includeChecklist;
       draftUpdates.includeFaq = includeFaq;
       draftUpdates.includeInternalCta = includeInternalCta;
+      draftUpdates.includeOverview = includeOverview;
+      draftUpdates.includeAuthorTakeaway = Boolean(includeAuthorTakeaway);
+      draftUpdates.authorTakeawayText =
+        typeof authorTakeawayText === "string" ? authorTakeawayText : "";
       
       // Update draft with these fields
       const updatedDraft = blogDatabase.updateDraft(draft.id, draftUpdates);
@@ -78,7 +105,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Conduct research
-    const newResearchData = await performComprehensiveResearch(topic);
+    const parsedMaxResults =
+      typeof maxResults === "number" && Number.isFinite(maxResults)
+        ? Math.min(Math.max(Math.floor(maxResults), 1), 100)
+        : undefined;
+
+    const newResearchData = await performComprehensiveResearch(
+      topic,
+      parsedMaxResults
+    );
     
     // If researchMore is true, combine with existing sources
     let researchData = newResearchData;
@@ -107,13 +142,40 @@ export async function POST(request: NextRequest) {
       outline = await generateOutline(topic, researchData, numSections);
     }
 
-    // Update draft with research data
-    // Automatically select all sources for linking
-    const selectedSourceIds = researchData?.sources?.length > 0
-      ? researchData.sources.map((source: any, index: number) => 
-          source.url || `${source.title || "source"}-${index}`
+    // Update draft with research data.
+    // Keep existing source selections for this draft whenever possible.
+    const allCurrentSourceIds = researchData?.sources?.length > 0
+      ? researchData.sources.map((source: any, index: number) =>
+          buildSourceId(source, index)
         )
       : [];
+
+    let selectedSourceIds: string[] = [];
+    const existingSelections = Array.isArray(draft.selectedSourceIds)
+      ? draft.selectedSourceIds
+      : [];
+
+    if (existingSelections.length > 0) {
+      const availableIdSet = new Set(allCurrentSourceIds);
+      const legacyIdMap = new Map<string, string>();
+      researchData.sources.forEach((source: any, index: number) => {
+        legacyIdMap.set(buildLegacySourceId(source, index), buildSourceId(source, index));
+      });
+
+      selectedSourceIds = existingSelections
+        .map((id) => {
+          if (availableIdSet.has(id)) {
+            return id;
+          }
+          return legacyIdMap.get(id) || null;
+        })
+        .filter((id): id is string => Boolean(id));
+    }
+
+    // For brand new drafts with no prior selection, default to selecting all.
+    if (selectedSourceIds.length === 0 && !draftId) {
+      selectedSourceIds = allCurrentSourceIds;
+    }
 
     const finalDraft = blogDatabase.updateDraft(draft.id, {
       status: researchMore ? draft.status : "writing",
