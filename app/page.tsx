@@ -240,7 +240,7 @@ export default async function HomePage() {
                     <div className="flex-1 h-[400px] relative">
                       <Image
                         src="/physiotherapy-clinic-kilmarnock-1.webp"
-                        alt="Football injury physiotherapy assessment in Kilmarnock, Ayrshire"
+                        alt="Football injury physiotherapy assessment in Kilmarnock, Ayrshire with client performing movement analysis while physiotherapist observes"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                         className="rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02] border-4 border-[#1e3a8a]"
@@ -250,7 +250,7 @@ export default async function HomePage() {
                     <div className="flex-1 h-[400px] relative">
                       <Image
                         src="/physiotherapy-clinic-kilmarnock-2.webp"
-                        alt="Modern physiotherapy clinic treatment room in Kilmarnock, Ayrshire"
+                        alt="Modern physiotherapy clinic treatment room in Kilmarnock, Ayrshire with client performing rehabilitation exercises"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                         className="rounded-2xl object-cover shadow-md transition-transform duration-500 hover:scale-[1.02] border-4 border-[#1e3a8a]"
