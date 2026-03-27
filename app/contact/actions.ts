@@ -1,12 +1,22 @@
 // app/contact/actions.ts
 "use server";
 
+import type { WixDataItem } from "@wix/wix-data-items-sdk";
 import { getWixClient } from "../lib/wix";
 
 // IMPORTANT:
 // This must be the *Collection ID* (not just the display name) of your Wix CMS collection.
 // If your collection is named "Contacts" in the UI, the ID is often "Contacts" or "contacts".
 const CONTACTS_COLLECTION_ID = "Contacts";
+
+type ContactSubmissionItem = Partial<WixDataItem> & {
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string;
+  createdAt: string;
+  source: string;
+};
 
 export async function submitContact(formData: FormData) {
   const name = String(formData.get("name") || "").trim();
@@ -23,7 +33,7 @@ export async function submitContact(formData: FormData) {
   // A) Save a submission record into Wix CMS (Data Items)
   let submissionId: string | undefined;
   try {
-    const inserted = await wix.items.insert(CONTACTS_COLLECTION_ID, {
+    const inserted = await wix.items.insert<ContactSubmissionItem>(CONTACTS_COLLECTION_ID, {
       name,
       email,
       phone: phone || null,

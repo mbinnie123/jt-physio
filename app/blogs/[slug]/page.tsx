@@ -280,7 +280,8 @@ export default async function BlogPostPage({
 
   // Try to get the full post record
   try {
-    const { post: fullPost } = await wixClient.posts.getPost(post._id);
+      const fullPostResponse = await wixClient.posts.getPost(post._id);
+      const fullPost = (fullPostResponse as { post?: BlogPost })?.post ?? (fullPostResponse as BlogPost);
     if (fullPost) post = fullPost as BlogPost;
   } catch (e) {
     console.error("Failed to fetch full post", e);
