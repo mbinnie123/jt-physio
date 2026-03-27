@@ -1,5 +1,4 @@
-import { RicosViewer } from "@wix/ricos";
-import "@wix/ricos/dist/styles.css";
+import { ricosToHtml, ricosToText } from "../../lib/blog-automation/writer-utils";
 
 type BlogPost = {
   title: string;
@@ -17,11 +16,28 @@ type BlogPost = {
  * Draft posts would return richContent (Ricos format).
  */
 export function BlogPostBody({ post }: { post: BlogPost }) {
-  // Try richContent first (Ricos format - full structured content)
-  if (post.richContent) {
+  const richContentHtml = post.richContent ? ricosToHtml(post.richContent) : "";
+  const richContentText = post.richContent ? ricosToText(post.richContent).trim() : "";
+
+  // Try richContent first by converting it to HTML.
+  if (richContentHtml) {
+    return (
+      <div
+        className="prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={{ __html: richContentHtml }}
+      />
+    );
+  }
+
+  // If HTML conversion fails, fall back to extracted plain text.
+  if (richContentText) {
     return (
       <div className="prose prose-lg max-w-none">
-        <RicosViewer content={post.richContent} />
+        {richContentText.split("\n\n").map((para, i) => (
+          <p key={i} className="mb-4">
+            {para}
+          </p>
+        ))}
       </div>
     );
   }
