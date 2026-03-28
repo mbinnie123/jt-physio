@@ -199,6 +199,14 @@ Rules:
 - Keep approximately similar length.
 - Output ONLY the rewritten content. No commentary.
 
+SEO BOLDING RULES (apply or preserve):
+- Use **bold** for 5–10% of text only — key clinical terms, target keywords, and important takeaways.
+- Bold the primary topic keyword once in the opening and 1–2 natural placements in the body.
+- Bold key phrases readers would scan for (e.g., **return-to-play protocol**, **load management**).
+- Bold the key takeaway at the end of major paragraphs or sections.
+- Never bold whole sentences or paragraphs; never use bold as a heading substitute.
+- If the input already has appropriate bold, preserve it.
+
 Content:
 ${content}`;
 

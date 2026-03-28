@@ -17,40 +17,42 @@ function getOpenAIClient() {
 }
 
 /**
- * Extract outbound links from section content and research data
+ * Extract outbound links that are actually used in the written section content.
+ * Only returns links present in section HTML or markdown — never adds research
+ * sources that weren't actually linked in the body copy.
  */
 function extractOutboundLinks(
   sections: any[],
-  researchData: any
+  _researchData: any
 ): Array<{ title: string; url: string; source: string }> {
   const linkMap = new Map<string, { title: string; url: string; source: string }>();
 
-  // Add research sources (deduplicated by URL)
-  if (researchData?.sources) {
-    researchData.sources.forEach((source: any) => {
-      if (source.url && !linkMap.has(source.url)) {
-        linkMap.set(source.url, {
-          title: source.title || "Source",
-          url: source.url,
-          source: source.source || "Research",
-        });
-      }
-    });
-  }
-
-  // Extract links from section content (markdown URLs, also deduplicated)
   sections.forEach((section) => {
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    let match;
-    const content = typeof section.content === 'string' ? section.content : (section.contentHtml || '');
-    while ((match = linkRegex.exec(content)) !== null) {
-      const [, title, url] = match;
-      if (!linkMap.has(url)) {
-        linkMap.set(url, {
-          title,
-          url,
-          source: section.title || "Content",
-        });
+    const sectionTitle = section.title || "Content";
+
+    // Extract markdown-style links: [anchor](url)
+    const markdownContent = typeof section.content === 'string' ? section.content : '';
+    if (markdownContent) {
+      const mdRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+      let match;
+      while ((match = mdRegex.exec(markdownContent)) !== null) {
+        const [, title, url] = match;
+        if (!linkMap.has(url)) {
+          linkMap.set(url, { title, url, source: sectionTitle });
+        }
+      }
+    }
+
+    // Extract HTML anchor links: <a href="url">anchor</a>
+    const htmlContent = section.contentHtml || '';
+    if (htmlContent) {
+      const htmlRegex = /<a[^>]+href="(https?:\/\/[^"]+)"[^>]*>([^<]*)<\/a>/gi;
+      let match;
+      while ((match = htmlRegex.exec(htmlContent)) !== null) {
+        const [, url, title] = match;
+        if (!linkMap.has(url)) {
+          linkMap.set(url, { title: title.trim() || url, url, source: sectionTitle });
+        }
       }
     }
   });
@@ -61,7 +63,7 @@ function extractOutboundLinks(
 interface RegenerateExtrasBody {
   draftId: string;
   topic: string;
-  section?: "faqs" | "checklist" | "internalLinks" | "links" | "all";
+  section?: "faqs" | "checklist" | "internalLinks" | "links" | "authorTakeaway" | "all";
 }
 
 export async function POST(request: NextRequest) {
@@ -111,6 +113,7 @@ export async function POST(request: NextRequest) {
     const shouldGenerateChecklist = requestedSection === "all" || requestedSection === "checklist";
     const shouldGenerateInternalLinks = requestedSection === "all" || requestedSection === "internalLinks";
     const shouldGenerateLinks = requestedSection === "all" || requestedSection === "links";
+    const shouldGenerateAuthorTakeaway = requestedSection === "all" || requestedSection === "authorTakeaway";
 
     // Extract key information from sections (reuse for all prompts)
     const sectionSummaries = sections
@@ -121,6 +124,7 @@ export async function POST(request: NextRequest) {
     let checklist: string[] = [];
     let internalLinks: Array<{ title: string; url: string; relevance: string }> = [];
     let outboundLinks: any[] = [];
+    let authorTakeaway: string | undefined;
 
     // Generate content-specific FAQs only if requested
     if (shouldGenerateFaqs) {
@@ -272,6 +276,46 @@ Generate internal links that:
       outboundLinks = extractOutboundLinks(sections, filteredResearchData);
     }
 
+    // Generate AI author takeaway only if requested
+    if (shouldGenerateAuthorTakeaway) {
+      const takeawayPrompt = `You are a specialist physiotherapist at JT Football Physiotherapy writing a professional takeaway for a blog post about "${body.topic}".
+
+Blog Content Summary:
+${sectionSummaries}
+
+Write a concise, authoritative 3-4 sentence professional takeaway (100-150 words) that:
+- Opens with your clinical perspective on the topic
+- Highlights the single most important thing patients should know or do
+- Encourages early professional assessment
+- Ends with a warm invitation to book an appointment at JT Football Physiotherapy
+
+Write in first person as the treating physiotherapist. Do not include a heading. Return only the takeaway text, no JSON.`;
+
+      try {
+        const takeawayResponse = await getOpenAIClient().chat.completions.create({
+          model: "gpt-4-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are an expert specialist physiotherapist. Write a professional and empathetic clinical takeaway.",
+            },
+            { role: "user", content: takeawayPrompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 300,
+        });
+
+        const generated = (takeawayResponse.choices[0]?.message?.content || "").trim();
+        if (generated) {
+          authorTakeaway = generated;
+          // Persist the generated text to the draft so re-assembly picks it up
+          blogDatabase.updateDraft(body.draftId, { authorTakeawayText: generated });
+        }
+      } catch (error) {
+        console.error("Failed to generate author takeaway:", error);
+      }
+    }
+
     // Build response with only generated sections
     const responseData: any = {
       success: true,
@@ -280,6 +324,7 @@ Generate internal links that:
     if (shouldGenerateChecklist) responseData.checklist = checklist;
     if (shouldGenerateInternalLinks) responseData.internalLinks = internalLinks;
     if (shouldGenerateLinks) responseData.outboundLinks = outboundLinks;
+    if (shouldGenerateAuthorTakeaway && authorTakeaway !== undefined) responseData.authorTakeaway = authorTakeaway;
 
     return NextResponse.json(responseData);
   } catch (error) {

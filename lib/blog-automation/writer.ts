@@ -98,8 +98,8 @@ export async function writeSection(
     console.log(`\n[DEBUG] Generated content length: ${content.length}`);
     console.log(`[DEBUG] First 300 chars: ${content.substring(0, 300)}`);
 
-    // Fix unclosed H3 tags - if [H3] appears without matching [/H3], add it
-    content = fixUnclosedH3Tags(content);
+    // Fix unclosed heading tags before conversion.
+    content = fixUnclosedHeadingTags(content);
 
     // AI now generates citations directly with [text](url) format
     // Check if AI included citations
@@ -312,9 +312,49 @@ Keywords to incorporate: ${keywordsList}
 Context tailoring requirements:
 ${contextInstructions}
 
-${options.includeHeaders ? `Include relevant subheadings for better readability. Format subheadings with [H3] prefix like this:
-[H3]Subheading Title[/H3]
+${options.includeHeaders ? `Include relevant subheadings for better readability.
+- Use [H3]...[/H3] for the first in-section heading if a heading is needed.
+- Use [H4]...[/H4] for subordinate subheadings beneath it.
+
+Example:
+[H3]Understanding ACL Injuries[/H3]
+Opening paragraph...
+
+[H4]Symptoms of ACL Injuries[/H4]
 Content for this subsection...` : ""}
+
+${options.includeHeaders ? `CRITICAL HEADING RULES:
+- A heading must be on its own line.
+- Immediately close every heading marker, exactly like [H3]Heading[/H3] or [H4]Heading[/H4].
+- Never write body copy on the same line as a heading marker.
+- Never start a paragraph with a bare [H4] tag.
+- Do not use **bold** by itself as a heading when a subheading is intended.` : ""}
+
+CRITICAL ANCHOR TEXT RULES:
+- Keep every linked anchor under 5 words.
+- Make anchors descriptive, natural, and contextual.
+- Prefer partial-match or topic-match anchors, not source names.
+- Do not use generic anchors like "click here", "read more", "learn more", or "this page".
+- Do not use long clause-length anchors or entire sentence fragments.
+- Do not use source-led anchors like "according to Sports Medicine Australia" or "the Cromwell Hospital guide".
+- Good anchor examples: "ACL injury symptoms", "knee instability", "early physiotherapy", "football rehab".
+
+IMPORTANT SEO BOLDING RULES:
+Use **bold** (double asterisks) strategically for SEO and readability. Bold text signals importance to both readers and search engines. Use <strong> semantics — write **word or phrase** and it will be rendered as <strong> in HTML. Target 5–10% of text — enough to highlight key points without looking spammy.
+
+What to bold:
+1. TARGET KEYWORDS: Bold the primary topic keyword or phrase once in the introduction and 1–2 natural placements in the body (e.g., **anterior cruciate ligament** or **physiotherapy rehabilitation**).
+2. KEY PHRASES: Bold important clinical concepts, direct answers to questions, or thematic phrases readers would scan for (e.g., **reduce inflammation**, **return-to-play protocol**, **load management**).
+3. IN-PARAGRAPH LEAD PHRASES: When a paragraph introduces a specific concept or step, bold the key term at the start to aid skimming (e.g., **PRICE method** — Protection, Rest, Ice...).
+4. SUMMARY STATEMENTS: Bold the key clinical takeaway at the end of a section or important paragraph (e.g., "...making **consistent rehabilitation the single most important factor in long-term recovery**.")
+
+Bolding rules:
+- Limit bold to 5–10% of total text — do not bold every keyword or sentence.
+- Never bold whole sentences or full paragraphs.
+- Never use bold as a substitute for a subheading — use [H3]/[H4] for that.
+- Only bold where it makes natural grammatical and contextual sense; do not force keywords.
+- Prioritise readability for the human reader — SEO benefit is secondary.
+- Avoid bolding the same phrase repeatedly; bold it once or twice at most.
 
 Write engaging, informative content that helps the reader understand and apply the information. Use UK English spelling and grammar throughout.`;
 }
@@ -358,62 +398,56 @@ function normalizeOutline(content: string, numSections: number): string[] {
 }
 
 /**
- * Fix unclosed H3 tags by ensuring every [H3] has a matching [/H3]
+ * Fix unclosed heading tags by ensuring every [H1]-[H6] marker has a closing tag.
  */
-function fixUnclosedH3Tags(content: string): string {
-  // Find all [H3] tags and their corresponding [/H3] closing tags
-  const openTagRegex = /\[H3\]/g;
-  const closeTagRegex = /\[\/H3\]/g;
-  
-  const openCount = (content.match(openTagRegex) || []).length;
-  const closeCount = (content.match(closeTagRegex) || []).length;
-  
-  // If we have unclosed tags, try to fix them
-  if (openCount > closeCount) {
-    // Split by [H3] and process
-    let result = content;
-    let stack: number[] = [];
-    
-    // Find positions of opening tags
-    let match;
-    const openRegex = /\[H3\]/g;
-    while ((match = openRegex.exec(content)) !== null) {
-      stack.push(match.index);
+function fixUnclosedHeadingTags(content: string): string {
+  let result = content;
+
+  for (let level = 1; level <= 6; level++) {
+    const openTagRegex = new RegExp(`\\[H${level}\\]`, "g");
+    const closeTagRegex = new RegExp(`\\[\\/H${level}\\]`, "g");
+
+    const openCount = (result.match(openTagRegex) || []).length;
+    const closeCount = (result.match(closeTagRegex) || []).length;
+
+    if (openCount <= closeCount) {
+      continue;
     }
-    
-    // Find positions of closing tags
-    const closeMatches: number[] = [];
-    const closeRegex = /\[\/H3\]/g;
-    while ((match = closeRegex.exec(content)) !== null) {
-      closeMatches.push(match.index);
+
+    const openPositions: number[] = [];
+    let match: RegExpExecArray | null;
+    while ((match = openTagRegex.exec(result)) !== null) {
+      openPositions.push(match.index);
     }
-    
-    // For each unclosed opening tag, find where to insert the closing tag
-    if (stack.length > closeMatches.length) {
-      // Find the last opening tag without a closing tag
-      for (let i = stack.length - 1; i >= 0; i--) {
-        const openPos = stack[i];
-        // Find if there's a closing tag after this opening tag
-        const hasClosing = closeMatches.some(closePos => closePos > openPos);
-        
-        if (!hasClosing) {
-          // This opening tag doesn't have a closing tag
-          // Find the next newline or end of string to insert the closing tag
-          const nextNewline = content.indexOf('\n', openPos + 4); // +4 for [H3]
-          const nextDoubleNewline = content.indexOf('\n\n', openPos + 4);
-          
-          const insertPos = nextDoubleNewline !== -1 ? nextDoubleNewline : (nextNewline !== -1 ? nextNewline : content.length);
-          
-          result = result.slice(0, insertPos) + '[/H3]' + result.slice(insertPos);
-          break; // Fix one at a time for safety
-        }
+
+    const closePositions: number[] = [];
+    while ((match = closeTagRegex.exec(result)) !== null) {
+      closePositions.push(match.index);
+    }
+
+    for (let index = openPositions.length - 1; index >= 0; index--) {
+      const openPos = openPositions[index];
+      const hasClosing = closePositions.some((closePos) => closePos > openPos);
+      if (hasClosing) {
+        continue;
       }
+
+      const markerLength = `[H${level}]`.length;
+      const nextNewline = result.indexOf("\n", openPos + markerLength);
+      const nextDoubleNewline = result.indexOf("\n\n", openPos + markerLength);
+      const insertPos =
+        nextDoubleNewline !== -1
+          ? nextDoubleNewline
+          : nextNewline !== -1
+            ? nextNewline
+            : result.length;
+
+      result = result.slice(0, insertPos) + `[/H${level}]` + result.slice(insertPos);
+      break;
     }
-    
-    return result;
   }
-  
-  return content;
+
+  return result;
 }
 /**
  * Add contextual links to content based on selected sources
@@ -514,12 +548,12 @@ function addContextualLinks(
 
       console.log(`[Links]   ✓ Found match for phrase: "${phrase}"`);
 
-      // Split content so we only link in body copy (exclude [H3] headings)
-      const segments = content.split(/(\[H3\].*?\[\/H3\])/gis);
+      // Split content so we only link in body copy (exclude heading markers)
+      const segments = content.split(/(\[H[1-6]\].*?\[\/H[1-6]\])/gis);
       let updated = false;
 
       for (let i = 0; i < segments.length; i++) {
-        const isHeadingSegment = segments[i].startsWith("[H3]");
+        const isHeadingSegment = /^\[H[1-6]\]/i.test(segments[i]);
         if (isHeadingSegment) continue;
 
         if (matcher.test(segments[i])) {
@@ -549,15 +583,17 @@ function convertToRicos(content: string): any {
   const nodes: any[] = [];
   
   // Split by heading markers while preserving them
-  const parts = content.split(/(\[H3\].*?\[\/H3\])/gs);
+  const parts = content.split(/(\[H[1-6]\].*?\[\/H[1-6]\])/gs);
   
   for (const part of parts) {
     if (!part.trim()) continue;
     
     // Check if this is a heading
-    if (part.startsWith("[H3]")) {
-      const headingText = part.replace(/\[H3\](.*?)\[\/H3\]/s, "$1");
-      nodes.push(createHeadingNode(headingText, 3));
+    const headingMatch = part.match(/^\[H([1-6])\]([\s\S]*?)\[\/H\1\]$/i);
+    if (headingMatch) {
+      const level = Math.min(Math.max(parseInt(headingMatch[1], 10) || 4, 1), 6);
+      const headingText = headingMatch[2];
+      nodes.push(createHeadingNode(headingText, level));
     } else {
       // Split by double newlines to create paragraphs
       const paragraphs = part.split(/\n\n+/);
@@ -598,38 +634,45 @@ function createParagraphNode(text: string): any {
  */
 function createTextNodes(text: string): any[] {
   const nodes: any[] = [];
-  const linkRegex = /\[(.*?)\]\((https?:\/\/[^\)]+)\)/g;
+  const inlineRegex = /\*\*([^*]+)\*\*|\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g;
   
   let lastIndex = 0;
   let match;
-  let linkCount = 0;
   
-  while ((match = linkRegex.exec(text)) !== null) {
-    linkCount++;
-    // Add text before the link
+  while ((match = inlineRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
       nodes.push({
         type: "text",
         data: text.substring(lastIndex, match.index),
       });
     }
-    
-    // Add the link node
-    console.log(`[createTextNodes] Found link #${linkCount}: "[${match[1]}](${match[2]})"`);
-    nodes.push({
-      type: "link",
-      href: match[2],
-      target: "_blank",
-      rel: "noopener noreferrer",
-      nodes: [
-        {
-          type: "text",
-          data: match[1],
-        },
-      ],
-    });
-    
-    lastIndex = linkRegex.lastIndex;
+
+    if (match[1]) {
+      nodes.push({
+        type: "bold",
+        nodes: [
+          {
+            type: "text",
+            data: match[1],
+          },
+        ],
+      });
+    } else {
+      nodes.push({
+        type: "link",
+        href: match[3],
+        target: "_blank",
+        rel: "noopener noreferrer",
+        nodes: [
+          {
+            type: "text",
+            data: match[2],
+          },
+        ],
+      });
+    }
+
+    lastIndex = inlineRegex.lastIndex;
   }
   
   // Add remaining text
@@ -642,13 +685,10 @@ function createTextNodes(text: string): any[] {
   
   // If no nodes were created, just add the text as-is
   if (nodes.length === 0) {
-    console.log(`[createTextNodes] No markdown links found in text (length: ${text.length})`);
     nodes.push({
       type: "text",
       data: text,
     });
-  } else {
-    console.log(`[createTextNodes] Total links created: ${linkCount}`);
   }
   
   return nodes;

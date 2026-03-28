@@ -250,6 +250,7 @@ ${sourcesDescription}
 9. Do NOT wrap your response in markdown code fences or backticks
 10. Do NOT add any commentary — return ONLY the modified content
 11. Use British English spelling
+12. Preserve all existing **bold** text exactly as-is — do not remove, add, or change bold formatting
 
 The links should feel organic and naturally distributed throughout the content.`;
 

@@ -185,7 +185,68 @@ function ricosToHtml(rich: any): string {
       }
       return img;
     }
+    if (type === "VIDEO") {
+      const videoUrl: string =
+        node?.videoData?.video?.src?.url ||
+        node?.videoData?.src?.url ||
+        node?.videoData?.url ||
+        "";
+      const title: string = node?.videoData?.title || "Video";
+      const thumbnail: string =
+        node?.videoData?.thumbnail?.src?.url ||
+        node?.videoData?.thumbnail?.url ||
+        "";
 
+      if (!videoUrl) return "";
+
+      // Convert YouTube watch URLs to embed URLs
+      const ytMatch =
+        videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/) ||
+        videoUrl.match(/youtube\.com\/embed\/([A-Za-z0-9_-]{11})/);
+      if (ytMatch) {
+        const videoId = ytMatch[1];
+        return `<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5rem 0;border-radius:0.5rem;">` +
+          `<iframe src="https://www.youtube.com/embed/${escapeHtml(videoId)}" title="${escapeHtml(title)}" ` +
+          `style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" ` +
+          `allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>` +
+          `</div>`;
+      }
+
+      // Vimeo
+      const vimeoMatch = videoUrl.match(/vimeo\.com\/(\d+)/);
+      if (vimeoMatch) {
+        const videoId = vimeoMatch[1];
+        return `<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5rem 0;border-radius:0.5rem;">` +
+          `<iframe src="https://player.vimeo.com/video/${escapeHtml(videoId)}" title="${escapeHtml(title)}" ` +
+          `style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>` +
+          `</div>`;
+      }
+
+      // Wix-hosted video or other: render as <video> with optional poster
+      return `<div style="margin:1.5rem 0;">` +
+        `<video controls preload="metadata" style="width:100%;border-radius:0.5rem;"${thumbnail ? ` poster="${escapeHtml(thumbnail)}"` : ""}>` +
+        `<source src="${escapeHtml(videoUrl)}" />` +
+        `</video>` +
+        `</div>`;
+    }
+
+    if (type === "EMBED") {
+      // oEmbed HTML — comes from Wix's own oembed resolution, treat as trusted markup
+      const oembedHtml: string = node?.embedData?.oembed?.html || "";
+      if (!oembedHtml) return "";
+      // Wrap in a centred container; scripts inside (e.g. Instagram) will self-initialise
+      return `<div class="oembed-embed" style="margin:1.5rem auto;max-width:540px;">${oembedHtml}</div>`;
+    }
+
+    if (type === "HTML") {
+      // Raw HTML block inserted by the author
+      const rawHtml: string =
+        node?.htmlData?.html ||
+        node?.htmlData?.text ||
+        "";
+      if (!rawHtml) return "";
+      return `<div class="html-block" style="margin:1.5rem 0;">${rawHtml}</div>`;
+    }
     // Fallback: just render children so we don’t lose everything
     return renderChildren(node);
   };

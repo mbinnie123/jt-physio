@@ -2,6 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { GoogleAuth } from "google-auth-library";
 
+function getErrorDetails(error: unknown) {
+  if (axios.isAxiosError(error)) {
+    const apiMessage =
+      error.response?.data?.error?.message ||
+      error.response?.data?.message ||
+      error.message;
+
+    return {
+      message: apiMessage,
+      status: error.response?.status,
+    };
+  }
+
+  if (error instanceof Error) {
+    return { message: error.message, status: undefined };
+  }
+
+  return { message: "Unknown error", status: undefined };
+}
+
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");
@@ -76,7 +96,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("[API] Failed to fetch Vertex documents:", error);
-    const message = error instanceof Error ? error.message : "Unknown error";
+    const { message, status } = getErrorDetails(error);
     const lowerMessage = message.toLowerCase();
     const authHint =
       lowerMessage.includes("invalid_grant") ||
@@ -90,6 +110,7 @@ export async function GET(request: NextRequest) {
       {
         error: "Failed to fetch Vertex documents",
         details: message,
+        status,
         hint: authHint,
       },
       { status: 500 }

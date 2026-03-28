@@ -460,15 +460,24 @@ function createParagraphNodeFromNodes(childNodes: WixRichTextNode[]): WixRichTex
   };
 }
 
-function createTextNode(text: string, link?: { url: string; target?: string }): WixRichTextNode {
+function createTextNode(
+  text: string,
+  options?: { url?: string; target?: string; bold?: boolean }
+): WixRichTextNode {
   const decorations: Array<Record<string, unknown>> = [];
   
-  if (link) {
+  if (options?.bold) {
+    decorations.push({
+      type: "BOLD",
+    });
+  }
+
+  if (options?.url) {
     decorations.push({
       type: "LINK",
       linkData: {
         link: {
-          url: link.url,
+          url: options.url,
           target: "BLANK",
         },
       },
@@ -546,6 +555,15 @@ function convertRicosToWixNodes(ricosNodes: any[]): WixRichTextNode[] {
               decorations: [],
             },
           });
+        } else if (inlineNode.type === "bold") {
+          const boldText = extractTextFromRicosNodes(inlineNode.nodes || []);
+          if (boldText) {
+            wixInlineNodes.push(
+              createTextNode(boldText, {
+                bold: true,
+              })
+            );
+          }
         } else if (inlineNode.type === "link") {
           // Use createTextNode with link parameter to get the correct structure
           const linkText = extractTextFromRicosNodes(inlineNode.nodes || []);
@@ -596,23 +614,24 @@ function splitIntoParagraphs(content: string): string[] {
 function parseContentWithSubheadings(content: string): WixRichTextNode[] {
   const nodes: WixRichTextNode[] = [];
   
-  // Pattern to match [H3]Title[/H3] - using 's' flag to match newlines in content
-  const h3Pattern = /\[H3\](.*?)\[\/H3\]/gis;
+  // Pattern to match [H1]-[H6] heading markers - using capturing groups for heading level and content.
+  const headingPattern = /\[H([1-6])\](.*?)\[\/H\1\]/gis;
   
-  // Split content by h3 tags
-  const parts = content.split(h3Pattern);
+  // Split content by heading tags
+  const parts = content.split(headingPattern);
   
   let i = 0;
   while (i < parts.length) {
     const part = parts[i];
     
-    // If this is an h3 title (odd indices after split are the captured groups)
-    if (i % 2 === 1) {
-      const h3Title = part.trim();
-      if (h3Title) {
-        nodes.push(createHeadingNode(h3Title, 3));
+    // After split, heading level is at odd indices and heading text is at even indices immediately after that.
+    if (i % 3 === 1) {
+      const level = Math.min(Math.max(parseInt(part, 10) || 4, 1), 6);
+      const headingText = parts[i + 1]?.trim();
+      if (headingText) {
+        nodes.push(createHeadingNode(headingText, level));
       }
-      i++;
+      i += 2;
       continue;
     }
     

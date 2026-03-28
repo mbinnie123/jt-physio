@@ -274,7 +274,7 @@ export function convertToRicos(content: string): any {
     const trailing = normalized.substring(lastIndex);
     appendParagraphNodes(trailing, nodes);
 
-    return { nodes };
+    return { nodes: normalizeSectionHeadingHierarchy(nodes) };
   } catch (error) {
     console.error("[convertToRicos] Unexpected error converting to Ricos:", {
       error: error instanceof Error ? error.message : String(error),
@@ -286,8 +286,33 @@ export function convertToRicos(content: string): any {
   }
 }
 
+function normalizeSectionHeadingHierarchy(nodes: any[]): any[] {
+  let firstHeadingSeen = false;
+
+  return nodes.map((node) => {
+    if (node?.type !== "heading") {
+      return node;
+    }
+
+    const currentLevel = Math.min(Math.max(parseInt(String(node.level), 10) || 4, 1), 6);
+
+    if (!firstHeadingSeen) {
+      firstHeadingSeen = true;
+      return {
+        ...node,
+        level: currentLevel >= 4 ? 3 : currentLevel,
+      };
+    }
+
+    return {
+      ...node,
+      level: currentLevel <= 3 ? 4 : currentLevel,
+    };
+  });
+}
+
 function normalizeHeadingMarkers(text: string): string {
-  let result = text;
+  let result = repairInlineHeadingBlocks(text);
 
   // Convert markdown-style headings into [Hn] markers (these should already capture single line)
   result = result.replace(/^######\s*([^\n]+?)$/gm, "[H6]$1[/H6]");
@@ -309,6 +334,82 @@ function normalizeHeadingMarkers(text: string): string {
   return result;
 }
 
+function repairInlineHeadingBlocks(text: string): string {
+  return text.replace(/^\[H([1-6])\]([^\n]*)$/gm, (match, level, rawContent) => {
+    if (!rawContent || match.includes(`[/H${level}]`)) {
+      return match;
+    }
+
+    const trimmed = rawContent.trim();
+    if (!trimmed) {
+      return match;
+    }
+
+    const { heading, body } = splitHeadingFromInlineBody(trimmed);
+    if (!heading) {
+      return match;
+    }
+
+    return body
+      ? `[H${level}]${heading}[/H${level}]\n\n${body}`
+      : `[H${level}]${heading}[/H${level}]`;
+  });
+}
+
+function splitHeadingFromInlineBody(value: string): { heading: string; body: string } {
+  const words = value.split(/\s+/).filter(Boolean);
+  if (words.length <= 1) {
+    return { heading: value.trim(), body: "" };
+  }
+
+  const connectorWords = new Set([
+    "a",
+    "an",
+    "and",
+    "as",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "into",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "with",
+  ]);
+
+  let boundary = words.length;
+
+  for (let index = 1; index < words.length; index++) {
+    const current = stripHeadingToken(words[index]);
+    const previous = stripHeadingToken(words[index - 1]);
+    if (!current) continue;
+
+    const looksLikeLowercaseBodyWord =
+      /^[a-z]/.test(current) && !connectorWords.has(current.toLowerCase());
+
+    if (looksLikeLowercaseBodyWord && index >= 3) {
+      boundary = /^[A-Z]{2,}$/.test(previous) && index - 1 >= 3 ? index - 1 : index;
+      break;
+    }
+  }
+
+  const headingWords = words.slice(0, boundary).join(" ").trim();
+  const bodyWords = words.slice(boundary).join(" ").trim();
+
+  return {
+    heading: headingWords || value.trim(),
+    body: bodyWords,
+  };
+}
+
+function stripHeadingToken(value: string): string {
+  return value.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, "");
+}
+
 function appendParagraphNodes(text: string, nodes: any[]) {
   if (!text || !text.trim()) return;
 
@@ -318,8 +419,24 @@ function appendParagraphNodes(text: string, nodes: any[]) {
     .filter(Boolean);
 
   for (const paragraph of paragraphs) {
+    const boldHeading = parseStandaloneBoldHeading(paragraph);
+    if (boldHeading) {
+      nodes.push(createHeadingNode(boldHeading, 4));
+      continue;
+    }
+
     nodes.push(createParagraphNode(paragraph));
   }
+}
+
+function parseStandaloneBoldHeading(paragraph: string): string | null {
+  const match = paragraph.trim().match(/^\*\*([^*]+)\*\*$/);
+  if (!match) return null;
+
+  const headingText = match[1]?.trim();
+  if (!headingText) return null;
+
+  return headingText;
 }
 
 function createHeadingNode(text: string, level: number): any {

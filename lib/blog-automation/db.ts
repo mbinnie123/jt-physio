@@ -89,6 +89,7 @@ class BlogDatabase {
             sourceUsageIndex: draft.sourceUsageIndex ?? 0,
             sourceUsageCount: draft.sourceUsageCount ?? {},
             includeOverview: draft.includeOverview ?? true,
+            includeAuthorTakeaway: draft.includeAuthorTakeaway ?? true,
           }
         ]);
         
@@ -152,7 +153,7 @@ class BlogDatabase {
       includeFaq: true,
       includeInternalCta: true,
       includeOverview: true,
-      includeAuthorTakeaway: false,
+      includeAuthorTakeaway: true,
       authorTakeawayText: "",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

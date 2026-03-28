@@ -61,8 +61,9 @@ export function assembleBlogPost(
   const overview = includeOverview
     ? generateOverview(topic, sections)
     : undefined;
-  const authorTakeaway =
-    includeAuthorTakeaway && authorTakeawayText ? authorTakeawayText : undefined;
+  const authorTakeaway = includeAuthorTakeaway
+    ? (authorTakeawayText || generateAuthorTakeaway(topic, sections))
+    : undefined;
   const internalCta = includeInternalCta
     ? generateInternalCta(location || sport)
     : undefined;
@@ -379,6 +380,22 @@ function generateFAQs(
   ];
 
   return commonFAQs;
+}
+
+/**
+ * Generate a professional author takeaway based on topic and section content
+ */
+function generateAuthorTakeaway(topic: string, sections: BlogSection[]): string {
+  const conditionName = extractConditionName(topic);
+  const keyAreas = sections
+    .slice(0, 3)
+    .map((s) => s.title?.trim())
+    .filter(Boolean)
+    .join(", ");
+  const areasSentence = keyAreas
+    ? ` covering areas such as ${keyAreas}`
+    : "";
+  return `As a specialist physiotherapist, my key advice for anyone managing ${conditionName} is to seek professional assessment early${areasSentence}. Early intervention, a structured rehabilitation programme, and consistent adherence to your prescribed exercises make the greatest difference to long-term outcomes. Every patient is different, so a personalised approach is essential. If you have concerns or would like a tailored plan, please book an appointment — our team at JT Football Physiotherapy is here to support your recovery every step of the way.`;
 }
 
 /**

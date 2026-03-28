@@ -67,6 +67,7 @@ Target link requirements:
 - You may adjust surrounding wording to make the anchor placement feel natural.
 - Keep facts/meaning intact and keep length roughly similar.
 - Keep only one link instance to the target URL in this section.
+- Preserve all existing **bold** text exactly — do not add, remove, or change bold formatting.
 
 ${relocationInstruction}
 ${hintInstruction}

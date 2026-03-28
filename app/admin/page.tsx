@@ -30,7 +30,6 @@ interface ResearchData {
   sources: any[];
   keywords: string[];
 }
-
 interface ImageMetadata {
   altText: string;
   caption: string;
@@ -139,6 +138,74 @@ function extractLinksFromHtml(html: string): Array<{ url: string; text: string }
   }
   
   return links;
+}
+
+function extractLinksFromMarkdown(content: string): Array<{ url: string; text: string }> {
+  const links: Array<{ url: string; text: string }> = [];
+  const markdownPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let match;
+
+  while ((match = markdownPattern.exec(content)) !== null) {
+    const text = match[1]?.trim();
+    const url = match[2]?.trim();
+    if (!text || !url) continue;
+    if (!links.some((link) => link.url === url && link.text === text)) {
+      links.push({ text, url });
+    }
+  }
+
+  return links;
+}
+
+/**
+ * Pick anchor text from `bodyText` for a link pointing at `blog`.
+ *
+ * Rules (per SEO best practice):
+ *  1. Find a natural phrase in the BODY that contains a topic keyword and is ≤5 words.
+ *  2. Phrase must start at a word boundary and not be a heading or existing link.
+ *  3. Strip leading stopwords so the phrase is descriptive.
+ *  4. Never use generic link text ("click here", "read more", "this page", etc.).
+ *  5. Fall back to a trimmed version of the blog title (capped at 5 words) if nothing fits.
+ */
+function pickAnchorText(blog: any, bodyText: string): string {
+  const GENERIC = /^(click here|read more|this page|here|learn more|find out|more info|more information|view|see here|go here)$/i;
+  const MAX_WORDS = 5;
+
+  const title: string = blog.title || blog.topic || '';
+  const topic: string = blog.topic || blog.title || '';
+
+  // Build ordered candidate keywords: prefer multi-word phrases first, then single words
+  const topicWords = topic.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
+  const candidates: string[] = [];
+
+  // Bigrams first (more specific)
+  for (let i = 0; i < topicWords.length - 1; i++) {
+    candidates.push(`${topicWords[i]} ${topicWords[i + 1]}`);
+  }
+  candidates.push(...topicWords);
+
+  // Search bodyText for each candidate, then capture a natural phrase (≤5 words) around it
+  for (const keyword of candidates) {
+    const safeKw = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Capture the keyword plus any following qualifying words (up to 5 total)
+    const phraseRegex = new RegExp(
+      `\\b((?:\\w+\\s+){0,2}${safeKw}(?:\\s+\\w+){0,2})\\b`,
+      'i'
+    );
+    const m = bodyText.match(phraseRegex);
+    if (m) {
+      const phrase = m[1].trim().replace(/[.,;:!?]+$/, '');
+      const wordCount = phrase.split(/\s+/).length;
+      if (wordCount >= 1 && wordCount <= MAX_WORDS && !GENERIC.test(phrase)) {
+        return phrase;
+      }
+    }
+  }
+
+  // Fall back to blog title, capped at MAX_WORDS words
+  const titleWords = title.trim().split(/\s+/);
+  const capped = titleWords.slice(0, MAX_WORDS).join(' ').replace(/[.,;:!?]+$/, '');
+  return capped || title;
 }
 
 async function readJsonSafely(res: Response): Promise<any> {
@@ -294,7 +361,7 @@ export default function AdminDashboard() {
   const [includeFaq, setIncludeFaq] = useState(true);
   const [includeInternalCta, setIncludeInternalCta] = useState(true);
   const [includeOverview, setIncludeOverview] = useState(true);
-  const [includeAuthorTakeaway, setIncludeAuthorTakeaway] = useState(false);
+  const [includeAuthorTakeaway, setIncludeAuthorTakeaway] = useState(true);
   const [authorTakeawayText, setAuthorTakeawayText] = useState("");
   const [loading, setLoading] = useState(false);
   const [deletingDraftId, setDeletingDraftId] = useState<string | null>(null);
@@ -769,7 +836,7 @@ export default function AdminDashboard() {
       // Combine both sources
       const allBlogs = [...localBlogs, ...wixBlogs];
       setPublishedBlogs(allBlogs);
-      
+
       if (allBlogs.length === 0) {
         alert("No published blog posts found yet.\n\nTo see available blogs for linking:\n1. Create a blog draft\n2. Generate an outline\n3. Write sections\n4. Click 'Assemble Blog'\n\nOr publish existing Wix posts.");
       } else {
@@ -894,6 +961,20 @@ export default function AdminDashboard() {
     // Count "Related:" markers which indicate internal blog links
     const linkCount = (content.match(/\*\*Related:\*\*|<strong>Related:<\/strong>/g) || []).length;
     return linkCount;
+  };
+
+  const isInternalBlogLink = (url: string): boolean => {
+    if (!url) return false;
+
+    return (
+      url.startsWith("/") ||
+      url.includes("jtfootballphysiotherapy.co.uk") ||
+      url.includes("www.jtfootballphysiotherapy.co.uk")
+    );
+  };
+
+  const getExternalSectionLinks = (section: any): Array<{ text: string; url: string }> => {
+    return getSectionLinks(section).filter((link) => !isInternalBlogLink(link.url));
   };
 
   // Helper: Extract body content without headings (for markdown)
@@ -1136,8 +1217,8 @@ export default function AdminDashboard() {
       return;
     }
 
-    const contentHtml = section.contentHtml || '';
-    const existingLinks = extractLinksFromHtml(contentHtml);
+    const contentHtml = getSectionRenderedHtml(section);
+    const existingLinks = getExternalSectionLinks(section);
 
     if (existingLinks.length === 0) {
       alert("No external links found in this section to suggest alternatives for.");
@@ -1274,6 +1355,14 @@ export default function AdminDashboard() {
         }
       }
 
+      const syncUsesHtml = typeof section.content !== 'string';
+      const syncSource = syncUsesHtml
+        ? section.contentHtml || ''
+        : section.content;
+      updateSectionContentFromRaw(updatedSections, sectionIndex, syncSource, {
+        isHtml: syncUsesHtml,
+      });
+
       setSections(updatedSections);
       setSelectedExternalSuggestion(null);
 
@@ -1326,25 +1415,9 @@ export default function AdminDashboard() {
       ? removeHeadingsMarkdown(content)
       : removeHeadingsHtml(content);
 
-    // Try to find natural anchor text from body content (not headings)
-    let anchorText = blogTitle; // Fallback
+    // Pick concise, descriptive, natural anchor text (≤5 words, not generic)
+    const anchorText = pickAnchorText(blog, bodyContentForSearch);
     let insertedLink = false;
-
-    // Extract keywords from blog title/topic
-    const blogKeywords = blog.topic.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
-    
-    // Search for natural phrases in BODY content only (no headings)
-    for (const keyword of blogKeywords) {
-      // Create a case-insensitive regex to find the keyword
-      const regex = new RegExp(`\\b${keyword}[\\s\\w]*?(?:[,.]|\\s|$)`, 'i');
-      const match = bodyContentForSearch.match(regex);
-      
-      if (match && match[0].length > 0) {
-        // Use the found phrase as anchor text (trim punctuation)
-        anchorText = match[0].trim().replace(/[.,]$/, '');
-        break;
-      }
-    }
 
     // Insert link naturally into content
     const updatedSections = [...sections];
@@ -1461,19 +1534,9 @@ export default function AdminDashboard() {
       const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
       const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
       const blogTitle = blog.title || blog.topic || 'Read more';
-      
-      // Try to find natural anchor text from BODY content (not headings)
-      let anchorText = blogTitle;
-      const blogKeywords = blog.topic.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
-      
-      for (const keyword of blogKeywords) {
-        const regex = new RegExp(`\\b${keyword}[\\s\\w]*?(?:[,.]|\\s|$)`, 'i');
-        const match = bodyContentForSearch.match(regex);
-        if (match && match[0].length > 0) {
-          anchorText = match[0].trim().replace(/[.,]$/, '');
-          break;
-        }
-      }
+
+      // Pick concise, descriptive, natural anchor text (≤5 words, not generic)
+      const anchorText = pickAnchorText(blog, bodyContentForSearch);
 
       const linkMarkdown = `[${anchorText}](${blogUrl})`;
       const linkHtml = `<a href="${blogUrl}" target="_blank">${anchorText}</a>`;
@@ -1535,6 +1598,14 @@ export default function AdminDashboard() {
       addedCount++;
     }
 
+    const syncUsesHtml = typeof targetSection.content !== 'string';
+    const syncSource = syncUsesHtml
+      ? targetSection.contentHtml || ''
+      : targetSection.content;
+    updateSectionContentFromRaw(updatedSections, sectionIndex, syncSource, {
+      isHtml: syncUsesHtml,
+    });
+
     setSections(updatedSections);
     const newLinkCount = currentLinkCount + addedCount;
     const remainingSlots = internalLinksPerSection - newLinkCount;
@@ -1567,19 +1638,9 @@ export default function AdminDashboard() {
       const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
       const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
       const blogTitle = blog.title || blog.topic || 'Read more';
-      
-      // Try to find natural anchor text from BODY content (not headings)
-      let anchorText = blogTitle;
-      const blogKeywords = blog.topic.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
-      
-      for (const keyword of blogKeywords) {
-        const regex = new RegExp(`\\b${keyword}[\\s\\w]*?(?:[,.]|\\s|$)`, 'i');
-        const match = bodyContentForSearch.match(regex);
-        if (match && match[0].length > 0) {
-          anchorText = match[0].trim().replace(/[.,]$/, '');
-          break;
-        }
-      }
+
+      // Pick concise, descriptive, natural anchor text (≤5 words, not generic)
+      const anchorText = pickAnchorText(blog, bodyContentForSearch);
 
       const linkMarkdown = `[${anchorText}](${blogUrl})`;
       const linkHtml = `<a href="${blogUrl}" target="_blank">${anchorText}</a>`;
@@ -1634,6 +1695,14 @@ export default function AdminDashboard() {
         }
       }
     }
+
+    const syncUsesHtml = typeof section.content !== 'string';
+    const syncSource = syncUsesHtml
+      ? section.contentHtml || ''
+      : section.content;
+    updateSectionContentFromRaw(updatedSections, sectionIndex, syncSource, {
+      isHtml: syncUsesHtml,
+    });
 
     setSections(updatedSections);
     console.log(`[Auto-Insert] Added ${linksToInsert} internal links to section ${sectionIndex}`);
@@ -1869,6 +1938,23 @@ export default function AdminDashboard() {
     editableFeaturedImageUrl,
     editableContent,
   ]);
+
+  useEffect(() => {
+    if (!selectedDraft?.id || activeTab !== "edit") {
+      return;
+    }
+
+    setSelectedDraft((prev) => {
+      if (!prev || prev.id !== selectedDraft.id || prev.sections === sections) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        sections,
+      };
+    });
+  }, [activeTab, sections, selectedDraft?.id]);
 
   useEffect(() => {
     setSelectedDraftIds((prev) =>
@@ -2209,7 +2295,7 @@ export default function AdminDashboard() {
           includeFaq: true,
           includeInternalCta: true,
           includeOverview: true,
-          includeAuthorTakeaway: false,
+          includeAuthorTakeaway: true,
           authorTakeawayText: "",
           createdAt: wixPost.createdDate || new Date().toISOString(),
         };
@@ -2713,12 +2799,16 @@ export default function AdminDashboard() {
           body: JSON.stringify({
             draftId: selectedDraft.id,
             sectionTitle: editableOutline[targetIndex],
+            sectionIndex: targetIndex,
             sectionNumber: targetIndex + 1,
             tone: "professional",
             targetAudience: "physiotherapy patients",
             targetWords: sectionTargetWords[targetIndex] || 300,
             externalLinksPerSection,
             internalLinksPerSection,
+            allSectionTitles: editableOutline,
+            location: editableDraftLocation,
+            sport: editableDraftSport,
           }),
         },
         1
@@ -2734,6 +2824,14 @@ export default function AdminDashboard() {
         }
         updatedSections[targetIndex] = newSection;
         setSections(updatedSections);
+        setSelectedDraft((prev) =>
+          prev
+            ? {
+                ...prev,
+                sections: updatedSections,
+              }
+            : prev
+        );
         
         // Auto-filter relevant published blogs based on this section
         if (publishedBlogs.length === 0) {
@@ -2793,10 +2891,16 @@ export default function AdminDashboard() {
           body: JSON.stringify({
             draftId: selectedDraft.id,
             sectionTitle: editableOutline[sectionIndex],
+            sectionIndex,
             sectionNumber: sectionIndex + 1,
             tone: "professional",
             targetAudience: "physiotherapy patients",
             targetWords: sectionTargetWords[sectionIndex] || 300,
+            externalLinksPerSection,
+            internalLinksPerSection,
+            allSectionTitles: editableOutline,
+            location: editableDraftLocation,
+            sport: editableDraftSport,
           }),
         },
         1
@@ -2812,6 +2916,14 @@ export default function AdminDashboard() {
         }
         updatedSections[sectionIndex] = newSection;
         setSections(updatedSections);
+        setSelectedDraft((prev) =>
+          prev
+            ? {
+                ...prev,
+                sections: updatedSections,
+              }
+            : prev
+        );
       } else {
         const errorMessage = data?.error || `HTTP ${response.status}: Failed to regenerate section`;
         console.error("Regenerate section failed:", response.status, data);
@@ -3099,6 +3211,7 @@ export default function AdminDashboard() {
           body: JSON.stringify({ 
             draftId: selectedDraft.id,
             assembleOnly: true,
+            sections,
             topic: editableDraftTopic,
             location: editableDraftLocation,
             sport: editableDraftSport,
@@ -3118,7 +3231,7 @@ export default function AdminDashboard() {
         console.log("Assembly successful! Response data:", data);
         console.log("Draft status after assembly:", data.draft?.status);
         alert("Blog post assembled successfully!");
-        setSelectedDraft(data.draft);
+        hydrateDraftEditor(data.draft);
         setAssembledBlog(data.blogPost); // Store assembled blog data
         // Regenerate outline to show in the UI
         generateOutline(data.draft.id, auth, numSections);
@@ -3164,6 +3277,7 @@ export default function AdminDashboard() {
           body: JSON.stringify({
             draftId: selectedDraft.id,
             assembleOnly: true,
+            sections,
             topic: editableDraftTopic,
             location: editableDraftLocation,
             sport: editableDraftSport,
@@ -3204,7 +3318,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const regenerateExtras = async (section?: "faqs" | "checklist" | "links") => {
+  const regenerateExtras = async (section?: "faqs" | "checklist" | "links" | "authorTakeaway") => {
     if (!selectedDraft || !editableDraftTopic) {
       alert("No draft or topic found");
       return;
@@ -3259,6 +3373,16 @@ export default function AdminDashboard() {
             updates.outboundLinks = data.outboundLinks;
           }
         }
+        if (!section || section === "authorTakeaway") {
+          // Only update if author takeaway was actually generated
+          if ("authorTakeaway" in data && data.authorTakeaway) {
+            updates.authorTakeaway = data.authorTakeaway;
+            // Also update the draft's authorTakeawayText so future assemblies use it
+            setSelectedDraft((prev) =>
+              prev ? { ...prev, authorTakeawayText: data.authorTakeaway } : prev
+            );
+          }
+        }
 
         const updatedBlog = {
           ...assembledBlog,
@@ -3274,6 +3398,8 @@ export default function AdminDashboard() {
             ? "FAQs"
             : section === "checklist"
             ? "Checklist"
+            : section === "authorTakeaway"
+            ? "Author's Takeaway"
             : "Sources"
           : "all sections";
         alert(`${sectionName} regenerated successfully!`);
@@ -3314,6 +3440,7 @@ export default function AdminDashboard() {
           },
           body: JSON.stringify({ 
             draftId: selectedDraft.id,
+            sections,
             metadata: {
               title: editableTitle,
               slug: editableSlug,
@@ -3343,13 +3470,13 @@ export default function AdminDashboard() {
       );
 
       if (response.ok) {
-        alert(`Published! View at: ${data.url}`);
+        const publishVerb = selectedDraft.wixPostId ? "Updated" : "Published";
+        alert(`${publishVerb}! View at: ${data.url}`);
         clearDraftAutosave(selectedDraft.id);
-        setSelectedDraft(null);
-        setSections([]);
-        setOutline([]);
+        hydrateDraftEditor(data.draft);
+        setAssembledBlog(data.blogPost);
         loadDrafts(auth);
-        setActiveTab("list");
+        setActiveTab("edit");
       } else {
         const errorMessage = data?.error || `HTTP ${response.status}: Failed to publish`;
         console.error("Publish failed:", errorMessage);
@@ -3373,13 +3500,16 @@ export default function AdminDashboard() {
   const convertMarkdownToHtml = (markdown: string): string => {
     let html = markdown;
 
-    // Convert [H3]/[H2]/etc markers into markdown-style headings
-    html = html.replace(/\[H([1-6])\]/gi, (_, level) => {
-      const headingLevel = Math.min(Math.max(parseInt(level, 10) || 3, 1), 6);
-      return `\n\n${"#".repeat(headingLevel)} `;
+    // Convert explicit [H1]-[H6] markers directly into HTML headings.
+    html = html.replace(/\[H([1-6])\]([\s\S]*?)\[\/H\1\]/gi, (_match, level, text) => {
+      const headingLevel = Math.min(Math.max(parseInt(level, 10) || 4, 1), 6);
+      return `<h${headingLevel}>${text.trim()}</h${headingLevel}>`;
     });
 
     // Headers
+    html = html.replace(/^###### (.*?)$/gm, "<h6>$1</h6>");
+    html = html.replace(/^##### (.*?)$/gm, "<h5>$1</h5>");
+    html = html.replace(/^#### (.*?)$/gm, "<h4>$1</h4>");
     html = html.replace(/^### (.*?)$/gm, "<h3>$1</h3>");
     html = html.replace(/^## (.*?)$/gm, "<h2>$1</h2>");
     html = html.replace(/^# (.*?)$/gm, "<h1>$1</h1>");
@@ -3402,6 +3532,24 @@ export default function AdminDashboard() {
     html = html.replace(/(<li>.*<\/li>)/s, "<ul>$1</ul>");
 
     return html;
+  };
+
+  const getSectionRenderedHtml = (section: any): string => {
+    if (!section) return "";
+
+    if (typeof section.content === "string") {
+      return convertMarkdownToHtml(section.content);
+    }
+
+    if (section.contentHtml) {
+      return section.contentHtml;
+    }
+
+    if (section.content && typeof section.content === "object") {
+      return ricosToHtml(section.content);
+    }
+
+    return "";
   };
 
   const convertHtmlToMarkdownish = (html: string): string => {
@@ -3515,16 +3663,12 @@ export default function AdminDashboard() {
     };
 
     if (typeof section.content === "string") {
-      const markdownPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
-      let match;
-      while ((match = markdownPattern.exec(section.content)) !== null) {
-        addLink(match[1], match[2]);
-      }
+      extractLinksFromMarkdown(section.content).forEach((link) => addLink(link.text, link.url));
     }
 
-    if (section.contentHtml) {
-      extractLinksFromHtml(section.contentHtml).forEach((link) => addLink(link.text, link.url));
-    }
+    extractLinksFromHtml(getSectionRenderedHtml(section)).forEach((link) =>
+      addLink(link.text, link.url)
+    );
 
     return Array.from(linkMap.values());
   };
@@ -4331,7 +4475,12 @@ export default function AdminDashboard() {
                               "Authorization": auth,
                             },
                           });
-                          if (!response.ok) throw new Error("Failed to fetch Vertex documents");
+                          if (!response.ok) {
+                            const errorData = await response.json().catch(() => null);
+                            const details = errorData?.details ? `\n\nDetails: ${errorData.details}` : "";
+                            const hint = errorData?.hint ? `\n\nHint: ${errorData.hint}` : "";
+                            throw new Error(`Failed to fetch Vertex documents${details}${hint}`);
+                          }
                           
                           const data = await response.json();
                           // Add Vertex documents as sources to research data
@@ -4367,7 +4516,8 @@ export default function AdminDashboard() {
                           alert(`✅ Added ${vertexSources.length} Vertex documents to your sources!`);
                         } catch (error) {
                           console.error("Vertex fetch error:", error);
-                          alert("Failed to load Vertex documents");
+                          const message = error instanceof Error ? error.message : "Failed to load Vertex documents";
+                          alert(message);
                         } finally {
                           setLoading(false);
                         }
@@ -4981,11 +5131,7 @@ export default function AdminDashboard() {
                             {section.wordCount} words
                           </p>
                           <p className="text-gray-700 mt-2 line-clamp-3">
-                            {typeof section.content === 'string' 
-                              ? section.content 
-                              : section.contentHtml 
-                                ? section.contentHtml.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
-                                : 'No preview available'}
+                            {getSectionRenderedHtml(section).replace(/<[^>]*>/g, '').trim().substring(0, 200) || 'No preview available'}
                           </p>
                         </div>
                         <div className="ml-3 flex flex-col gap-2 whitespace-nowrap">
@@ -5049,6 +5195,22 @@ export default function AdminDashboard() {
                               👁️ View
                             </button>
                           )}
+                          <button
+                            onClick={() => {
+                              if (confirm(`Delete section "${section.title}"? This cannot be undone.`)) {
+                                const updated = [...sections];
+                                updated[i] = null;
+                                setSections(updated);
+                                setSelectedDraft((prev: any) =>
+                                  prev ? { ...prev, sections: updated } : prev
+                                );
+                              }
+                            }}
+                            className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+                            title="Delete this section"
+                          >
+                            🗑️ Delete
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -5265,7 +5427,7 @@ export default function AdminDashboard() {
                     {viewLinksMode ? (
                       // Links View
                       (() => {
-                        const links = extractLinksFromHtml(sections[expandedSectionIndex].contentHtml || '');
+                        const links = getSectionLinks(sections[expandedSectionIndex]);
                         return links.length > 0 ? (
                           <div className="space-y-3">
                             <div className="flex justify-between items-center mb-4">
@@ -5313,69 +5475,7 @@ export default function AdminDashboard() {
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Main Content */}
                         <div className="lg:col-span-2">
-                        <style jsx>{`
-                          .section-content {
-                            color: #374151;
-                          }
-                          .section-content a {
-                            color: #1d4ed8;
-                            background-color: #dbeafe;
-                            text-decoration: underline;
-                            text-decoration-thickness: 2px;
-                            text-underline-offset: 3px;
-                            cursor: pointer;
-                            font-weight: 600;
-                            padding: 2px 4px;
-                            border-radius: 3px;
-                            transition: all 0.2s ease;
-                          }
-                          .section-content a:hover {
-                            color: #1e40af;
-                            background-color: #bfdbfe;
-                            text-decoration-thickness: 3px;
-                            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-                          }
-                          .section-content h2 {
-                            margin-top: 1.5rem;
-                            margin-bottom: 1rem;
-                            font-size: 1.375rem;
-                            font-weight: 700;
-                            color: #111827;
-                          }
-                          .section-content h2:first-child {
-                            margin-top: 0;
-                          }
-                          .section-content h3 {
-                            margin-top: 1.25rem;
-                            margin-bottom: 0.75rem;
-                            font-size: 1.125rem;
-                            font-weight: 600;
-                            color: #1f2937;
-                          }
-                          .section-content h3:first-child {
-                            margin-top: 0;
-                          }
-                          .section-content strong,
-                          .section-content b {
-                            font-weight: 700;
-                            color: #111827;
-                          }
-                          .section-content p {
-                            margin-bottom: 1rem;
-                            line-height: 1.6;
-                            color: #374151;
-                          }
-                          .section-content ul,
-                          .section-content ol {
-                            margin-bottom: 1rem;
-                            margin-left: 1.25rem;
-                          }
-                          .section-content li {
-                            margin-bottom: 0.5rem;
-                            color: #374151;
-                          }
-                        `}</style>
-                          <div className="prose prose-sm max-w-none section-content">
+                          <div className="section-content">
                             <p className="text-sm text-gray-600 mb-4">
                               {sections[expandedSectionIndex].wordCount} words
                             </p>
@@ -5420,24 +5520,27 @@ export default function AdminDashboard() {
                             )}
                             {(() => {
                               const section = sections[expandedSectionIndex];
-                              if (typeof section.content === 'string') {
-                                const formattedHtml = convertMarkdownToHtml(section.content);
-                                return (
-                                  <div
-                                    className="section-content text-gray-800 leading-relaxed"
-                                    dangerouslySetInnerHTML={{ __html: formattedHtml }}
-                                  />
-                                );
+                              const sectionHtml = getSectionRenderedHtml(section);
+                              if (!sectionHtml && !section?.content) {
+                                return <div className="text-gray-400">No content available</div>;
                               }
-                              if (section.contentHtml) {
-                                return (
-                                  <div 
-                                    className="section-content text-gray-800 leading-relaxed"
-                                    dangerouslySetInnerHTML={{ __html: section.contentHtml }}
+
+                              return (
+                                <div className="section-content text-gray-800 leading-relaxed">
+                                  <BlogPostBody
+                                    post={{
+                                      title: section.title || "Section",
+                                      richContent:
+                                        section.content && typeof section.content === "object"
+                                          ? section.content
+                                          : null,
+                                      htmlBody: sectionHtml || null,
+                                      contentText:
+                                        typeof section.content === "string" ? section.content : null,
+                                    }}
                                   />
-                                );
-                              }
-                              return <div className="text-gray-400">No content available</div>;
+                                </div>
+                              );
                             })()}
                           </div>
                         </div>
@@ -5533,6 +5636,45 @@ export default function AdminDashboard() {
                           )}
                           
                           <div className="mt-4 pt-4 border-t border-blue-200">
+                            <p className="text-xs font-semibold text-gray-900 mb-2">Link Settings</p>
+                            <div className="space-y-3 bg-white p-3 rounded border border-blue-100 mb-3">
+                              <label className="block">
+                                <span className="block text-xs text-gray-700 font-medium mb-1">
+                                  Internal links target
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="range"
+                                    min="0"
+                                    max="10"
+                                    value={internalLinksPerSection}
+                                    onChange={(e) => setInternalLinksPerSection(parseInt(e.target.value, 10) || 0)}
+                                    className="flex-1"
+                                  />
+                                  <span className="w-8 text-xs font-semibold text-gray-700 text-right">
+                                    {internalLinksPerSection}
+                                  </span>
+                                </div>
+                              </label>
+                              <label className="block">
+                                <span className="block text-xs text-gray-700 font-medium mb-1">
+                                  External links target
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="range"
+                                    min="0"
+                                    max="10"
+                                    value={externalLinksPerSection}
+                                    onChange={(e) => setExternalLinksPerSection(parseInt(e.target.value, 10) || 0)}
+                                    className="flex-1"
+                                  />
+                                  <span className="w-8 text-xs font-semibold text-gray-700 text-right">
+                                    {externalLinksPerSection}
+                                  </span>
+                                </div>
+                              </label>
+                            </div>
                             <p className="text-xs font-semibold text-gray-900 mb-2">Link Count</p>
                             <div className="bg-white p-2 rounded border border-blue-100">
                               <p className="text-xs text-gray-700 font-medium">
@@ -5548,7 +5690,7 @@ export default function AdminDashboard() {
                             </h5>
                             
                             {(() => {
-                              const externalLinks = extractLinksFromHtml(sections[expandedSectionIndex]?.contentHtml || '');
+                              const externalLinks = getExternalSectionLinks(sections[expandedSectionIndex]);
                               return (
                                 <>
                                   {externalLinks.length > 0 ? (
@@ -6089,7 +6231,7 @@ export default function AdminDashboard() {
                   </h3>
                   <button
                     onClick={() => {
-                      if (confirm("Regenerate FAQs and checklist specific to your content? This will replace the current extras.")) {
+                      if (confirm("Regenerate FAQs, checklist, and author's takeaway specific to your content? This will replace the current extras.")) {
                         regenerateExtras();
                       }
                     }}
@@ -6100,7 +6242,7 @@ export default function AdminDashboard() {
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mb-4">
-                  ℹ️ These FAQs and checklist are generated specifically from your blog content. Click "Regenerate" to create new content-specific versions.
+                  ℹ️ These FAQs, checklist, and author takeaway are generated specifically from your blog content. Click "Regenerate" to create new content-specific versions.
                 </p>
                 <div className="space-y-6">
                   {/* FAQs */}
@@ -6195,11 +6337,31 @@ export default function AdminDashboard() {
                       </ul>
                     </div>
                   )}
+                  {/* Author's Professional Takeaway */}
+                  {selectedDraft.includeAuthorTakeaway !== false && (assembledBlog.metadata?.authorTakeaway || assembledBlog.authorTakeaway) && (
+                    <div>
+                      <div className="flex justify-between items-center mb-3">
+                        <h4 className="font-semibold text-gray-700">Author's Professional Takeaway</h4>
+                        <button
+                          onClick={() => {
+                            if (confirm("Regenerate the author's professional takeaway using AI?")) {
+                              regenerateExtras("authorTakeaway");
+                            }
+                          }}
+                          disabled={regeneratingSection === "authorTakeaway"}
+                          className="px-3 py-1 text-xs bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400"
+                        >
+                          {regeneratingSection === "authorTakeaway" ? "..." : "🔄"}
+                        </button>
+                      </div>
+                      <p className="text-sm text-gray-700 bg-purple-50 border border-purple-100 rounded p-3 italic">
+                        {assembledBlog.metadata?.authorTakeaway || assembledBlog.authorTakeaway}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
-
-            {/* Action Buttons */}
             <div className="bg-white rounded-lg shadow p-6">
               <div className="flex gap-4 flex-wrap">
                 {canWriteSections && (

@@ -14,6 +14,7 @@ import { generateBlogImage } from "@/lib/blog-automation/image-generator";
 
 interface PublishRequestBody {
   draftId: string;
+  sections?: any[];
   metadata?: Partial<BlogMetadata>;
   content?: string;
   selectedSourceIds?: string[];
@@ -130,7 +131,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const sanitizedSections = (draft.sections || []).filter(Boolean);
+    const incomingSections = Array.isArray(body.sections) ? body.sections : undefined;
+    const sanitizedSections = (incomingSections || draft.sections || []).filter(Boolean);
     
     // Only require sections if we're actually assembling/publishing, not just refreshing metadata
     if (!body.refreshMetadata && sanitizedSections.length === 0) {
@@ -194,6 +196,7 @@ export async function POST(request: NextRequest) {
     // If refreshing metadata without sections, just update and return
     if (body.refreshMetadata && sanitizedSections.length === 0) {
       const updatedDraft = persistDraftState(draft.id, {
+        sections: sanitizedSections,
         metadata: metadataForAssembly,
         selectedSourceIds,
         status: body.preserveStatus ? draft.status : draft.status,
@@ -294,6 +297,7 @@ export async function POST(request: NextRequest) {
     if (body.assembleOnly) {
       console.log("[API] assembleOnly branch. preserveStatus:", body.preserveStatus);
       const updatedDraft = persistDraftState(draft.id, {
+        sections: sanitizedSections,
         metadata: assembledPost.metadata,
         selectedSourceIds,
         status: body.preserveStatus ? draft.status : "assembled",
@@ -336,6 +340,7 @@ export async function POST(request: NextRequest) {
     });
 
     const updatedDraft = persistDraftState(draft.id, {
+      sections: sanitizedSections,
       status: "published",
       metadata: assembledPost.metadata,
       selectedSourceIds,

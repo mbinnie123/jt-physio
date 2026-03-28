@@ -47,3 +47,88 @@ h4 {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Section content viewer (blog generator admin modal) */
+.section-content {
+  color: #374151;
+}
+
+.section-content strong,
+.section-content b {
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-content em,
+.section-content i {
+  font-style: italic;
+}
+
+.section-content a {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.section-content a:hover {
+  color: #1e40af;
+  background-color: #bfdbfe;
+  text-decoration-thickness: 3px;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.section-content h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-content h2:first-child {
+  margin-top: 0;
+}
+
+.section-content h3 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.section-content h3:first-child {
+  margin-top: 0;
+}
+
+.section-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.section-content ul,
+.section-content ol {
+  margin-bottom: 1rem;
+  margin-left: 1.25rem;
+}
+
+.section-content ul {
+  list-style-type: disc;
+}
+
+.section-content ol {
+  list-style-type: decimal;
+}
+
+.section-content li {
+  margin-bottom: 0.5rem;
+  color: #374151;
+}

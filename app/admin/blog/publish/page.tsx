@@ -11,7 +11,6 @@ interface Draft {
   createdAt: string;
   publishedAt?: string;
   wixPostId?: string;
-  url?: string;
 }
 
 export default function AdminPublish() {
