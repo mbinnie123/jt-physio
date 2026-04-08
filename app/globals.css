@@ -48,6 +48,24 @@ h4 {
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Marquee (areas ticker) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 120s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 /* Section content viewer (blog generator admin modal) */
 .section-content {
   color: #374151;
