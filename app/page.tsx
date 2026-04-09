@@ -152,6 +152,16 @@ export default async function HomePage() {
     featured: post.featured || false,
   }));
 
+  const ayrshireAreas = [
+    "North Ayrshire", "South Ayrshire", "East Ayrshire",
+    "Irvine", "Ayr", "Kilmarnock", "Troon", "Prestwick",
+    "Saltcoats", "Ardrossan", "Stevenston", "Kilwinning",
+    "Largs", "West Kilbride", "Beith", "Dalry",
+    "Stewarton", "Galston", "Darvel", "Newmilns",
+    "Mauchline", "Cumnock", "Auchinleck", "Maybole",
+    "Girvan", "Alloway", "Dunlop", "Fenwick",
+  ];
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -225,17 +235,33 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Ayrshire Areas Marquee */}
+        <section className="bg-slate-900 py-3 overflow-hidden" aria-hidden="true">
+          <div className="marquee-wrapper w-full overflow-hidden">
+            <ul className="marquee-track list-none m-0 p-0">
+              {[...Array(8)].map((_, copy) =>
+                ayrshireAreas.map((area) => (
+                  <li key={`${copy}-${area}`} className="inline-flex items-center gap-3 px-4 py-1 text-sm font-medium text-slate-300 whitespace-nowrap">
+                    <span className="h-1 w-1 rounded-full bg-[#4C6CD6] shrink-0" />
+                    {area}
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+        </section>
+
         {/* About Us & Process */}
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <FadeIn>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                  About Our <span className="text-[#1e3a8a]">Kilmarnock Physiotherapy</span> Process
+                  Physiotherapy That <span className="text-[#1e3a8a]">Comes to You</span> — Across All of Ayrshire
                 </h2>
                 <div className="space-y-4 text-lg text-slate-600">
-                  <p>JT Football Physiotherapy provides specialist physiotherapy and health services for footballers at all levels in Kilmarnock, Ayrshire. We focus on injury recovery and prevention, using football-specific assessment and tailored rehabilitation to help players return stronger and more confident.</p>
-                  <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and enjoy the game.</p>
+                  <p>Jordan Templeton offers specialist physiotherapy for footballers and active individuals across the whole of Ayrshire. Based in Kilmarnock, Jordan provides <strong>mobile appointments that come directly to you</strong> — whether you&apos;re in Irvine, Ayr, Troon, Stewarton, or anywhere else across North, South, and East Ayrshire.</p>
+                  <p className="font-medium text-slate-900">Our approach is simple: treat the cause, not just the symptoms, so you can stay fit, perform better, and get back to doing what you love — wherever you are in Ayrshire.</p>
                   <div className="flex gap-4 my-6">
                     <div className="flex-1 h-[400px] relative">
                       <Image
@@ -289,17 +315,17 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
-                Why Choose Our <span className="text-[#1e3a8a]">Physiotherapy & Health Clinic</span> in Kilmarnock
+                Why Patients Across <span className="text-[#1e3a8a]">Ayrshire</span> Choose Jordan
               </h2>
               <p className="text-lg text-slate-600">
-                Every person receives personalised care based on their injury, goals and level of play, with treatment focused on recovery, performance and long-term injury prevention.
+                From Irvine to Ayr, Troon to Cumnock — Jordan brings expert physiotherapy to you. Every person gets a personalised plan built around their injury, their goals, and where they want to be.
               </p>
             </FadeIn>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {[
                 { title: "Specialised Football Physiotherapy", desc: "We understand the unique demands on football players in Kilmarnock. Our tailored services help you recover from injuries, reduce pain, and improve performance on and off the pitch." },
                 { title: "Personalised Care", desc: "Every player is different — and so is every injury. We deliver individualised treatment plans focused on your goals, whether that's returning to play or enhancing athletic function." },
-                { title: "Flexibility to Suit You", desc: "Choose between in-person sessions in Kilmarnock or online consultations, giving you expert physiotherapy and health support no matter where you are." }
+                { title: "Mobile Appointments Across Ayrshire", desc: "Jordan offers mobile appointments that come to you — covering all of North, South, and East Ayrshire. Can't make it to the Kilmarnock clinic? We come to you." }
               ].map((item, i) => (
                 <FadeIn key={i} delay={i * 100} className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
@@ -429,10 +455,10 @@ export default async function HomePage() {
               </FadeIn>
               <FadeIn delay={200}>
                 <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                  About Jordan — Lead Physiotherapist & Founder of <span className="text-[#1e3a8a]">JT Football Physiotherapy</span>
+                  Meet Jordan — <span className="text-[#1e3a8a]">Your Guide Through Recovery</span> Across Ayrshire
                 </h2>
                 <div className="space-y-4 text-base text-slate-600">
-                  <p><strong>Jordan Templeton</strong> is a highly experienced football physiotherapist with over seven years of professional experience working within the elite football game. He is the founder and lead physiotherapist at JT Football Physiotherapy in Kilmarnock, Ayrshire — a specialist service dedicated to helping football players and active individuals overcome injury, optimise performance, and return to sport with confidence.</p>
+                  <p><strong>Jordan Templeton</strong> is a highly experienced physiotherapist with over seven years of professional experience in elite football. He is the founder and lead physiotherapist at JT Football Physiotherapy — offering specialist, mobile physiotherapy across all of Ayrshire, as well as face-to-face sessions at the Kilmarnock clinic. Whether you&apos;re a footballer recovering from injury or an active individual dealing with persistent pain, Jordan builds the plan around you — and can bring it directly to your door.</p>
 
                   <p><strong>Professional Experience:</strong> Jordan spent four years as a coach at <a href="https://kilmarnockfc.co.uk/academy/" target="_blank" rel="noopener noreferrer" className="text-[#1e3a8a] hover:underline transition-colors">Kilmarnock FC Academy</a>, where he developed youth players across key stages of their athlete pathway. He then progressed into physiotherapy, working as an academy physiotherapist at <a href="https://kilmarnockfc.co.uk/" target="_blank" rel="noopener noreferrer" className="text-[#1e3a8a] hover:underline transition-colors">Kilmarnock FC</a> before moving to <a href="https://www.heartsfc.co.uk/" target="_blank" rel="noopener noreferrer" className="text-[#1e3a8a] hover:underline transition-colors">Hearts of Midlothian FC</a> as the Professional Development Phase Physiotherapist, supporting the academy, B team, and first team with injury management, rehabilitation, and return-to-play planning in a high-performance environment. He currently works full-time as a physiotherapist for <a href="https://kilmarnockfc.co.uk/" target="_blank" rel="noopener noreferrer" className="text-[#1e3a8a] hover:underline transition-colors">Kilmarnock FC</a>.</p>
 
@@ -472,6 +498,84 @@ export default async function HomePage() {
         {/* Reviews */}
         <Reviews />
 
+        {/* Erin Case Study Teaser */}
+        <section className="py-20 bg-white border-t border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="mb-12 text-center">
+              <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-[#1e3a8a] mb-4">
+                <span className="flex h-2 w-2 rounded-full bg-[#1e3a8a] mr-2" />
+                Real Patient · Real Results · Kilmarnock, Ayrshire
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                See What&apos;s Possible — <span className="text-[#1e3a8a]">Erin&apos;s ACL Prehab Story</span>
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                Erin tore her ACL and couldn&apos;t walk without a limp. With surgery weeks away, she didn&apos;t know where to start. This is how structured prehab physiotherapy helped her arrive at surgery in the best condition possible.
+              </p>
+            </FadeIn>
+            <div className="grid lg:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+              <FadeIn>
+                <div className="relative rounded-2xl overflow-hidden shadow-xl mx-auto" style={{ aspectRatio: "9/16", maxHeight: "520px", maxWidth: "300px" }}>
+                  <video
+                    src="/case-study-acl-injury-physiotherapy-kilmarnock-ayrshire.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                    aria-label="Erin&apos;s ACL prehab case study — JT Football Physiotherapy Ayrshire"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent" />
+                  <div className="absolute bottom-6 left-4 right-4">
+                    <Link
+                      href="/case-studies/erin-acl-kilmarnock"
+                      className="block text-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#1e3a8a] shadow-lg hover:bg-blue-50 transition-colors"
+                    >
+                      Read Full Case Study →
+                    </Link>
+                  </div>
+                </div>
+              </FadeIn>
+              <FadeIn delay={150} className="space-y-5">
+                <div className="space-y-3">
+                  {[
+                    { before: "Couldn&apos;t walk without a limp", after: "Near-normal walking pattern restored" },
+                    { before: "Almost no knee extension or flexion", after: "Full pre-surgery range of motion achieved" },
+                    { before: "Unsure where to even begin", after: "Clear plan, structured programme, surgery-ready" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 shadow-sm">
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-red-400 mb-0.5">Before</p>
+                        <p className="text-sm text-slate-600" dangerouslySetInnerHTML={{ __html: item.before }} />
+                      </div>
+                      <div className="w-px bg-slate-200 shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-green-600 mb-0.5">After</p>
+                        <p className="text-sm font-medium text-slate-800" dangerouslySetInnerHTML={{ __html: item.after }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <figure className="border-l-4 border-[#1e3a8a] pl-5">
+                  <blockquote className="italic text-slate-700 text-lg leading-relaxed">
+                    &ldquo;My knee&apos;s in the best condition now — not as it was before, but kind of the best condition it can be going into surgery.&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-2 text-sm font-medium text-slate-500">— Erin, ACL Prehab Patient, Kilmarnock</figcaption>
+                </figure>
+                <Link
+                  href="/case-studies/erin-acl-kilmarnock"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#1e3a8a] px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-800 transition-all"
+                >
+                  Read the Full Case Study
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
         {/* Blogs */}
         <section className="py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -497,24 +601,57 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Areas We Serve */}
-        <section className="py-16 bg-slate-50 border-t border-slate-200">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <FadeIn>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mb-4">
-                Serving Kilmarnock & Across Ayrshire
+        {/* Areas We Cover */}
+        <section className="py-20 bg-white border-t border-slate-100">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <FadeIn className="text-center mb-12">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                Mobile Physiotherapy <span className="text-[#1e3a8a]">All Across Ayrshire</span>
               </h2>
-              <p className="mx-auto max-w-3xl text-lg text-slate-600 leading-relaxed mb-10">
-                At <strong>JT Football Physiotherapy</strong>, we provide expert <strong>physiotherapy in Kilmarnock</strong> for clients across Ayrshire. While our clinic is based in Kilmarnock, we regularly welcome players and patients from <strong>Irvine, Ayr, Troon, Prestwick, Kilwinning, Galston, Stewarton, and Cumnock</strong>. No matter where you are in Ayrshire, our specialist care is worth the journey.
+              <p className="mx-auto max-w-3xl text-lg text-slate-600 leading-relaxed">
+                Jordan doesn&apos;t just work from a clinic. He brings expert physiotherapy directly to patients across <strong>North, South, and East Ayrshire</strong> — so geography is never a barrier to getting the care you need.
               </p>
-              <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl shadow-xl">
+            </FadeIn>
+            <div className="grid lg:grid-cols-3 gap-6 mb-12">
+              {[
+                { region: "North Ayrshire", areas: ["Irvine", "Saltcoats", "Ardrossan", "Stevenston", "Kilwinning", "Largs", "West Kilbride", "Beith", "Dalry"] },
+                { region: "East Ayrshire", areas: ["Kilmarnock", "Stewarton", "Galston", "Darvel", "Newmilns", "Mauchline", "Cumnock", "Auchinleck", "Fenwick"] },
+                { region: "South Ayrshire", areas: ["Ayr", "Prestwick", "Troon", "Maybole", "Girvan", "Alloway", "Symington", "Crosshill"] },
+              ].map((region) => (
+                <FadeIn key={region.region} className="rounded-2xl bg-slate-50 border border-slate-100 p-6">
+                  <h3 className="text-sm font-bold text-[#1e3a8a] uppercase tracking-wider mb-4">{region.region}</h3>
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
+                    {region.areas.map((area) => (
+                      <li key={area} className="flex items-center gap-2 text-sm text-slate-600">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#4C6CD6] shrink-0" />
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
+                </FadeIn>
+              ))}
+            </div>
+            <FadeIn className="rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative">
                 <Image
                   src="/ayrshire-landscape.webp"
-                  alt="JT Football Physiotherapy clinic serving Kilmarnock and Ayrshire"
+                  alt="Ayrshire landscape — physiotherapy available across North, South and East Ayrshire"
                   width={1200}
-                  height={600}
-                  className="w-full h-auto object-cover"
+                  height={480}
+                  className="w-full h-56 sm:h-72 object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/85 via-[#1e3a8a]/50 to-transparent flex items-center">
+                  <div className="px-8 max-w-lg">
+                    <p className="text-white font-bold text-xl mb-2">Can&apos;t make it to the clinic?</p>
+                    <p className="text-blue-100 text-sm mb-4">Jordan offers mobile appointments across all of Ayrshire. We come to you.</p>
+                    <a
+                      href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
+                      className="inline-block rounded-full bg-white px-6 py-2.5 text-sm font-bold text-[#1e3a8a] hover:bg-blue-50 transition-colors"
+                    >
+                      Book a Mobile Appointment
+                    </a>
+                  </div>
+                </div>
               </div>
             </FadeIn>
           </div>
@@ -525,17 +662,23 @@ export default async function HomePage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
             <FadeIn>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
-                Contact Us Now For <span className="text-[#1e3a8a]">Better Health & Pain Relief</span> in Kilmarnock
+                Ready to <span className="text-[#1e3a8a]">Start Your Recovery</span> Across Ayrshire?
               </h2>
               <p className="text-xl text-slate-600 mb-8">
-                Get in touch today to book an assessment or ask a question. Our Free Discovery session in Kilmarnock lets you discuss your injury at no cost. Your recovery in Kilmarnock starts here, with JT Football Physiotherapy.
+                Whether you&apos;re in Kilmarnock, Irvine, Ayr, or anywhere across Ayrshire — Jordan can help. Book a free discovery session to discuss your injury, your goals, and the best path forward. No pressure, no commitment.
               </p>
-              <div className="flex justify-center">
-                <Link
-                  href="/contact"
+              <div className="flex flex-wrap gap-4 justify-center">
+                <a
+                  href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
                   className="rounded-full bg-[#1e3a8a] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-800 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                 >
-                  Contact Us Today
+                  Book Your Appointment
+                </a>
+                <Link
+                  href="/services/free-discovery-session"
+                  className="rounded-full border border-[#1e3a8a]/30 bg-white px-8 py-4 text-lg font-semibold text-[#1e3a8a] shadow-sm transition-all duration-300 hover:bg-slate-50"
+                >
+                  Free Discovery Session
                 </Link>
               </div>
             </FadeIn>
