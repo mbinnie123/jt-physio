@@ -38,7 +38,7 @@ export function Header() {
     <header className={`sticky z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md transition-all duration-300 ease-in-out ${
       isContactBarVisible ? "top-[3.35rem] sm:top-12" : "top-0"
     }`}>
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 lg:h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter text-slate-900" onClick={() => setIsServicesOpen(false)}>
             <img
@@ -50,12 +50,12 @@ export function Header() {
             />
             Football Physiotherapy
           </Link>
-          <span className="hidden lg:block text-xs font-medium text-slate-500 border-l border-slate-200 pl-6">
-            Ayrshire Based Physio Clinic in Kilmarnock 
+          <span className="hidden xl:block text-xs font-medium text-slate-500 border-l border-slate-200 pl-6">
+            Ayrshire Based Physio Clinic in Kilmarnock
           </span>
         </div>
 
-        <nav className="hidden gap-8 text-sm font-medium lg:flex items-center">
+        <nav className="hidden lg:gap-5 xl:gap-7 text-sm font-medium lg:flex items-center">
           <Link href="/" className="text-slate-600 hover:text-[#1e3a8a] transition-colors" onClick={() => setIsServicesOpen(false)}>
             Home
           </Link>
@@ -270,7 +270,7 @@ export function Header() {
             <div
               role="menu"
               className={
-                `absolute left-1/2 -translate-x-1/2 top-full w-64 z-50 pt-2 ` +
+                `absolute right-0 top-full w-64 z-50 pt-2 ` +
                 `transition-all duration-200 ease-out transform ` +
                 (isResourcesOpen
                   ? "opacity-100 visible translate-y-0 pointer-events-auto"
@@ -304,7 +304,7 @@ export function Header() {
           </Link>
           <a
             href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
-            className="rounded-full bg-[#1e3a8a] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 transition-all hover:shadow-md text-center"
+            className="rounded-full bg-[#1e3a8a] lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 transition-all hover:shadow-md whitespace-nowrap"
             onClick={() => setIsServicesOpen(false)}
           >
             Book Now
@@ -336,186 +336,140 @@ export function Header() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white">
-          <div className="space-y-1 px-4 py-6">
-            <Link href="/" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
+        <div className="lg:hidden border-t border-slate-200 bg-white max-h-[calc(100dvh-4rem)] overflow-y-auto">
+          <div className="px-4 py-4">
+            <Link href="/" className="flex items-center rounded-xl px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 border-b border-slate-100" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
-            <div className="py-2">
+            <div className="border-b border-slate-100">
               <button
                 type="button"
-                className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+                className="w-full flex items-center justify-between px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 rounded-xl"
                 onClick={() => setIsMobileAboutOpen((v) => !v)}
                 aria-expanded={isMobileAboutOpen}
               >
                 <span>About</span>
                 <svg
-                  className={`h-5 w-5 transition-transform duration-200 ${isMobileAboutOpen ? "rotate-180" : ""}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+                  className={`h-5 w-5 text-slate-400 transition-transform duration-200 ${isMobileAboutOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-
               {isMobileAboutOpen && (
-                <div className="mt-1">
-                  <Link
-                    href="/about"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileAboutOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    About JT Football Physio
-                  </Link>
-                  <Link
-                    href="/faq"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileAboutOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Physiotherapy FAQ
-                  </Link>
-                  <Link
-                    href="/prices"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileAboutOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Pricing
-                  </Link>
+                <div className="pb-2 pl-2">
+                  {[
+                    { href: "/about", label: "About JT Football Physio", sub: "Who we are & how we work" },
+                    { href: "/faq", label: "Physiotherapy FAQ", sub: "Common questions answered" },
+                    { href: "/prices", label: "Pricing", sub: "Clear, transparent rates" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex flex-col rounded-xl px-3 py-3 hover:bg-slate-50"
+                      onClick={() => { setIsMobileAboutOpen(false); setIsMenuOpen(false); }}
+                    >
+                      <span className="text-sm font-semibold text-slate-900">{item.label}</span>
+                      <span className="text-xs text-slate-500 mt-0.5">{item.sub}</span>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
-            <div className="py-2">
+            <div className="border-b border-slate-100">
               <button
                 type="button"
-                className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+                className="w-full flex items-center justify-between px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 rounded-xl"
                 onClick={() => setIsMobileServicesOpen((v) => !v)}
                 aria-expanded={isMobileServicesOpen}
               >
                 <span>Services</span>
                 <svg
-                  className={`h-5 w-5 transition-transform duration-200 ${isMobileServicesOpen ? "rotate-180" : ""}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+                  className={`h-5 w-5 text-slate-400 transition-transform duration-200 ${isMobileServicesOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-
               {isMobileServicesOpen && (
-                <div className="mt-1">
-                  <Link
-                    href="/services/free-discovery-session"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileServicesOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Free Discovery Session
-                  </Link>
-                  <Link
-                    href="/services/injury-assessment"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileServicesOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Injury Assessment
-                  </Link>
-                  <Link
-                    href="/services/rehabilitation"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileServicesOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Rehabilitation
-                  </Link>
-                  <Link
-                    href="/services/sports-massage"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileServicesOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Sports Massage
-                  </Link>
-                  <Link
-                    href="/services/private-physiotherapy"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => {
-                      setIsMobileServicesOpen(false);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Private Physiotherapy
-                  </Link>
+                <div className="pb-2 pl-2">
+                  {[
+                    { href: "/services/free-discovery-session", label: "Free Discovery Session", sub: "Discuss your injury" },
+                    { href: "/services/injury-assessment", label: "Injury Assessment", sub: "Diagnosis & plan" },
+                    { href: "/services/rehabilitation", label: "Rehabilitation", sub: "Return to play" },
+                    { href: "/services/sports-massage", label: "Sports Massage", sub: "Recovery & prevention" },
+                    { href: "/services/private-physiotherapy", label: "Private Physiotherapy", sub: "Why choose private care" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex flex-col rounded-xl px-3 py-3 hover:bg-slate-50"
+                      onClick={() => { setIsMobileServicesOpen(false); setIsMenuOpen(false); }}
+                    >
+                      <span className="text-sm font-semibold text-slate-900">{item.label}</span>
+                      <span className="text-xs text-slate-500 mt-0.5">{item.sub}</span>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
             <Link
               href="/#reviews"
-              className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+              className="flex items-center rounded-xl px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 border-b border-slate-100"
               onClick={(e) => handleScroll(e, "/#reviews")}
             >
               Reviews
             </Link>
-            <div className="py-2">
+            <div className="border-b border-slate-100">
               <button
                 type="button"
-                className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+                className="w-full flex items-center justify-between px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 rounded-xl"
                 onClick={() => setIsMobileResourcesOpen((v) => !v)}
                 aria-expanded={isMobileResourcesOpen}
               >
                 <span>Resources</span>
                 <svg
-                  className={`h-5 w-5 transition-transform duration-200 ${isMobileResourcesOpen ? "rotate-180" : ""}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+                  className={`h-5 w-5 text-slate-400 transition-transform duration-200 ${isMobileResourcesOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {isMobileResourcesOpen && (
-                <div className="mt-1">
-                  <Link
-                    href="/blogs"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => { setIsMobileResourcesOpen(false); setIsMenuOpen(false); }}
-                  >
-                    Blogs
-                  </Link>
-                  <Link
-                    href="/case-studies"
-                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
-                    onClick={() => { setIsMobileResourcesOpen(false); setIsMenuOpen(false); }}
-                  >
-                    Case Studies
-                  </Link>
+                <div className="pb-2 pl-2">
+                  {[
+                    { href: "/blogs", label: "Blogs", sub: "Physio tips & insights" },
+                    { href: "/case-studies", label: "Case Studies", sub: "Real patient journeys" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex flex-col rounded-xl px-3 py-3 hover:bg-slate-50"
+                      onClick={() => { setIsMobileResourcesOpen(false); setIsMenuOpen(false); }}
+                    >
+                      <span className="text-sm font-semibold text-slate-900">{item.label}</span>
+                      <span className="text-xs text-slate-500 mt-0.5">{item.sub}</span>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
-            <Link href="/contact" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
+            <Link
+              href="/contact"
+              className="flex items-center rounded-xl px-3 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50"
+              onClick={() => setIsMenuOpen(false)}
+            >
               Contact
             </Link>
+            <div className="pt-3 pb-1">
+              <a
+                href="https://jt-football-physiotherapy.uk2.cliniko.com/bookings#service"
+                className="block w-full rounded-full bg-[#1e3a8a] px-6 py-3.5 text-center text-base font-semibold text-white shadow hover:bg-blue-800 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Book Your Appointment
+              </a>
+            </div>
           </div>
         </div>
       )}
