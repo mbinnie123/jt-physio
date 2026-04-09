@@ -83,7 +83,7 @@ export default function ErinACLCaseStudyPage() {
               <nav className="flex items-center gap-2 text-sm text-slate-400 mb-8">
                 <Link href="/" className="hover:text-[#1e3a8a] transition-colors">Home</Link>
                 <span>/</span>
-                <Link href="/kilmarnock-ayrshire" className="hover:text-[#1e3a8a] transition-colors">Kilmarnock, Ayrshire</Link>
+                <Link href="/physiotherapy-kilmarnock-ayrshire" className="hover:text-[#1e3a8a] transition-colors">Kilmarnock, Ayrshire</Link>
                 <span>/</span>
                 <span className="text-slate-600">Erin — ACL Prehab Case Study</span>
               </nav>
@@ -392,7 +392,7 @@ export default function ErinACLCaseStudyPage() {
                 </Link>
               </div>
               <p className="mt-6 text-sm text-slate-400">
-                <Link href="/kilmarnock-ayrshire" className="hover:text-[#1e3a8a] underline underline-offset-2">
+                <Link href="/physiotherapy-kilmarnock-ayrshire" className="hover:text-[#1e3a8a] underline underline-offset-2">
                   ← Back to Physiotherapy in Kilmarnock, Ayrshire
                 </Link>
               </p>
