@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: "Physiotherapy in Kilmarnock, Ayrshire | JT Football Physiotherapy",
     description:
       "Expert physiotherapy in Kilmarnock, Ayrshire. Specialist injury assessment, rehabilitation, sports massage and football physio from Jordan Templeton MSc. Book online today.",
-    url: "https://www.jordanphysiotherapyayrshire.co.uk/kilmarnock-ayrshire",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/physiotherapy-kilmarnock-ayrshire",
     locale: "en_GB",
     type: "website",
   },
@@ -36,18 +36,21 @@ const schemaMarkup = {
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": "https://www.jordanphysiotherapyayrshire.co.uk",
-      "name": "JT Football Physiotherapy",
+      "@id": "https://www.jordanphysiotherapyayrshire.co.uk/#business",
+      "name": "Jordan Physiotherapy Ayrshire",
+      "alternateName": "JT Football Physiotherapy",
       "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.svg",
       "description":
-        "Expert physiotherapy clinic in Kilmarnock, Ayrshire, specialising in football injury assessment, rehabilitation, sports massage and performance coaching for all levels.",
-      "telephone": "+441563544449",
+        "Expert physiotherapy clinic in Kilmarnock, Ayrshire, specialising in injury assessment, rehabilitation, sports massage and performance coaching for all levels.",
+      "telephone": "+447841430205",
       "url": "https://www.jordanphysiotherapyayrshire.co.uk",
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=JT+Football+Physiotherapy,+5+Bunting+Pl,+Kilmarnock+KA1+3LE",
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "5 Bunting Place",
         "addressLocality": "Kilmarnock",
         "addressRegion": "Ayrshire",
-        "postalCode": "KA1",
+        "postalCode": "KA1 3LE",
         "addressCountry": "GB",
       },
       "geo": {
@@ -69,12 +72,9 @@ const schemaMarkup = {
       ],
       "priceRange": "£50–£150",
       "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00",
-        },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "17:00", "closes": "21:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "17:00", "closes": "21:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "17:00", "closes": "21:00" },
       ],
       "sameAs": [
         "https://www.instagram.com/jtfootballphysiotherapy",
@@ -150,7 +150,7 @@ const schemaMarkup = {
           "@type": "ListItem",
           "position": 2,
           "name": "Physiotherapy in Kilmarnock, Ayrshire",
-          "item": "https://www.jordanphysiotherapyayrshire.co.uk/kilmarnock-ayrshire",
+          "item": "https://www.jordanphysiotherapyayrshire.co.uk/physiotherapy-kilmarnock-ayrshire",
         },
       ],
     },

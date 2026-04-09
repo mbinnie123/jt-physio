@@ -176,8 +176,74 @@ export default async function HomePage() {
     "Girvan", "Alloway", "Dunlop", "Fenwick",
   ];
 
+  const homepageSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "MedicalBusiness"],
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk/#business",
+        "name": "Jordan Physiotherapy Ayrshire",
+        "alternateName": "JT Football Physiotherapy",
+        "description": "Expert physiotherapy across Ayrshire — based in Kilmarnock with mobile appointments throughout North, East & South Ayrshire. Sports injury, ACL rehabilitation, and performance care.",
+        "url": "https://www.jordanphysiotherapyayrshire.co.uk",
+        "telephone": "+447841430205",
+        "email": "jtfootballphysiotherapy@gmail.com",
+        "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.svg",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "5 Bunting Place",
+          "addressLocality": "Kilmarnock",
+          "addressRegion": "Ayrshire",
+          "postalCode": "KA1 3LE",
+          "addressCountry": "GB"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 55.6114,
+          "longitude": -4.4956
+        },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "17:00", "closes": "21:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "17:00", "closes": "21:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "17:00", "closes": "21:00" }
+        ],
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "East Ayrshire" },
+          { "@type": "AdministrativeArea", "name": "North Ayrshire" },
+          { "@type": "AdministrativeArea", "name": "South Ayrshire" }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Physiotherapy Services Ayrshire",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "MedicalTherapy", "name": "Sports Injury Physiotherapy" } },
+            { "@type": "Offer", "itemOffered": { "@type": "MedicalTherapy", "name": "ACL Rehabilitation" } },
+            { "@type": "Offer", "itemOffered": { "@type": "MedicalTherapy", "name": "Mobile Physiotherapy Ayrshire" } },
+            { "@type": "Offer", "itemOffered": { "@type": "MedicalTherapy", "name": "Injury Assessment & Rehabilitation" } }
+          ]
+        },
+        "sameAs": [
+          "https://www.instagram.com/jtfootballphysio",
+          "https://www.facebook.com/jtfootballphysio"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk/#website",
+        "url": "https://www.jordanphysiotherapyayrshire.co.uk",
+        "name": "Jordan Physiotherapy Ayrshire",
+        "publisher": { "@id": "https://www.jordanphysiotherapyayrshire.co.uk/#business" },
+        "inLanguage": "en-GB"
+      }
+    ]
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
+      />
       <Header />
 
       <main className="flex-1">
