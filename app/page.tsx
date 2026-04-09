@@ -65,11 +65,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
-  description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
+  title: "Physiotherapy Ayrshire | Jordan Physiotherapy | Kilmarnock & Across Ayrshire",
+  description: "Expert physiotherapy across Ayrshire — based in Kilmarnock with mobile appointments available throughout North, East & South Ayrshire. Sports injury, rehabilitation, and performance care tailored to you.",
+  keywords: [
+    "physiotherapy Ayrshire",
+    "physio Kilmarnock",
+    "physiotherapist Ayrshire",
+    "sports physio Ayrshire",
+    "mobile physiotherapy Ayrshire",
+    "injury rehabilitation Ayrshire",
+    "physiotherapy Troon",
+    "physiotherapy Irvine",
+    "physiotherapy Prestwick",
+    "physiotherapy Ayr",
+    "Jordan Physiotherapy Ayrshire",
+  ],
   openGraph: {
-    title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
-    description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
+    title: "Physiotherapy Ayrshire | Jordan Physiotherapy | Kilmarnock & Across Ayrshire",
+    description: "Expert physiotherapy across Ayrshire — based in Kilmarnock with mobile appointments available throughout North, East & South Ayrshire. Sports injury, rehabilitation, and performance care tailored to you.",
     url: "https://www.jordanphysiotherapyayrshire.co.uk",
   },
 };
