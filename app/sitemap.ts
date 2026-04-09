@@ -65,6 +65,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/physiotherapy-kilmarnock-ayrshire`,
+      lastModified: new Date('2026-04-09'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/case-studies/erin-acl-kilmarnock`,
+      lastModified: new Date('2026-04-09'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
   ];
 
   // Service pages

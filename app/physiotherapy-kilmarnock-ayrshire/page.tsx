@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Expert physiotherapy in Kilmarnock, Ayrshire. Specialist injury assessment, rehabilitation, sports massage and football physio from Jordan Templeton MSc. Book online today.",
   alternates: {
-    canonical: "/kilmarnock-ayrshire",
+    canonical: "/physiotherapy-kilmarnock-ayrshire",
   },
   openGraph: {
     title: "Physiotherapy in Kilmarnock, Ayrshire | JT Football Physiotherapy",

@@ -6,4 +6,4 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /private/
 
-Sitemap: https://www.jtfootballphysiotherapy.co.uk/sitemap.xml
+Sitemap: https://www.jordanphysiotherapyayrshire.co.uk/sitemap.xml
