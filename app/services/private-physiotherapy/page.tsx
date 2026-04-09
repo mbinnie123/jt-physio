@@ -19,12 +19,12 @@ export default function PrivatePhysiotherapyPage() {
     "@graph": [
       {
         "@type": "LocalBusiness",
-        "@id": "https://www.jtfootballphysiotherapy.co.uk",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk",
         "name": "JT Football Physiotherapy",
-        "image": "https://www.jtfootballphysiotherapy.co.uk/logo.png",
+        "image": "https://www.jordanphysiotherapyayrshire.co.uk/logo.png",
         "description": "Expert physiotherapy services in Kilmarnock specialising in injury assessment, rehabilitation, sports massage, and recovery.",
         "telephone": "+441563544449",
-        "url": "https://www.jtfootballphysiotherapy.co.uk",
+        "url": "https://www.jordanphysiotherapyayrshire.co.uk",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Kilmarnock",
@@ -37,11 +37,11 @@ export default function PrivatePhysiotherapyPage() {
       },
       {
         "@type": "Service",
-        "@id": "https://www.jtfootballphysiotherapy.co.uk/services/private-physiotherapy",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk/services/private-physiotherapy",
         "name": "Private Physiotherapy",
         "description": "One-to-one private physiotherapy assessment, hands-on treatment and personalised rehabilitation plans in Kilmarnock and Ayrshire.",
         "provider": {
-          "@id": "https://www.jtfootballphysiotherapy.co.uk"
+          "@id": "https://www.jordanphysiotherapyayrshire.co.uk"
         },
         "areaServed": "Kilmarnock, Ayrshire",
         "availableLanguage": "en"
@@ -53,19 +53,19 @@ export default function PrivatePhysiotherapyPage() {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://www.jtfootballphysiotherapy.co.uk"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Services",
-            "item": "https://www.jtfootballphysiotherapy.co.uk/services"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk/services"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Private Physiotherapy",
-            "item": "https://www.jtfootballphysiotherapy.co.uk/services/private-physiotherapy"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk/services/private-physiotherapy"
           }
         ]
       }

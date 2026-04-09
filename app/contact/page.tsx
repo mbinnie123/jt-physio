@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Us | JT Football Physiotherapy Kilmarnock",
     description: "Contact JT Football Physiotherapy in Kilmarnock. Book an appointment, ask about injury assessment, or find our clinic location in Ayrshire.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/contact",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/contact",
   },
   keywords: ["contact physio Kilmarnock", "book physio Ayrshire", "physiotherapy appointment", "JT Football Physiotherapy location"],
 };

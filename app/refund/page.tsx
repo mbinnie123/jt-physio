@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Refund Policy | JT Football Physiotherapy",
     description: "Refund policy for services provided by JT Football Physiotherapy, including appointments, cancellations, and pre-paid packages.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/refund",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/refund",
   },
 };
 

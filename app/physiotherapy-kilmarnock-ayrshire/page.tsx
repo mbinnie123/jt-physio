@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: "Physiotherapy in Kilmarnock, Ayrshire | JT Football Physiotherapy",
     description:
       "Expert physiotherapy in Kilmarnock, Ayrshire. Specialist injury assessment, rehabilitation, sports massage and football physio from Jordan Templeton MSc. Book online today.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/kilmarnock-ayrshire",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/kilmarnock-ayrshire",
     locale: "en_GB",
     type: "website",
   },
@@ -36,13 +36,13 @@ const schemaMarkup = {
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": "https://www.jtfootballphysiotherapy.co.uk",
+      "@id": "https://www.jordanphysiotherapyayrshire.co.uk",
       "name": "JT Football Physiotherapy",
-      "image": "https://www.jtfootballphysiotherapy.co.uk/jt-football-physio-logo.svg",
+      "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.svg",
       "description":
         "Expert physiotherapy clinic in Kilmarnock, Ayrshire, specialising in football injury assessment, rehabilitation, sports massage and performance coaching for all levels.",
       "telephone": "+441563544449",
-      "url": "https://www.jtfootballphysiotherapy.co.uk",
+      "url": "https://www.jordanphysiotherapyayrshire.co.uk",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Kilmarnock",
@@ -87,7 +87,7 @@ const schemaMarkup = {
       "description":
         "Expert physiotherapy services in Kilmarnock, Ayrshire — including injury assessment, rehabilitation, sports massage, and football-specific physiotherapy.",
       "provider": {
-        "@id": "https://www.jtfootballphysiotherapy.co.uk",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk",
       },
       "areaServed": "Kilmarnock, Ayrshire",
       "availableLanguage": "en",
@@ -144,13 +144,13 @@ const schemaMarkup = {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://www.jtfootballphysiotherapy.co.uk",
+          "item": "https://www.jordanphysiotherapyayrshire.co.uk",
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Physiotherapy in Kilmarnock, Ayrshire",
-          "item": "https://www.jtfootballphysiotherapy.co.uk/kilmarnock-ayrshire",
+          "item": "https://www.jordanphysiotherapyayrshire.co.uk/kilmarnock-ayrshire",
         },
       ],
     },

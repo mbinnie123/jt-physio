@@ -18,12 +18,12 @@ export default function InjuryAssessmentPage() {
     "@graph": [
       {
         "@type": "LocalBusiness",
-        "@id": "https://www.jtfootballphysiotherapy.co.uk",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk",
         "name": "JT Football Physiotherapy",
-        "image": "https://www.jtfootballphysiotherapy.co.uk/logo.png",
+        "image": "https://www.jordanphysiotherapyayrshire.co.uk/logo.png",
         "description": "Expert physiotherapy services in Kilmarnock specialising in injury assessment, rehabilitation, sports massage, and recovery.",
         "telephone": "+441563544449",
-        "url": "https://www.jtfootballphysiotherapy.co.uk",
+        "url": "https://www.jordanphysiotherapyayrshire.co.uk",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Kilmarnock",
@@ -36,11 +36,11 @@ export default function InjuryAssessmentPage() {
       },
       {
         "@type": "Service",
-        "@id": "https://www.jtfootballphysiotherapy.co.uk/services/injury-assessment",
+        "@id": "https://www.jordanphysiotherapyayrshire.co.uk/services/injury-assessment",
         "name": "Injury Assessment & Diagnosis",
         "description": "Comprehensive injury assessment and diagnostic evaluation to identify the root cause of your pain and guide effective treatment in Kilmarnock and Ayrshire.",
         "provider": {
-          "@id": "https://www.jtfootballphysiotherapy.co.uk"
+          "@id": "https://www.jordanphysiotherapyayrshire.co.uk"
         },
         "areaServed": "Kilmarnock, Ayrshire",
         "availableLanguage": "en"
@@ -52,19 +52,19 @@ export default function InjuryAssessmentPage() {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://www.jtfootballphysiotherapy.co.uk"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Services",
-            "item": "https://www.jtfootballphysiotherapy.co.uk/services"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk/services"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Injury Assessment",
-            "item": "https://www.jtfootballphysiotherapy.co.uk/services/injury-assessment"
+            "item": "https://www.jordanphysiotherapyayrshire.co.uk/services/injury-assessment"
           }
         ]
       }

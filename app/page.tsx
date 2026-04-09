@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "JT Football Physiotherapy | Expert Physio Clinic in Kilmarnock",
     description: "Specialist football physiotherapy and injury clinic in Kilmarnock, Ayrshire. Expert assessment, rehabilitation, and performance coaching for all levels.",
-    url: "https://www.jtfootballphysiotherapy.co.uk",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk",
   },
 };
 

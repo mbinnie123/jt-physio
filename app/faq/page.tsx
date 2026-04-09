@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "Physiotherapy FAQ | JT Football Physiotherapy Kilmarnock",
     description:
       "Comprehensive answers to common questions about physiotherapy, injury rehab, pain, football-specific treatment and appointments at JT Football Physiotherapy in Kilmarnock, Ayrshire.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/faq",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/faq",
   },
 };
 

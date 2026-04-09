@@ -968,8 +968,8 @@ export default function AdminDashboard() {
 
     return (
       url.startsWith("/") ||
-      url.includes("jtfootballphysiotherapy.co.uk") ||
-      url.includes("www.jtfootballphysiotherapy.co.uk")
+      url.includes("jordanphysiotherapyayrshire.co.uk") ||
+      url.includes("www.jordanphysiotherapyayrshire.co.uk")
     );
   };
 
@@ -1147,7 +1147,7 @@ export default function AdminDashboard() {
     }
 
     const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
-    const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
+    const blogUrl = `https://www.jordanphysiotherapyayrshire.co.uk/${slug}`;
     const anchorText = suggestion.anchorText;
     const currentContent = typeof section.content === 'string' 
       ? section.content 
@@ -1402,7 +1402,7 @@ export default function AdminDashboard() {
     }
 
     const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
-    const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
+    const blogUrl = `https://www.jordanphysiotherapyayrshire.co.uk/${slug}`;
     const blogTitle = blog.title || blog.topic || 'Read more';
     
     // Get the section content
@@ -1532,7 +1532,7 @@ export default function AdminDashboard() {
     for (let i = 0; i < linksToInsert; i++) {
       const blog = relevantBlogs[i];
       const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
-      const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
+      const blogUrl = `https://www.jordanphysiotherapyayrshire.co.uk/${slug}`;
       const blogTitle = blog.title || blog.topic || 'Read more';
 
       // Pick concise, descriptive, natural anchor text (≤5 words, not generic)
@@ -1636,7 +1636,7 @@ export default function AdminDashboard() {
     for (let i = 0; i < linksToInsert; i++) {
       const blog = relevantBlogs[i];
       const slug = blog.metadata?.slug || blog.wixSlug || 'blog';
-      const blogUrl = `https://www.jtfootballphysiotherapy.co.uk/${slug}`;
+      const blogUrl = `https://www.jordanphysiotherapyayrshire.co.uk/${slug}`;
       const blogTitle = blog.title || blog.topic || 'Read more';
 
       // Pick concise, descriptive, natural anchor text (≤5 words, not generic)

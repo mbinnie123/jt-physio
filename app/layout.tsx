@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.jtfootballphysiotherapy.co.uk"),
+  metadataBase: new URL("https://www.jordanphysiotherapyayrshire.co.uk"),
   title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
   description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance. Specialist football physio helping you recover from injury and return to the pitch stronger.",
   keywords: ["Physiotherapy Kilmarnock", "Football Physio Ayrshire", "Sports Injury Clinic", "Back Pain Relief", "Sports Massage Kilmarnock", "Rehabilitation Ayrshire"],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
     images: [
       {
-        url: "https://www.jtfootballphysiotherapy.co.uk/jt-football-physio-logo.png",
+        url: "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.png",
         width: 1200,
         height: 630,
         alt: "JT Football Physiotherapy Logo",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
     description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
-    images: ["https://www.jtfootballphysiotherapy.co.uk/jt-football-physio-logo.png"],
+    images: ["https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.png"],
   },
 };
 
@@ -50,7 +50,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Physiotherapy",
     "name": "JT Football Physiotherapy",
-    "image": "https://www.jtfootballphysiotherapy.co.uk/jt-football-physio-logo.svg",
+    "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.svg",
     "description": "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
     "address": {
       "@type": "PostalAddress",
@@ -60,7 +60,7 @@ export default function RootLayout({
       "addressCountry": "UK"
     },
     "telephone": "+447841430205",
-    "url": "https://www.jtfootballphysiotherapy.co.uk",
+    "url": "https://www.jordanphysiotherapyayrshire.co.uk",
     "priceRange": "$$"
   };
 

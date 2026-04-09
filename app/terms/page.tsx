@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms and Conditions | JT Football Physiotherapy",
     description: "Terms and conditions for services provided by JT Football Physiotherapy, including appointments, payments, and patient responsibilities.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/terms",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/terms",
   },
 };
 

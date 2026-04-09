@@ -14,10 +14,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Jordan Templeton | JT Football Physiotherapy - Kilmarnock Clinic",
     description: "Meet Jordan Templeton, MSc Physiotherapist. With 7+ years in professional football at Kilmarnock, Hearts, experience across Ayrshire and Kilmarnock. Expert physiotherapy for footballers.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/about",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/about",
     images: [
       {
-        url: "https://www.jtfootballphysiotherapy.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
+        url: "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
         width: 600,
         height: 750,
         alt: "Jordan Templeton - MSc Physiotherapist at JT Football Physiotherapy Kilmarnock Ayrshire",
@@ -399,18 +399,18 @@ export default function AboutPage() {
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Jordan Templeton",
-              "image": "https://www.jtfootballphysiotherapy.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
+              "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physiotherapy-jordan-templeton-ayrhsire-kilmarnock-physiotherapy-clinic.webp",
               "jobTitle": "MSc Physiotherapist, Founder & Lead Physiotherapist",
-              "email": "contact@jtfootballphysiotherapy.co.uk",
+              "email": "contact@jordanphysiotherapyayrshire.co.uk",
               "telephone": "+44",
-              "url": "https://www.jtfootballphysiotherapy.co.uk/about",
+              "url": "https://www.jordanphysiotherapyayrshire.co.uk/about",
               "sameAs": [
                 "https://www.linkedin.com/in/jordan-templeton-53530a137/"
               ],
               "affiliation": {
                 "@type": "Organization",
                 "name": "JT Football Physiotherapy",
-                "url": "https://www.jtfootballphysiotherapy.co.uk"
+                "url": "https://www.jordanphysiotherapyayrshire.co.uk"
               },
               "address": {
                 "@type": "PostalAddress",

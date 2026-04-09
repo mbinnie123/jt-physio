@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Accessibility Statement | JT Football Physiotherapy",
     description: "Accessibility statement for JT Football Physiotherapy in Kilmarnock. Information on clinic access, wheelchair accessibility, and digital inclusion.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/accessibility",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/accessibility",
   },
 };
 

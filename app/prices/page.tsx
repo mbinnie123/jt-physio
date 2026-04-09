@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "Physiotherapy Prices | JT Football Physiotherapy Kilmarnock",
     description:
       "Clear, competitive pricing for physiotherapy appointments, massage, and specialist services. Book your appointment at JT Football Physiotherapy in Kilmarnock, Ayrshire.",
-    url: "https://www.jtfootballphysiotherapy.co.uk/prices",
+    url: "https://www.jordanphysiotherapyayrshire.co.uk/prices",
   },
 };
 
