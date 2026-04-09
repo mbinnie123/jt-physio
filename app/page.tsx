@@ -177,7 +177,7 @@ export default async function HomePage() {
                   Face-to-Face in Kilmarnock, Ayrshire or Online
                 </div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold tracking-tight text-slate-900 mb-6 lg:mb-4 leading-tight">
-                  Expert <span className="text-[#1e3a8a]">Physiotherapy in Kilmarnock, Ayrshire</span> for Peak Performance
+                  Expert <span className="text-[#1e3a8a]">Physiotherapy Across Ayrshire</span> for Peak Performance
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl lg:text-lg font-medium text-slate-800 mb-4">
                   Recover faster. Improve your physical health. Stay injury-free.
