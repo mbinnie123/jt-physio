@@ -72,6 +72,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/case-studies`,
+      lastModified: new Date('2026-04-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/case-studies/erin-acl-kilmarnock`,
       lastModified: new Date('2026-04-09'),
       changeFrequency: 'monthly',

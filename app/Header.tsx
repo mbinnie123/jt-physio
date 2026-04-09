@@ -10,6 +10,8 @@ export function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false);
   const isContactBarVisible = useTopContactBarVisibility();
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
@@ -241,9 +243,62 @@ export function Header() {
           >
             Reviews
           </Link>
-          <Link href="/blogs" className="text-slate-600 hover:text-[#1e3a8a] transition-colors" onClick={() => setIsServicesOpen(false)}>
-            Blogs
-          </Link>
+          <div
+            className="relative"
+            onMouseEnter={() => setIsResourcesOpen(true)}
+            onMouseLeave={() => setIsResourcesOpen(false)}
+          >
+            <button
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={isResourcesOpen}
+              className="flex items-center gap-1 text-slate-600 hover:text-[#1e3a8a] transition-colors outline-none py-2"
+              onClick={() => setIsResourcesOpen((v) => !v)}
+              onFocus={() => setIsResourcesOpen(true)}
+            >
+              Resources
+              <svg
+                className={`h-4 w-4 transition-transform duration-200 ${isResourcesOpen ? "rotate-180" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              role="menu"
+              className={
+                `absolute left-1/2 -translate-x-1/2 top-full w-64 z-50 pt-2 ` +
+                `transition-all duration-200 ease-out transform ` +
+                (isResourcesOpen
+                  ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                  : "opacity-0 invisible -translate-y-1 pointer-events-none")
+              }
+            >
+              <div className="rounded-2xl bg-white p-2 shadow-xl border border-slate-100 ring-1 ring-slate-900/5">
+                <Link
+                  role="menuitem"
+                  href="/blogs"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => { setIsResourcesOpen(false); setIsMenuOpen(false); }}
+                >
+                  <span className="font-semibold block text-slate-900">Blogs</span>
+                  <span className="text-xs text-slate-500">Physio tips & insights</span>
+                </Link>
+                <Link
+                  role="menuitem"
+                  href="/case-studies"
+                  className="block rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-colors"
+                  onClick={() => { setIsResourcesOpen(false); setIsMenuOpen(false); }}
+                >
+                  <span className="font-semibold block text-slate-900">Case Studies</span>
+                  <span className="text-xs text-slate-500">Real patient journeys</span>
+                </Link>
+              </div>
+            </div>
+          </div>
           <Link href="/contact" className="text-slate-600 hover:text-[#1e3a8a] transition-colors" onClick={() => setIsServicesOpen(false)}>
             Contact
           </Link>
@@ -421,9 +476,43 @@ export function Header() {
             >
               Reviews
             </Link>
-            <Link href="/blogs" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
-              Blogs
-            </Link>
+            <div className="py-2">
+              <button
+                type="button"
+                className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
+                onClick={() => setIsMobileResourcesOpen((v) => !v)}
+                aria-expanded={isMobileResourcesOpen}
+              >
+                <span>Resources</span>
+                <svg
+                  className={`h-5 w-5 transition-transform duration-200 ${isMobileResourcesOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isMobileResourcesOpen && (
+                <div className="mt-1">
+                  <Link
+                    href="/blogs"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => { setIsMobileResourcesOpen(false); setIsMenuOpen(false); }}
+                  >
+                    Blogs
+                  </Link>
+                  <Link
+                    href="/case-studies"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50 pl-6"
+                    onClick={() => { setIsMobileResourcesOpen(false); setIsMenuOpen(false); }}
+                  >
+                    Case Studies
+                  </Link>
+                </div>
+              )}
+            </div>
             <Link href="/contact" className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50" onClick={() => setIsMenuOpen(false)}>
               Contact
             </Link>
