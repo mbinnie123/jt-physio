@@ -8,6 +8,7 @@ import { stringify } from 'flatted';
 import { Reviews } from "./Reviews";
 import { wixClient } from "./lib/wix";
 import { BlogCarousel } from "./BlogCarousel";
+import { HeroVideoButton } from "./HeroVideoButton";
 
 type BlogPost = {
   _id: string;
@@ -168,7 +169,23 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-[#4C6CD6]/20 h-[calc(100vh-64px)] flex items-center">
+        <section className="relative overflow-hidden h-[calc(100vh-64px)] flex items-center">
+          {/* Background image — sharp, full cover, no blur/scale */}
+          <Image
+            src="/ayrshire-landscape.webp"
+            alt=""
+            fill
+            className="absolute inset-0 object-cover object-center"
+            priority
+            fetchPriority="high"
+            aria-hidden="true"
+          />
+          {/* Gradient overlay — white fade from left, brand blue tint from right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-[#1e3a8a]/30" />
+          {/* Top & bottom fade to white to blend cleanly with header/stats bar */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/60 to-transparent" />
+
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-6 items-center justify-center mt-10 lg:mt-10">
               <FadeIn className="max-w-3xl mx-auto lg:mx-0">
@@ -192,6 +209,7 @@ export default async function HomePage() {
                   >
                     Book Your Appointment
                   </a>
+                  <HeroVideoButton />
                 </div>
                 <p className="mt-3 sm:mt-4 text-xs text-slate-500 uppercase tracking-wider">Kilmarnock Ayrshire Physiotherapy | Physio | Football | Sports Clinic
                 </p>
@@ -210,10 +228,6 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Decorative background element */}
-          <div className="absolute top-0 right-0 -z-10 translate-x-1/3 -translate-y-1/4 opacity-10">
-            <img src="/jt-football-physio-logo.svg" alt="" className="w-[800px] h-[800px]" fetchPriority="high" />
-          </div>
         </section>
 
         {/* Trust Stats */}
