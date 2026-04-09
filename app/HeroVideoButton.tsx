@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 export function HeroVideoButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ export function HeroVideoButton() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2.5 rounded-full border border-[#1e3a8a]/30 bg-white/80 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-[#1e3a8a] shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md hover:-translate-y-0.5 active:scale-95"
+        className="cursor-pointer inline-flex items-center gap-2.5 rounded-full border border-[#1e3a8a]/30 bg-white/80 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-[#1e3a8a] shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md hover:-translate-y-0.5 active:scale-95"
       >
         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1e3a8a] shrink-0">
           <svg className="h-3 w-3 text-white translate-x-px" fill="currentColor" viewBox="0 0 24 24">
@@ -44,10 +45,10 @@ export function HeroVideoButton() {
         Inside the Clinic — See How We Work
       </button>
 
-      {/* Modal backdrop */}
-      {isOpen && (
+      {/* Modal — rendered into document.body via portal so it always covers the full page */}
+      {isOpen && createPortal(
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 bg-slate-900/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8 bg-slate-900/80 backdrop-blur-sm"
           onClick={(e) => { if (e.target === e.currentTarget) setIsOpen(false); }}
           role="dialog"
           aria-modal="true"
@@ -58,7 +59,7 @@ export function HeroVideoButton() {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
+              className="cursor-pointer absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
               aria-label="Close video"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -75,7 +76,8 @@ export function HeroVideoButton() {
               aria-label="Inside the JT Football Physiotherapy clinic, Kilmarnock, Ayrshire"
             />
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
