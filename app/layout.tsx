@@ -12,9 +12,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jordanphysiotherapyayrshire.co.uk"),
-  title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
-  description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance. Specialist football physio helping you recover from injury and return to the pitch stronger.",
-  keywords: ["Physiotherapy Kilmarnock", "Football Physio Ayrshire", "Sports Injury Clinic", "Back Pain Relief", "Sports Massage Kilmarnock", "Rehabilitation Ayrshire"],
+  title: "Physiotherapy Ayrshire | Jordan Physiotherapy | Kilmarnock & Ayrshire",
+  description: "Expert physiotherapy across Ayrshire — based in Kilmarnock with mobile appointments throughout North, East & South Ayrshire. Sports injury, rehabilitation, and performance care tailored to you.",
+  keywords: ["Physiotherapy Ayrshire", "Physio Kilmarnock", "Sports Injury Clinic Ayrshire", "Mobile Physiotherapy Ayrshire", "Sports Massage Kilmarnock", "Rehabilitation Ayrshire"],
   icons: {
     icon: "/jt-football-physio-logo.svg",
     shortcut: "/jt-football-physio-logo.svg",
@@ -31,14 +31,14 @@ export const metadata: Metadata = {
         alt: "JT Football Physiotherapy Logo",
       },
     ],
-    siteName: "JT Football Physiotherapy",
+    siteName: "Jordan Physiotherapy Ayrshire",
     type: "website",
     locale: "en_GB",
   },
   twitter: {
     card: "summary",
-    title: "Physiotherapy Kilmarnock | JT Football Physiotherapy",
-    description: "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
+    title: "Physiotherapy Ayrshire | Jordan Physiotherapy",
+    description: "Expert physiotherapy across Ayrshire — based in Kilmarnock with mobile appointments throughout North, East & South Ayrshire.",
     images: ["https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.png"],
   },
 };
@@ -48,20 +48,22 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Physiotherapy",
-    "name": "JT Football Physiotherapy",
+    "@type": ["LocalBusiness", "MedicalBusiness"],
+    "@id": "https://www.jordanphysiotherapyayrshire.co.uk/#business",
+    "name": "Jordan Physiotherapy Ayrshire",
+    "alternateName": "JT Football Physiotherapy",
     "image": "https://www.jordanphysiotherapyayrshire.co.uk/jt-football-physio-logo.svg",
     "description": "Expert physiotherapy in Kilmarnock, Ayrshire for pain relief, rehab and performance.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "5 Bunting Pl",
+      "streetAddress": "5 Bunting Place",
       "addressLocality": "Kilmarnock",
       "postalCode": "KA1 3LE",
-      "addressCountry": "UK"
+      "addressCountry": "GB"
     },
     "telephone": "+447841430205",
     "url": "https://www.jordanphysiotherapyayrshire.co.uk",
-    "priceRange": "$$"
+    "priceRange": "££"
   };
 
   return (
