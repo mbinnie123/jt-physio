@@ -55,6 +55,20 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      // Old domain → new domain (301, preserves full path)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "jtfootballphysiotherapy.co.uk" }],
+        destination: "https://www.jordanphysiotherapyayrshire.co.uk/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.jtfootballphysiotherapy.co.uk" }],
+        destination: "https://www.jordanphysiotherapyayrshire.co.uk/:path*",
+        permanent: true,
+      },
+      // Blog slug migration
       {
         source: '/post/:slug',
         destination: '/blogs/:slug',
